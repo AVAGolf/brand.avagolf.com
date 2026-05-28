@@ -23,14 +23,31 @@ const socialImage = new URL(image, site).href;
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "AVA Golf",
-  alternateName: "AVA",
+  name: "AVA Golf, Inc.",
+  alternateName: "AVA Golf",
   url: "https://avagolf.com",
-  logo: new URL("/avagolf-icon.svg", site).href,
-  image: socialImage,
-  description:
-    "AVA Golf delivers precision performance intelligence for golfers, translating complex performance data into clear, prioritized actions that drive measurable improvement.",
-  slogan: "Golf Intelligence",
+  logo: "https://brand.avagolf.com/avagolf-sxs-color.svg",
+  description: "AVA Golf is the first golf intelligence system, unifying player data from simulators, launch monitors, and on-course tracking to deliver personalized coaching and improvement plans.",
+  sameAs: [
+    "https://www.instagram.com/avagolfofficial/",
+    "https://www.linkedin.com/company/avagolf/",
+    "https://www.youtube.com/@avagolfofficial",
+    "https://facebook.com/avagolf",
+    "https://www.tiktok.com/@ava.golf"
+  ]
+};
+
+const webSiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "AVA Golf Brand Guidelines",
+  url: "https://brand.avagolf.com",
+  description: "Official brand guidelines for AVA Golf — covering logo marks, color palette, typography, brand elements, and communication principles.",
+  publisher: {
+    "@type": "Organization",
+    name: "AVA Golf, Inc.",
+    url: "https://avagolf.com"
+  }
 };
 ---
 
@@ -112,6 +129,12 @@ const organizationSchema = {
       type="application/ld+json"
       is:inline
       set:html={JSON.stringify(organizationSchema)}
+    />
+
+    <script 
+      type="application/ld+json" 
+      is:inline 
+      set:html={JSON.stringify(webSiteSchema)} 
     />
   </head>
   <body>
