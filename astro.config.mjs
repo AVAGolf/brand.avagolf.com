@@ -10,6 +10,10 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'hover',
+  },
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],

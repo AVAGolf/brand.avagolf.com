@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 
 interface Props {
@@ -103,6 +104,8 @@ const organizationSchema = {
 
     <!-- Page-specific head -->
     <slot name="head" />
+
+    <ClientRouter />
 
     <!-- Structured data -->
     <script
