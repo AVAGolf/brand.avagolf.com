@@ -1,0 +1,48 @@
+name: Deploy to S3
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
+
+      - uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: brand.avagolf.com
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.S3_BUCKET_REGION }}
+          SOURCE_DIR: 'dist/'
+
+      - name: Invalidate Fastly
+        uses: jcoene/fastly-purge-action@master
+        with:
+          api_key: "${{ secrets.FASTLY_API_KEY }}"
+          service_id: "iN42g1xAhUJCEMKjylOpRW"
+
+      - name: Purge Cloudflare Cache
+        uses: nathanvaughn/actions-cloudflare-purge@master
+        with:
+          cf_zone: "e690f4cbe14dc74233ccb7b3a76749cc"
+          cf_auth: ${{ secrets.CLOUDFLARE_PURGE_CACHE_API }}
