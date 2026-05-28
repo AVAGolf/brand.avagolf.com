@@ -1,0 +1,16 @@
+name: slack-rebuild-app
+
+on:
+  repository_dispatch:
+    types: [slack-rebuild-app]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm install
+      - run: npm run build
