@@ -1,40 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="AVA_Golf_Logo" data-name="AVA Golf Logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 516 512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="AVA Golf">
+  <rect width="32" height="32" fill="#070e0c" />
   <defs>
-    <style>
-      .cls-1 {
-        fill: url(#linear-gradient-2);
-      }
-
-      .cls-2 {
-        fill: url(#linear-gradient);
-      }
-
-      .cls-3 {
-        fill: #fff;
-      }
-
-      .cls-4 {
-        fill: #15382e;
-      }
-    </style>
-    <linearGradient id="linear-gradient" x1="153.51" y1="135.19" x2="153.51" y2="380.81" gradientTransform="translate(0 514) scale(1 -1)" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#359683"/>
-      <stop offset="1" stop-color="#359683" stop-opacity="0"/>
+    <linearGradient id="a" x1="9.5" y1="8.4" x2="9.5" y2="23.6" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#359683" />
+      <stop offset="1" stop-color="#359683" stop-opacity="0" />
     </linearGradient>
-    <linearGradient id="linear-gradient-2" x1="191.13" y1="258" x2="436.22" y2="258" gradientTransform="translate(0 514) scale(1 -1)" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#ffff4a"/>
-      <stop offset="1" stop-color="#ffe708"/>
+    <linearGradient id="b" x1="11.8" y1="16" x2="27" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffff4a" />
+      <stop offset="1" stop-color="#ffe708" />
     </linearGradient>
   </defs>
-  <rect class="cls-4" width="516" height="512"/>
-  <g id="icon">
-    <path class="cls-2" d="M30.97,378.81h105.56l139.53-245.62h-85.29c-12.61,0-24.34,7.18-31.06,19L30.97,378.81Z"/>
-    <circle class="cls-3" cx="145.84" cy="269.77" r="45.79"/>
-    <path class="cls-1" d="M436.22,378.81h-105.56l-139.53-245.62h85.29c12.61,0,24.34,7.18,31.06,19l128.74,226.62Z"/>
-    <g id="TradeMark">
-      <polygon class="cls-3" points="447.13 361.02 453.05 361.02 453.05 378.81 457.05 378.81 457.05 361.02 462.93 361.02 462.93 357.26 447.13 357.26 447.13 361.02"/>
-      <polygon class="cls-3" points="483.92 357.26 477.53 373.47 477.42 373.47 470.98 357.26 465.88 357.26 465.88 378.81 469.8 378.81 469.8 367.22 469.68 363.57 469.79 363.57 475.88 378.81 479.03 378.81 485.14 363.57 485.23 363.57 485.12 367.22 485.12 378.81 489.03 378.81 489.03 357.26 483.92 357.26"/>
-    </g>
-  </g>
+  <path fill="url(#a)" d="M1.9 23.6h6.5l8.6-15.2H8.2c-.8 0-1.5.4-1.9 1.2L1.9 23.6Z" />
+  <circle cx="9" cy="16.8" r="2.8" fill="#fff" />
+  <path fill="url(#b)" d="M27 23.6h-6.5l-8.6-15.2h5.3c.8 0 1.5.4 1.9 1.2l7.9 14Z" />
 </svg>
