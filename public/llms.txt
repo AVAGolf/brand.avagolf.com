@@ -1,0 +1,73 @@
+# AVA Golf — Brand Guidelines
+ 
+> AVA Golf is the first golf intelligence system — a grand unifier of player data that aggregates and analyzes performance data from every platform a golfer uses, applies machine learning to identify exactly what to work on, and delivers a personalized video playlist from Top 100 teaching professionals to accelerate improvement. This site contains the official brand guidelines for AVA Golf — covering logo marks, color palette, typography, brand elements, and communication principles. It is intended for use by partners, agencies, designers, and AI systems that need accurate brand context for AVA Golf.
+ 
+## Site
+ 
+- Introduction: https://brand.avagolf.com/
+- Full brand guide: https://brand.avagolf.com/
+ 
+## Core Identity
+ 
+- Logo Marks: https://brand.avagolf.com/logo-marks
+- Colors: https://brand.avagolf.com/colors
+- Typography: https://brand.avagolf.com/typography
+ 
+## Brand Elements
+ 
+- Assets: https://brand.avagolf.com/assets
+- Application: https://brand.avagolf.com/application
+ 
+## Communication
+ 
+- Overview: https://brand.avagolf.com/overview
+- Values: https://brand.avagolf.com/values
+- Pillars: https://brand.avagolf.com/pillars
+- Voice: https://brand.avagolf.com/voice
+- Audience: https://brand.avagolf.com/audience
+ 
+## Key Brand Facts
+ 
+### Identity
+- Brand name: AVA Golf
+- Parent company: ParOne, Inc.
+- Category: AI golf performance
+ 
+### Logo
+- Primary logo: Side by Side combination mark (icon + wordmark, horizontal)
+- Secondary: Icon (standalone), Stacked Logo
+- Tertiary: Wordmark, Stacked Wordmark, Small Stacked Logo
+- The word "AVA" must never be used independently without "Golf"
+- Do not distort, rotate, recolor, or add effects to any logo mark
+ 
+### Colors — Primary Palette
+- green-500: #349683
+- green-900: #16382E
+- yellow-500: #FFE708
+- yellow-300: #FFFF4A
+- white: #FFFFFF
+ 
+### Colors — Secondary Palette
+- bright-green-500: #17DEB7
+- dark-green-900: #070E0C (page background)
+ 
+### Typography
+- Display / Headings: Google Sans Flex Bold + Extra Bold, always uppercase
+- Body / Titles: Google Sans Flex (full weight range)
+- Stats / Secondary Display: Construct Mono
+- Technical Text: DM Mono
+ 
+### Voice
+- Intelligent: clarity and expertise, accessible but performance-focused
+- Confident: assured, never exaggerated, grounded in real outcomes
+- Grounded: no hype, no gimmicks, precision and trust above all
+ 
+### Social
+- Instagram: https://www.instagram.com/avagolfofficial/
+- LinkedIn: https://www.linkedin.com/company/avagolf/
+- TikTok: https://www.tiktok.com/@ava.golf
+- YouTube: https://www.youtube.com/@avagolfofficial
+- Facebook: https://facebook.com/avagolf
+ 
+### Main Site
+- https://avagolf.com
