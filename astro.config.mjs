@@ -3,9 +3,12 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from "@tailwindcss/vite";
 
+export const siteUrl = 'https://brand.avagolf.com';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://brand.avagolf.com',
+  site: siteUrl,
+  server: { port: 3000 },
   trailingSlash: 'always',
   build: {
     format: 'directory',
