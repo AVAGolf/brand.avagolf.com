@@ -1,0 +1,51 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+
+const values = [
+  {
+    title: "Precision",
+    body: "We believe improvement comes from accurate diagnosis and targeted solutions. Every insight should be rooted in real performance data, removing ambiguity and giving golfers a clear starting point for progress.",
+  },
+  {
+    title: "Discipline",
+    body: "Progress in golf is built through consistent effort and focused practice. AVA reinforces structured improvement rather than scattered experimentation, helping golfers turn commitment into measurable results.",
+  },
+  {
+    title: "Calibration",
+    body: "The modern golfer is surrounded by overwhelming amounts of data and instruction. AVA uses intelligent analysis to take your game data and turn it into intuitive, actionable steps — focusing on what matters most.",
+  },
+];
+---
+
+<BrandLayout
+  slug="values"
+  eyebrow="Communication"
+  title="Values"
+>
+  <div class="mx-auto max-w-6xl space-y-12">
+    <section>
+      <h2 class="text-h2 text-dark-green-900 mb-4">Our Values</h2>
+      <p class="text-body text-dark-green-700 max-w-3xl">
+        AVA is guided by three core values: precision, discipline, and
+        calibration. Together, they ensure every experience is rooted in
+        accurate insight, structured progression, and clear, actionable
+        guidance. These are important because they shape how we help golfers
+        cut through complexity, stay focused on meaningful improvement, and
+        build confidence through measurable progress.
+      </p>
+    </section>
+
+    <section class="border-t border-green-500/30 pt-12">
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
+        {
+          values.map((v) => (
+            <article>
+              <h3 class="text-h2 text-green-900 mb-4">{v.title}</h3>
+              <p class="text-body text-dark-green-700">{v.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</BrandLayout>

@@ -1,0 +1,205 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+import ColorSwatch from "../components/ColorSwatch.astro";
+
+const greens = [
+  { name: "green-300", hex: "#95CBC1", cmyk: "41 4 27 0", text: "text-dark-green-900" },
+  { name: "green-500", hex: "#349683", cmyk: "77 21 56 3", text: "text-white" },
+  { name: "green-700", hex: "#225142", cmyk: "83 45 72 40", text: "text-white" },
+  { name: "green-900", hex: "#16382E", cmyk: "84 52 72 59", text: "text-white" },
+];
+
+const yellows = [
+  { name: "yellow-300", hex: "#FFFF4A", cmyk: "5 0 80 0", text: "text-dark-green-900" },
+  { name: "yellow-500", hex: "#FFE708", cmyk: "2 4 100 0", text: "text-dark-green-900" },
+];
+
+const neutrals = [
+  { name: "white", hex: "#FFFFFF", cmyk: "0 0 0 0", text: "text-dark-green-900" },
+  { name: "grey-300", hex: "#F4F4F2", cmyk: "3 2 3 0", text: "text-dark-green-900" },
+];
+
+const brightGreen = [
+  { name: "bright-green-500", hex: "#17DEB7", cmyk: "60 0 40 0", text: "text-dark-green-900" },
+];
+
+const darkGreens = [
+  { name: "dark-green-300", hex: "#132A23", cmyk: "80 60 70 70", text: "text-white" },
+  { name: "dark-green-500", hex: "#10211C", cmyk: "80 60 70 75", text: "text-white" },
+  { name: "dark-green-700", hex: "#0B1C16", cmyk: "80 60 70 80", text: "text-white" },
+  { name: "dark-green-900", hex: "#070E0C", cmyk: "75 65 70 85", text: "text-white" },
+];
+
+const gradients = [
+  { name: "green-fade", from: "#349683", to: "#16382E", text: "text-white" },
+  { name: "dark-green-fade", from: "#16382E", to: "#070E0C", text: "text-white" },
+  { name: "yellow-fade", from: "#FFFF4A", to: "#FFE708", text: "text-dark-green-900" },
+];
+---
+
+<BrandLayout
+  slug="colors"
+  eyebrow="Core Identity"
+  title="Color"
+  subtitle="Our brand colors are essential in shaping recognition, emotion, and perception, creating a consistent visual identity that allows audiences to instantly connect with and remember the brand."
+>
+  <div class="mx-auto max-w-6xl space-y-20">
+    <!-- PRIMARY PALETTE -->
+    <section>
+      <header class="mb-8">
+        <h2 class="text-h2 text-dark-green-900 mb-3">Primary Palette</h2>
+        <p class="text-body text-dark-green-700">These are the core identity colors.</p>
+      </header>
+
+      <!-- Hero grid: 2 large greens + a stacked yellow/white column -->
+      <div class="mb-12 grid grid-cols-5 gap-2" style="aspect-ratio: 5 / 2;">
+        <ColorSwatch
+          name="green-500"
+          hex="#349683"
+          textClass="text-white"
+          size="lg"
+          class="col-span-2 h-full"
+        />
+        <ColorSwatch
+          name="green-900"
+          hex="#16382E"
+          textClass="text-white"
+          size="lg"
+          class="col-span-2 h-full"
+        />
+        <div class="col-span-1 flex flex-col gap-2">
+          <ColorSwatch name="yellow-500" hex="#FFE708" textClass="text-dark-green-900" size="sm" class="flex-1" />
+          <ColorSwatch name="yellow-300" hex="#FFFF4A" textClass="text-dark-green-900" size="sm" class="flex-1" />
+          <ColorSwatch name="white" hex="#FFFFFF" textClass="text-dark-green-900" size="sm" class="flex-1" />
+        </div>
+      </div>
+
+      <!-- Greens row -->
+      <div class="mb-10">
+        <h3 class="text-eyebrow text-dark-green-900 mb-4">Green</h3>
+        <div class="grid grid-cols-4 gap-2">
+          {greens.map((c) => (
+            <ColorSwatch
+              name={c.name}
+              hex={c.hex}
+              cmyk={c.cmyk}
+              textClass={c.text}
+              class="aspect-[3/2]"
+            />
+          ))}
+        </div>
+      </div>
+
+      <!-- Yellows row -->
+      <div class="mb-10">
+        <h3 class="text-eyebrow text-dark-green-900 mb-4">Yellow</h3>
+        <div class="grid grid-cols-4 gap-2">
+          {yellows.map((c) => (
+            <ColorSwatch
+              name={c.name}
+              hex={c.hex}
+              cmyk={c.cmyk}
+              textClass={c.text}
+              class="aspect-[3/2]"
+            />
+          ))}
+        </div>
+      </div>
+
+      <!-- Neutrals row -->
+      <div>
+        <h3 class="text-eyebrow text-dark-green-900 mb-4">White / Grey</h3>
+        <div class="grid grid-cols-4 gap-2">
+          {neutrals.map((c) => (
+            <ColorSwatch
+              name={c.name}
+              hex={c.hex}
+              cmyk={c.cmyk}
+              textClass={c.text}
+              class="aspect-[3/2] border border-green-500/30"
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- SECONDARY PALETTE -->
+    <section>
+      <header class="mb-8 border-t border-green-500/30 pt-12">
+        <h2 class="text-h2 text-dark-green-900 mb-3">Secondary Palette</h2>
+      </header>
+
+      <div class="mb-10">
+        <h3 class="text-eyebrow text-dark-green-900 mb-4">Bright Green</h3>
+        <div class="grid grid-cols-4 gap-2">
+          {brightGreen.map((c) => (
+            <ColorSwatch
+              name={c.name}
+              hex={c.hex}
+              cmyk={c.cmyk}
+              textClass={c.text}
+              class="aspect-[3/2]"
+            />
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-eyebrow text-dark-green-900 mb-4">Dark Green</h3>
+        <div class="grid grid-cols-4 gap-2">
+          {darkGreens.map((c) => (
+            <ColorSwatch
+              name={c.name}
+              hex={c.hex}
+              cmyk={c.cmyk}
+              textClass={c.text}
+              class="aspect-[3/2]"
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- GRADIENTS -->
+    <section>
+      <header class="mb-8 border-t border-green-500/30 pt-12">
+        <h2 class="text-h2 text-dark-green-900 mb-3">Gradients</h2>
+        <p class="text-body text-dark-green-700">Color blends.</p>
+      </header>
+
+      <!-- Hero gradient strip -->
+      <div class="mb-12 grid grid-cols-3 gap-2" style="aspect-ratio: 3 / 1;">
+        {gradients.map((g) => (
+          <div
+            class:list={["relative flex flex-col justify-end rounded-md p-8", g.text]}
+            style={`background: linear-gradient(90deg, ${g.from} 0%, ${g.to} 100%)`}
+          >
+            <p class="text-button">{g.name}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Per-gradient breakdown rows -->
+      {gradients.map((g) => (
+        <div class="mb-10">
+          <h3 class="text-eyebrow text-dark-green-900 mb-4">{g.name}</h3>
+          <div class="grid grid-cols-[1fr_auto_1fr] items-stretch gap-3">
+            <ColorSwatch
+              name="From"
+              hex={g.from}
+              textClass={g.text}
+              class="aspect-[5/2]"
+            />
+            <div class="flex items-center justify-center text-green-500 text-2xl">›</div>
+            <ColorSwatch
+              name="To"
+              hex={g.to}
+              textClass={g.text}
+              class="aspect-[5/2]"
+            />
+          </div>
+        </div>
+      ))}
+    </section>
+  </div>
+</BrandLayout>

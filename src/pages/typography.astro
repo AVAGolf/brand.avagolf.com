@@ -1,0 +1,148 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+
+const alphabet = "AaBbCcDdEeFfGgHh\nIiJjKkLlMmNnOoPpQq\nRrSsTtUuVvWwXxYyZz\n1234567890!?&#%$";
+
+const sansWeights = [
+  { name: "Regular", weight: 400 },
+  { name: "SemiBold", weight: 600 },
+  { name: "ExtraBold", weight: 800 },
+];
+
+const dmMonoWeights = [
+  { name: "Regular", weight: 400 },
+  { name: "Medium", weight: 500 },
+];
+
+const sampleCopy =
+  "Nam nec ligula tincidunt, mattis massa ac, maximus nisi. Vestibulum viverra velit varius elit vestibulum luctus. In mauris ex, tincidunt ac malesuada id, imperdiet id dui. Vivamus dapibus tellus libero, non molestie elit hendrerit sed. Donec vitae eros nulla. In ullamcorper condimentum magna, vitae aliquet nisl eleifend ut. Integer ac elit in orci consectetur sagittis.";
+---
+
+<BrandLayout
+  slug="typography"
+  eyebrow="Core Identity"
+  title="Typography"
+  subtitle="We use 3 fonts, with Google Sans Flex being our main font family. This is supported by Construct Mono and DM Mono."
+>
+  <div class="mx-auto max-w-6xl space-y-20">
+    <!-- DISPLAY TYPE -->
+    <section>
+      <header class="mb-8">
+        <h2 class="text-h2 text-dark-green-900 mb-3">Display Type</h2>
+        <p class="text-body text-dark-green-700 max-w-3xl">
+          Google Sans Flex is for use in headings with few words where we want
+          big impact. It should always be in uppercase. Bold and Extra Bold
+          weights can be used depending on how the software renders the font
+          and the desired impact needed. The result should look heavy.
+        </p>
+        <p class="text-code text-green-700 mt-4">
+          Display Type / Headings — Google Sans Flex Bold + Extra Bold Uppercase
+        </p>
+      </header>
+      <p
+        class="text-dark-green-900 uppercase whitespace-pre-line"
+        style="font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 6vw, 80px); line-height: 0.95;"
+      >
+        {alphabet}
+      </p>
+    </section>
+
+    <!-- MAIN FAMILY -->
+    <section>
+      <header class="mb-8 border-t border-green-500/30 pt-12">
+        <h2 class="text-h2 text-dark-green-900 mb-3">Main Family</h2>
+        <p class="text-body text-dark-green-700 max-w-3xl">
+          Google Sans Flex is our primary font family, and can be used in all
+          copy situations from titles to body copy. As a family it is available
+          in a full range of weights which can be used appropriately within the
+          context of application.
+        </p>
+        <p class="text-code text-green-700 mt-4">
+          Titles / Body Copy — Google Sans Flex Family (Various Weights)
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        {
+          sansWeights.map((w) => (
+            <div>
+              <p class="text-micro text-dark-green-700 mb-4">
+                Google Sans Flex — {w.name}
+              </p>
+              <p
+                class="text-dark-green-900 whitespace-pre-line"
+                style={`font-family: var(--font-sans); font-weight: ${w.weight}; font-size: 28px; line-height: 34px;`}
+              >
+                {alphabet}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+
+      <p class="text-body text-dark-green-700 mt-8 max-w-3xl">{sampleCopy}</p>
+    </section>
+
+    <!-- SECONDARY DISPLAY -->
+    <section>
+      <header class="mb-8 border-t border-green-500/30 pt-12">
+        <h2 class="text-h2 text-dark-green-900 mb-3">Secondary Display Type</h2>
+        <p class="text-body text-dark-green-700 max-w-3xl">
+          Construct Mono is our secondary display type. Primarily this is to be
+          used to display numbers in stats, but can also be used as a secondary
+          display type when we want to create more technical impact.
+        </p>
+        <p class="text-code text-green-700 mt-4">
+          Secondary Display Type / Stats — Construct Mono
+        </p>
+      </header>
+
+      <p
+        class="text-dark-green-900 uppercase whitespace-pre-line"
+        style="font-family: var(--font-stat); font-weight: 400; font-size: clamp(40px, 6vw, 80px); line-height: 0.95;"
+      >
+        {alphabet}
+      </p>
+    </section>
+
+    <!-- TECHNICAL TEXT -->
+    <section>
+      <header class="mb-8 border-t border-green-500/30 pt-12">
+        <h2 class="text-h2 text-dark-green-900 mb-3">Technical Text</h2>
+        <p class="text-body text-dark-green-700 max-w-3xl">
+          DM Mono is our technical font family, to be used when we want to add
+          technical details and additional information. It can be used at much
+          smaller size than normal copy and in various weights.
+        </p>
+        <p class="text-code text-green-700 mt-4">
+          Technical Text — DM Mono Family (Various Weights)
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {
+          dmMonoWeights.map((w) => (
+            <div>
+              <p class="text-micro text-dark-green-700 mb-4">
+                DM Mono — {w.name}
+              </p>
+              <p
+                class="text-dark-green-900 whitespace-pre-line"
+                style={`font-family: var(--font-mono); font-weight: ${w.weight}; font-size: 28px; line-height: 34px;`}
+              >
+                {alphabet}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+
+      <p
+        class="text-dark-green-700 mt-8 max-w-3xl"
+        style="font-family: var(--font-mono); font-size: 14px; line-height: 28px;"
+      >
+        {sampleCopy}
+      </p>
+    </section>
+  </div>
+</BrandLayout>

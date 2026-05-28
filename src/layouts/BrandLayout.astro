@@ -1,0 +1,45 @@
+---
+import Layout from "./Layout.astro";
+import BrandSidebar from "../components/BrandSidebar.astro";
+import BrandHeader from "../components/BrandHeader.astro";
+import BrandPagination from "../components/BrandPagination.astro";
+import BrandFooter from "../components/BrandFooter.astro";
+import { getAdjacent } from "../lib/sections";
+
+interface Props {
+  slug: string;
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
+  variant?: "default" | "hero";
+}
+
+const { slug, eyebrow, title, subtitle, variant } = Astro.props;
+const { current } = getAdjacent(slug);
+const pageTitle = current ? `${current.title} — AVA Golf Brand Guide` : title;
+---
+
+<Layout title={pageTitle} description={subtitle}>
+  <BrandSidebar activeSlug={slug} />
+
+  <div class="ml-[260px] flex min-h-screen flex-col">
+    <BrandHeader
+      eyebrow={eyebrow}
+      title={title}
+      subtitle={subtitle}
+      variant={variant}
+    >
+      <slot name="hero-cta" slot="cta" />
+    </BrandHeader>
+
+    <main class="bg-grey-300 flex-1 px-12 py-16">
+      <slot />
+    </main>
+
+    <div class="bg-grey-300">
+      <BrandPagination slug={slug} />
+    </div>
+
+    <BrandFooter />
+  </div>
+</Layout>

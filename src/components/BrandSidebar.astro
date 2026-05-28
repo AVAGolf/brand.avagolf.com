@@ -1,0 +1,65 @@
+---
+import { sectionsByGroup, groupOrder } from "../lib/sections";
+
+interface Props {
+  activeSlug?: string;
+}
+
+const { activeSlug } = Astro.props;
+const groups = sectionsByGroup();
+---
+
+<aside
+  class="bg-dark-green-500 border-dark-green-300 fixed inset-y-0 left-0 z-20 flex w-[260px] flex-col border-r"
+>
+  <div class="border-dark-green-300 border-b px-12 py-8">
+    <a href="/" class="block">
+      <img
+        src="/avagolf-sxs-color.svg"
+        alt="AVA Golf"
+        class="h-9 w-auto"
+      />
+    </a>
+    <p class="text-micro text-green-300 mt-6 uppercase tracking-widest">Brand Guidelines</p>
+  </div>
+
+  <nav class="flex-1 overflow-y-auto py-8">
+    {
+      groupOrder.map((group) => (
+        <div class="mb-8 last:mb-0">
+          <p class="text-label text-white mb-4 px-12 font-bold uppercase tracking-widest">
+            {group}
+          </p>
+          <ul>
+            {groups[group].map((s) => {
+              const isActive = s.slug === activeSlug;
+              return (
+                <li>
+                  <a
+                    href={`/${s.slug}`}
+                    class:list={[
+                      "text-nav relative flex h-9 items-center px-12 font-normal uppercase tracking-widest transition-colors",
+                      isActive
+                        ? "bg-dark-green-900 text-bright-green-500"
+                        : "text-grey-300 hover:bg-dark-green-700 hover:text-white",
+                    ]}
+                  >
+                    <span>{s.title}</span>
+                    {isActive && (
+                      <span
+                        aria-hidden="true"
+                        class="text-bright-green-500 absolute right-3 text-xl leading-none"
+                      >
+                        ◄
+                      </span>
+                    )}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))
+    }
+  </nav>
+</aside>

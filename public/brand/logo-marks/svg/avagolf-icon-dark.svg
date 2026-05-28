@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="AVA_Golf_Logo" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 610.97 329.5">
+  <!-- Generator: Adobe Illustrator 30.4.0, SVG Export Plug-In . SVG Version: 2.1.4 Build 226)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #16382e;
+      }
+
+      .st1 {
+        fill: #fff;
+      }
+
+      .st2 {
+        fill: #349683;
+      }
+
+      .st3 {
+        fill: url(#linear-gradient);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="163.45" y1="329.5" x2="163.45" y2="1.9" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#359683"/>
+      <stop offset="1" stop-color="#16382e"/>
+    </linearGradient>
+  </defs>
+  <g id="icon">
+    <path class="st3" d="M0,329.5h140.79S326.89,1.9,326.89,1.9h-113.76c-16.82,0-32.47,9.57-41.43,25.34L0,329.5Z"/>
+    <circle class="st1" cx="153.22" cy="184.07" r="61.08"/>
+    <path class="st2" d="M540.52,329.5h-140.79L213.62,1.9h113.76c16.82,0,32.47,9.57,41.43,25.34l171.71,302.26Z"/>
+    <g id="TradeMark">
+      <polygon class="st0" points="555.08 305.78 562.97 305.78 562.97 329.5 568.31 329.5 568.31 305.78 576.15 305.78 576.15 300.76 555.08 300.76 555.08 305.78"/>
+      <polygon class="st0" points="604.15 300.76 595.62 322.38 595.48 322.38 586.89 300.76 580.09 300.76 580.09 329.5 585.32 329.5 585.32 314.05 585.16 309.17 585.3 309.17 593.43 329.5 597.63 329.5 605.77 309.17 605.89 309.17 605.75 314.05 605.75 329.5 610.97 329.5 610.97 300.76 604.15 300.76"/>
+    </g>
+  </g>
+</svg>

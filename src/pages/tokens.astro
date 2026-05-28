@@ -1,0 +1,102 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const brandColors = [
+  { name: "green-300", hex: "#95CBC1" },
+  { name: "green-500", hex: "#349683" },
+  { name: "green-700", hex: "#225142" },
+  { name: "green-900", hex: "#16382E" },
+  { name: "dark-green-300", hex: "#132A23" },
+  { name: "dark-green-500", hex: "#10211C" },
+  { name: "dark-green-700", hex: "#0B1C16" },
+  { name: "dark-green-900", hex: "#070E0C" },
+  { name: "yellow-300", hex: "#FFFF4A" },
+  { name: "yellow-500", hex: "#FFE708" },
+  { name: "bright-green-500", hex: "#17DEB7" },
+  { name: "white", hex: "#FFFFFF" },
+  { name: "grey-300", hex: "#F4F4F2" },
+];
+
+const typeRamp = [
+  { class: "text-display", label: "Display — 64 / 56 ExtraBold Upper" },
+  { class: "text-h1", label: "Heading 1 — 48 / 42 Bold Upper" },
+  { class: "text-h2", label: "Heading 2 — 36 / 32 Bold Upper" },
+  { class: "text-eyebrow", label: "Eyebrow — 22 / 22 Bold Upper" },
+  { class: "text-body", label: "Body — 18 / 32 Regular" },
+  { class: "text-body-strong", label: "Body Strong — 18 / 32 SemiBold" },
+  { class: "text-label", label: "Label — 16 Medium Upper 15%" },
+  { class: "text-button", label: "Button — 16 Bold Upper" },
+  { class: "text-nav", label: "Nav — 16 Medium Upper 10%" },
+  { class: "text-code", label: "Code — 14 DM Mono Medium" },
+  { class: "text-body-mono", label: "Body Mono — 14 / 28 DM Mono Regular" },
+  { class: "text-footer-link", label: "Footer Link — 12 Medium Upper 15%" },
+  { class: "text-micro", label: "Micro — 10 DM Mono Upper 10%" },
+  { class: "text-stat", label: "Stat — 64 Construct Mono Regular" },
+];
+---
+
+<Layout title="AVA Golf — Design Tokens">
+  <main class="mx-auto max-w-7xl px-8 py-16">
+    <header class="mb-16">
+      <p class="text-label text-green-300 mb-4">Foundations</p>
+      <h1 class="text-display text-white">Design Tokens</h1>
+      <p class="text-body text-grey-300 mt-6 max-w-2xl">
+        Raw token inventory. The user-facing brand guide lives at <a
+          href="/"
+          class="text-yellow-500 underline">/</a
+        >.
+      </p>
+    </header>
+
+    <section class="mb-20">
+      <h2 class="text-h2 text-yellow-500 mb-8">Color</h2>
+      <div class="grid grid-cols-2 gap-2 md:grid-cols-4">
+        {
+          brandColors.map((c) => (
+            <div class="overflow-hidden rounded-md border border-dark-green-300">
+              <div
+                class="aspect-[5/3] w-full"
+                style={`background-color: ${c.hex}`}
+              />
+              <div class="bg-dark-green-700 p-4">
+                <p class="text-code text-white">{c.name}</p>
+                <p class="text-micro text-grey-300 mt-1">{c.hex}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="mb-20">
+      <h2 class="text-h2 text-yellow-500 mb-8">Gradients</h2>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div class="bg-green-fade rounded-md p-8">
+          <p class="text-code text-white">green-fade</p>
+        </div>
+        <div class="bg-dark-green-fade rounded-md p-8">
+          <p class="text-code text-white">dark-green-fade</p>
+        </div>
+        <div class="bg-yellow-fade rounded-md p-8">
+          <p class="text-code text-dark-green-900">yellow-fade</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-20">
+      <h2 class="text-h2 text-yellow-500 mb-8">Typography</h2>
+      <div class="space-y-8">
+        {
+          typeRamp.map((t) => (
+            <div class="border-dark-green-300 border-b pb-6">
+              <p class="text-micro text-green-300 mb-3">{t.label}</p>
+              <p class={`${t.class} text-white`}>
+                The quick brown fox jumps over the lazy dog
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</Layout>

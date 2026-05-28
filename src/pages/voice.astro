@@ -1,0 +1,43 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+
+const traits = [
+  {
+    title: "Intelligent",
+    body: "We communicate with clarity and expertise. The brand reflects a deep understanding of performance and technology while remaining accessible and easy to understand.",
+  },
+  {
+    title: "Confident",
+    body: "Our tone is assured but never exaggerated. AVA presents insights and solutions with authority, grounded in real performance outcomes.",
+  },
+  {
+    title: "Grounded",
+    body: "Our voice is grounded and disciplined — avoiding hype, gimmicks, or exaggerated claims. Communication prioritizes precision, trust, and reliability.",
+  },
+];
+---
+
+<BrandLayout slug="voice" eyebrow="Communication" title="Voice">
+  <div class="mx-auto max-w-6xl space-y-12">
+    <section>
+      <h2 class="text-h2 text-dark-green-900 mb-4">Our Voice</h2>
+      <p class="text-body text-dark-green-700 max-w-3xl">
+        Our voice is not only how we speak to our audience, but how we talk to
+        each other and how we write about ourselves.
+      </p>
+    </section>
+
+    <section class="border-t border-green-500/30 pt-12">
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
+        {
+          traits.map((t) => (
+            <article>
+              <h3 class="text-h2 text-green-900 mb-4">{t.title}</h3>
+              <p class="text-body text-dark-green-700 whitespace-pre-line">{t.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</BrandLayout>

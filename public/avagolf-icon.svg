@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="AVA_Golf_Logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 540 327.3">
+  <!-- Generator: Adobe Illustrator 30.2.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 1)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: url(#linear-gradient);
+      }
+
+      .st1 {
+        fill: #fff;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="163.3" y1="327.3" x2="163.3" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g id="icon">
+    <path class="st1" d="M540,327.3h-140.7L213.4,0h113.7c16.8,0,32.4,9.6,41.4,25.3l171.5,302Z"/>
+    <path class="st0" d="M0,327.3h140.7S326.6,0,326.6,0h-113.7c-16.8,0-32.4,9.6-41.4,25.3L0,327.3Z"/>
+    <circle class="st1" cx="153.1" cy="182" r="61"/>
+  </g>
+</svg>

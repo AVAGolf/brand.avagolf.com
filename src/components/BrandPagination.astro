@@ -1,0 +1,91 @@
+---
+import { getAdjacent, sections } from "../lib/sections";
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const { prev, next } = getAdjacent(slug);
+
+function groupLabel(s: { group: string }) {
+  return s.group.toUpperCase();
+}
+const prevSection = prev ? sections.find((x) => x.slug === prev.slug) : null;
+const nextSection = next ? sections.find((x) => x.slug === next.slug) : null;
+---
+
+<nav class="mx-12 flex items-start justify-between gap-8 py-8">
+  {
+    prev && prevSection ? (
+      <div class="flex flex-col items-start gap-3">
+        <span
+          class="text-dark-green-700 text-[10px] uppercase tracking-[0.1em]"
+          style="font-family: var(--font-mono);"
+        >
+          {groupLabel(prevSection)}: {prev.title}
+        </span>
+        <a
+          href={`/${prev.slug}`}
+          class="text-dark-green-900 flex h-9 w-60 items-center rounded-3xl border-2 border-transparent text-base font-medium uppercase tracking-[0.1em] [background:linear-gradient(var(--color-grey-300),_var(--color-grey-300))_padding-box,linear-gradient(91.29deg,_#349683,_#16382e)_border-box] transition-opacity hover:opacity-90"
+        >
+          <svg
+            class="ml-4"
+            width="8"
+            height="12"
+            viewBox="0 0 8 12"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M7 11L1 6L7 1"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="flex-1 text-center pr-6">Prev</span>
+        </a>
+      </div>
+    ) : (
+      <span class="min-w-[240px]" />
+    )
+  }
+  {
+    next && nextSection ? (
+      <div class="ml-auto flex flex-col items-end gap-3">
+        <span
+          class="text-dark-green-700 text-[10px] uppercase tracking-[0.1em]"
+          style="font-family: var(--font-mono);"
+        >
+          {groupLabel(nextSection)}: {next.title}
+        </span>
+        <a
+          href={`/${next.slug}`}
+          class="text-dark-green-900 flex h-9 w-60 items-center rounded-3xl border-2 border-transparent text-base font-medium uppercase tracking-[0.1em] [background:linear-gradient(var(--color-grey-300),_var(--color-grey-300))_padding-box,linear-gradient(91.29deg,_#349683,_#16382e)_border-box] transition-opacity hover:opacity-90"
+        >
+          <span class="flex-1 text-center pl-6">Next</span>
+          <svg
+            class="mr-4"
+            width="8"
+            height="12"
+            viewBox="0 0 8 12"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M1 1L7 6L1 11"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+      </div>
+    ) : (
+      <span class="ml-auto min-w-[240px]" />
+    )
+  }
+</nav>

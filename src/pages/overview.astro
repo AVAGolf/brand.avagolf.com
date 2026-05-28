@@ -1,0 +1,193 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+
+const whatHowWhy = [
+  {
+    title: "What we do",
+    body: "AVA delivers precision performance intelligence for golfers, translating complex performance data into clear, prioritized actions that drive measurable improvement.",
+  },
+  {
+    title: "How we do it",
+    body: "Golf Intelligence.\n\nAVA connects the golfer's existing tools — launch monitors, simulators, and on-course performance — to analyze patterns and identify the true causes of performance issues. These insights are translated into personalized video-led progressions that evolve with the golfer's development.",
+  },
+  {
+    title: "Why we do it",
+    body: "Disciplined golfers deserve a system that matches their commitment. Today's improvement tools produce vast amounts of data but rarely work together. AVA brings structure to this fragmented ecosystem, eliminating guesswork and unlocking a clear path to mastery.",
+  },
+];
+---
+
+<BrandLayout slug="overview" eyebrow="Communication" title="Overview">
+  <div class="mx-auto max-w-6xl space-y-20">
+    <!-- TAGLINE -->
+    <section>
+      <h2 class="text-h2 text-dark-green-900 mb-3">Tagline</h2>
+      <div class="bg-green-fade relative mt-6 overflow-hidden rounded-lg p-12">
+        <div
+          class="pointer-events-none absolute inset-y-0 right-0 w-1/2 opacity-30"
+          style="background-image: radial-gradient(circle, #95cbc1 1.5px, transparent 1.5px); background-size: 12px 12px;"
+          aria-hidden="true"
+        ></div>
+        <p
+          class="relative text-white uppercase leading-none"
+          style="font-family: var(--font-display); font-weight: 800; font-size: clamp(48px, 8vw, 96px); line-height: 0.95;"
+        >
+          Personalized<br />Progression
+        </p>
+      </div>
+      <p class="text-body-strong text-dark-green-900 mt-6">When to use</p>
+      <p class="text-body-mono text-dark-green-700 mt-1">
+        For marketing purposes at first contact with the brand. To create
+        curiosity and excite our audience.
+      </p>
+    </section>
+
+    <!-- DESCRIPTIONS -->
+    <section class="border-t border-green-500/30 pt-12">
+      <div class="grid grid-cols-1 gap-12 md:grid-cols-2">
+        <div>
+          <h2 class="text-h2 text-dark-green-900 mb-4">Short Description</h2>
+          <p
+            class="text-dark-green-900"
+            style="font-family: var(--font-display); font-size: 28px; line-height: 36px; font-weight: 400;"
+          >
+            AVA Golf connects your entire golf ecosystem, delivering tailored
+            insights and expert-led video guidance — helping you improve with
+            precision and purpose, making every swing count.
+          </p>
+          <p class="text-body-strong text-dark-green-900 mt-6">When to use</p>
+          <p class="text-body-mono text-dark-green-700 mt-1">
+            First contact when we want to keep things light and top level.
+          </p>
+        </div>
+        <div>
+          <h2 class="text-h2 text-dark-green-900 mb-4">Full Description</h2>
+          <div class="text-body text-dark-green-700 space-y-4">
+            <p>
+              Modern golfers generate vast amounts of performance data — from
+              launch monitors and simulators to on-course tracking and coaching
+              sessions. Yet these tools rarely work together, leaving players to
+              interpret fragmented insights and guess at what matters most.
+            </p>
+            <p>
+              AVA connects this ecosystem and translates it into structured,
+              personalized guidance. More than just analysis, it turns data
+              into understanding — helping golfers learn why things are
+              happening, not just what to change.
+            </p>
+            <p>
+              By identifying patterns across a player's performance, AVA
+              delivers targeted, video-based progressions that educate as they
+              guide — building knowledge, reinforcing fundamentals, and
+              developing lasting skill.
+            </p>
+            <p>
+              Rather than overwhelming golfers with more metrics or endless
+              drills, AVA focuses on what matters most: clarity, progression,
+              and comprehension.
+            </p>
+            <p>
+              The result is a smarter, more disciplined approach to improvement
+              — a system that doesn't just direct golfers, but teaches them to
+              think, adapt, and ultimately master their game with confidence.
+            </p>
+          </div>
+          <p class="text-body-strong text-dark-green-900 mt-6">When to use</p>
+          <p class="text-body-mono text-dark-green-700 mt-1">
+            For press, partnerships, and when we want to dive a little deeper
+            into explaining who and what we are. Also important for onboarding
+            internally so everyone starts off with the same understanding.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GOLF INTELLIGENCE -->
+    <section class="border-t border-green-500/30 pt-12">
+      <h2 class="text-h2 text-dark-green-900 mb-4">Golf Intelligence</h2>
+      <p class="text-body text-dark-green-700 max-w-3xl">
+        By its nature AVA is Golf Intelligence. As pioneers of this we are
+        setting precedent for what Golf Intelligence is.
+      </p>
+      <p class="text-body-strong text-dark-green-900 mt-6">When to use</p>
+      <p class="text-body-mono text-dark-green-700 mt-1">
+        In education formats and for marketing purposes to validate our
+        underpinnings.
+      </p>
+    </section>
+
+    <!-- WHAT / HOW / WHY -->
+    <section class="border-t border-green-500/30 pt-12">
+      <h2 class="text-h2 text-dark-green-900 mb-4">What, How + Why</h2>
+      <p class="text-body text-dark-green-700 max-w-3xl">
+        Understanding the what, the how, and the why creates clarity at every
+        level of the brand. The <em>what</em> defines what we offer, the <em>how</em>
+        explains the unique way we deliver value, and the <em>why</em> captures
+        the deeper purpose that drives it. Together, they create a consistent
+        foundation for decision-making, communication, and customer experience
+        — ensuring the brand is not only understood, but felt and remembered.
+      </p>
+
+      <div class="grid grid-cols-1 gap-10 mt-12 md:grid-cols-3">
+        {
+          whatHowWhy.map((c) => (
+            <article>
+              <h3 class="text-h2 text-green-900 mb-4">{c.title}</h3>
+              <p class="text-body text-dark-green-700 whitespace-pre-line">{c.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- PERSONALITY + NAMING -->
+    <section class="border-t border-green-500/30 pt-12">
+      <h2 class="text-h2 text-dark-green-900 mb-4">Our Personality + Name Use</h2>
+      <p class="text-body text-dark-green-700 max-w-3xl">
+        Establishing a clear naming structure helps define both the clarity
+        and personality of the brand. AVA Golf should be used when introducing
+        the brand to provide immediate category recognition, while AVA
+        represents the more human, conversational identity of the platform once
+        context has been established. This distinction ensures consistency in
+        communication, strengthens brand personality, and creates flexibility
+        for the brand to evolve beyond golf in the future.
+      </p>
+
+      <div class="grid grid-cols-1 gap-10 mt-12 md:grid-cols-2">
+        <article>
+          <h3 class="text-h2 text-green-900 mb-4">AVA Golf</h3>
+          <p class="text-body text-dark-green-700">
+            AVA Golf is the primary brand name and should be used in all
+            external communications where the brand is introduced for the first
+            time. It provides immediate context for what the company does and
+            the category in which it operates, ensuring clarity for new
+            audiences encountering the brand.
+          </p>
+        </article>
+        <article>
+          <h3 class="text-h2 text-green-900 mb-4">AVA</h3>
+          <div class="text-body text-dark-green-700 space-y-4">
+            <p>
+              AVA represents the brand's personality, voice, and community.
+              Once the context of golf has been established through AVA Golf,
+              the brand can transition to simply AVA when speaking in the
+              first person. e.g.
+            </p>
+            <p class="text-yellow-500 italic">"At AVA, we believe…"</p>
+            <p>
+              This reflects a more human, conversational identity and reinforces
+              the idea of AVA as an intelligent companion guiding golfers
+              through their improvement journey.
+            </p>
+            <p>
+              Using AVA also allows the brand to exist beyond a single category.
+              While AVA Golf defines the current product and focus, the broader
+              AVA identity creates room for future expansion should the platform
+              evolve into other areas of performance intelligence beyond golf.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+</BrandLayout>

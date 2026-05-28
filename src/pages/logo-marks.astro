@@ -1,0 +1,633 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+
+const SVG = "/brand/logo-marks/svg";
+
+// Variants in the order Figma presents them, grouped by tier.
+const groups = [
+  {
+    eyebrow: "Main Logo",
+    body: "Our primary logo.",
+    variants: [
+      {
+        title: "Side by Side",
+        body: "This is our primary logo and is a combination mark. It should be used whenever possible and when it's important for the brand name to be present. It works best in horizontal formats. If there is limited horizontal space a stacked version of the logo is recommended to use.",
+        file: "avagolf-sxs-light.svg",
+        sizeClass: "h-16 md:h-20",
+      },
+    ],
+  },
+  {
+    eyebrow: "Secondary Logos",
+    body: "Fallbacks to the primary, with additional preferences.",
+    variants: [
+      {
+        title: "Icon",
+        body: "This is our icon. It can be used independently without a wordmark and should be used where people are either familiar with the brand, or we want to create curiosity and/or use it more graphically as a stylistic element.",
+        file: "avagolf-icon-light.svg",
+        sizeClass: "h-32 md:h-40",
+      },
+      {
+        title: "Stacked Logo",
+        body: "The stacked logo is a fallback to the primary logo for when we have limited horizontal space or if visually it is more appeasing to use this.",
+        file: "avagolf-stacked-logo-light.svg",
+        sizeClass: "h-40 md:h-48",
+      },
+    ],
+  },
+  {
+    eyebrow: "Tertiary Logos",
+    body: "Fallbacks to the primary, with additional preferences.",
+    variants: [
+      {
+        title: "Wordmark",
+        body: "This the primary wordmark, it should be used where we have extremely wide horizontal spaces and want to give impact of the brand name.",
+        file: "avagolf-wordmark-light.svg",
+        sizeClass: "h-8 md:h-10",
+      },
+      {
+        title: "Stacked Wordmark",
+        body: "This is the secondary wordmark, to be used as a fallback to the primary where there is less horizontal space but where the primary objective is still solely on the brand name.",
+        file: "avagolf-stacked-wordmark-light.svg",
+        sizeClass: "h-20 md:h-24",
+      },
+      {
+        title: "Small Stacked Logo",
+        body: "This is a variation of the stacked logo designed as as fallback to it where there is even less horizontal space. It should only be used if all other logos in the family do not work well.",
+        file: "avagolf-stacked-logo-small-light.svg",
+        sizeClass: "h-24 md:h-28",
+      },
+    ],
+  },
+];
+
+const donts = [
+  {
+    label: "DO NOT remove elements of the logos.",
+    file: "avagolf-sxs-black.svg",
+    style: "clip-path: inset(0 35% 0 0);",
+  },
+  {
+    label: "DO NOT change the proportions of logos.",
+    file: "avagolf-sxs-black.svg",
+    style: "transform: scaleY(1.6);",
+  },
+  {
+    label: "DO NOT distort, stretch, skew, warp or rotate the logos.",
+    file: "avagolf-sxs-black.svg",
+    style: "transform: skewX(-18deg);",
+  },
+  {
+    label: "DO NOT rearrange the logos in lock-ups that do not exist.",
+    file: "avagolf-stacked-logo-black.svg",
+    style: "transform: scaleX(-1);",
+  },
+  {
+    label: "DO NOT stylize the logo in any way such as adding strokes, glows and shadows etc.",
+    file: "avagolf-sxs-black.svg",
+    style: "filter: drop-shadow(0 0 8px rgba(23, 222, 183, 0.9));",
+  },
+  {
+    label: "DO NOT change the size of elements in the logos.",
+    file: "avagolf-sxs-black.svg",
+    style: "transform: scale(1.2); transform-origin: left center;",
+  },
+  {
+    label: "DO NOT use 'AVA' independently.",
+    file: "avagolf-sxs-black.svg",
+    style: "clip-path: inset(0 65% 0 0); transform: scale(1.3); transform-origin: left center;",
+  },
+  {
+    label: "DO NOT stylize the logo in any way such as adding strokes, glows and shadows etc.",
+    file: "avagolf-sxs-black.svg",
+    style: "filter: drop-shadow(2px 2px 0 #ffe708) drop-shadow(-2px -2px 0 #ff4a4a);",
+  },
+  {
+    label: "DO NOT outline the logos.",
+    file: "avagolf-sxs-black.svg",
+    style: "opacity: 0.001; filter: drop-shadow(1px 0 0 #16382e) drop-shadow(-1px 0 0 #16382e) drop-shadow(0 1px 0 #16382e) drop-shadow(0 -1px 0 #16382e);",
+  },
+  {
+    label: "DO NOT use colors that have not been approved or create poor contrast.",
+    file: "avagolf-sxs-light.svg",
+    style: "filter: hue-rotate(180deg) saturate(2.5);",
+  },
+  {
+    label: "DO NOT exceed the clearspace guidelines.",
+    file: "avagolf-sxs-black.svg",
+    style: "",
+    extraTouching: true,
+  },
+  {
+    label: "DO NOT use low resolution versions of the logo.",
+    file: "avagolf-sxs-black.svg",
+    style: "filter: blur(1.5px) contrast(0.8); image-rendering: pixelated;",
+  },
+];
+---
+
+<BrandLayout
+  slug="logo-marks"
+  eyebrow="Core Identity"
+  title="Logo Marks"
+>
+  <div class="mx-auto max-w-6xl space-y-16">
+    <!-- OUR LOGOS INTRO -->
+    <section class="max-w-2xl">
+      <h2 class="text-h2 text-green-900 mb-4">Our Logos</h2>
+      <p class="text-body text-green-900">
+        Our logos are the most recognizable symbol of the brand, serving as a
+        visual anchor that creates familiarity, builds trust, and ensures
+        consistent recognition across every touchpoint. We have a family of
+        different lock-ups that are best suited for different applications. This
+        outlines how best to use them.
+      </p>
+    </section>
+
+    <!-- LOGO FAMILY -->
+    <section
+      class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr] md:items-start"
+    >
+      <div>
+        <h2 class="text-h2 text-green-900 mb-3">Logo Family</h2>
+        <p class="text-body text-green-900">
+          Our logo family is made up of 6 different lock-ups. These consist of
+          combination marks, wordmarks and an icon.
+        </p>
+      </div>
+      <div
+        class="bg-dark-green-700 flex aspect-[16/9] w-full flex-col items-center justify-center gap-6 rounded-lg p-8 md:gap-8 md:p-12"
+      >
+        <img
+          src={`${SVG}/avagolf-sxs-light.svg`}
+          alt="Side by Side logo — primary"
+          class="h-12 w-auto md:h-16"
+          loading="lazy"
+        />
+        <div class="flex w-full items-center justify-around gap-8">
+          <img
+            src={`${SVG}/avagolf-icon-light.svg`}
+            alt="Icon"
+            class="h-12 w-auto md:h-16"
+            loading="lazy"
+          />
+          <img
+            src={`${SVG}/avagolf-stacked-logo-light.svg`}
+            alt="Stacked Logo"
+            class="h-14 w-auto md:h-20"
+            loading="lazy"
+          />
+        </div>
+        <div class="flex w-full items-center justify-around gap-6">
+          <img
+            src={`${SVG}/avagolf-wordmark-light.svg`}
+            alt="Wordmark"
+            class="h-3 w-auto md:h-4"
+            loading="lazy"
+          />
+          <img
+            src={`${SVG}/avagolf-stacked-wordmark-light.svg`}
+            alt="Stacked Wordmark"
+            class="h-6 w-auto md:h-8"
+            loading="lazy"
+          />
+          <img
+            src={`${SVG}/avagolf-stacked-logo-small-light.svg`}
+            alt="Small Stacked Logo"
+            class="h-8 w-auto md:h-10"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- VARIANTS GROUPED BY TIER -->
+    {
+      groups.map((group) => (
+        <>
+          <section class="border-t border-green-300/40 pt-12">
+            <h2 class="text-h2 text-green-900 mb-3">{group.eyebrow}</h2>
+            <p class="text-body text-green-900">{group.body}</p>
+          </section>
+          {group.variants.map((v) => (
+            <section class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr] md:items-start">
+              <div>
+                <h3 class="text-h2 text-green-900 mb-3">{v.title}</h3>
+                <p class="text-body text-green-900">{v.body}</p>
+              </div>
+              <div class="bg-dark-green-700 flex aspect-[16/9] w-full items-center justify-center rounded-lg p-8">
+                <img
+                  src={`${SVG}/${v.file}`}
+                  alt={`${v.title} mark`}
+                  class:list={[v.sizeClass, "w-auto"]}
+                  loading="lazy"
+                />
+              </div>
+            </section>
+          ))}
+        </>
+      ))
+    }
+
+    <!-- COLOR + BACKGROUND USE INTRO -->
+    <section class="border-t border-green-300/40 pt-12">
+      <h2 class="text-h2 text-green-900 mb-3">Color + Background Use</h2>
+      <p class="text-body text-green-900 max-w-2xl">
+        We have variations of each logo based on its environment, so that the
+        logo always looks its best and maintains good contrast for full impact.
+      </p>
+    </section>
+
+    <!-- DARK + IMAGERY -->
+    <section class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr] md:items-start">
+      <div>
+        <h3 class="text-h2 text-green-900 mb-3">Dark + Imagery</h3>
+        <p class="text-body text-green-900">
+          These light variations of the logo are best used on dark backgrounds
+          and when required for use over imagery or video. Wordmarks use the
+          white mono versions.
+        </p>
+      </div>
+      <div class="grid aspect-[16/9] w-full grid-cols-2 gap-4">
+        <div
+          class="relative flex flex-col items-center justify-around overflow-hidden rounded-lg p-6"
+          style="background: radial-gradient(circle at 70% 30%, #225142 0%, #070e0c 80%);"
+        >
+          <img
+            src={`${SVG}/avagolf-sxs-white.svg`}
+            alt="White side-by-side on dark"
+            class="h-6 w-auto md:h-7"
+            loading="lazy"
+          />
+          <div class="flex w-full items-center justify-around">
+            <img
+              src={`${SVG}/avagolf-icon-white.svg`}
+              alt="White icon"
+              class="h-8 w-auto md:h-10"
+              loading="lazy"
+            />
+            <img
+              src={`${SVG}/avagolf-stacked-logo-white.svg`}
+              alt="White stacked logo"
+              class="h-10 w-auto md:h-12"
+              loading="lazy"
+            />
+            <img
+              src={`${SVG}/avagolf-stacked-logo-small-white.svg`}
+              alt="White small stacked logo"
+              class="h-6 w-auto md:h-8"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <div
+          class="relative flex flex-col items-center justify-around overflow-hidden rounded-lg p-6"
+          style="background: linear-gradient(180deg, #1a4d2e 0%, #2d6b3c 40%, #4a8c3a 100%);"
+        >
+          <div
+            class="pointer-events-none absolute inset-0 opacity-40"
+            style="background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 40%);"
+          >
+          </div>
+          <img
+            src={`${SVG}/avagolf-sxs-white.svg`}
+            alt="White side-by-side on photo"
+            class="relative h-6 w-auto md:h-7"
+            loading="lazy"
+          />
+          <div class="relative flex w-full items-center justify-around">
+            <img
+              src={`${SVG}/avagolf-icon-white.svg`}
+              alt="White icon on photo"
+              class="h-8 w-auto md:h-10"
+              loading="lazy"
+            />
+            <img
+              src={`${SVG}/avagolf-stacked-logo-white.svg`}
+              alt="White stacked logo on photo"
+              class="h-10 w-auto md:h-12"
+              loading="lazy"
+            />
+            <img
+              src={`${SVG}/avagolf-stacked-logo-small-white.svg`}
+              alt="White small stacked logo on photo"
+              class="h-6 w-auto md:h-8"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MID -->
+    <section class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr] md:items-start">
+      <div>
+        <h3 class="text-h2 text-green-900 mb-3">Mid</h3>
+        <p class="text-body text-green-900">
+          These are fallbacks to the dark + imagery backgrounds, for use when
+          the background is close to the green used. The green in the icon is
+          switched out for a darker green for contrast. Wordmarks use the white
+          mono versions.
+        </p>
+      </div>
+      <div class="grid aspect-[16/9] w-full grid-cols-2 gap-4">
+        <div class="bg-green-500 flex flex-col items-center justify-around rounded-lg p-6">
+          <img
+            src={`${SVG}/avagolf-sxs-mid.svg`}
+            alt="Mid mark on green-500"
+            class="h-6 w-auto md:h-7"
+            loading="lazy"
+          />
+          <div class="flex w-full items-center justify-around">
+            <img
+              src={`${SVG}/avagolf-icon-mid.svg`}
+              alt="Mid icon"
+              class="h-8 w-auto md:h-10"
+              loading="lazy"
+            />
+            <img
+              src={`${SVG}/avagolf-stacked-logo-mid.svg`}
+              alt="Mid stacked logo"
+              class="h-10 w-auto md:h-12"
+              loading="lazy"
+            />
+            <img
+              src={`${SVG}/avagolf-stacked-logo-small-mid.svg`}
+              alt="Mid small stacked logo"
+              class="h-6 w-auto md:h-8"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <div class="bg-green-700 flex flex-col items-center justify-around rounded-lg p-6">
+          <img
+            src={`${SVG}/avagolf-sxs-mid.svg`}
+            alt="Mid mark on green-700"
+            class="h-6 w-auto md:h-7"
+            loading="lazy"
+          />
+          <div class="flex w-full items-center justify-around">
+            <img
+              src={`${SVG}/avagolf-icon-mid.svg`}
+              alt="Mid icon"
+              class="h-8 w-auto md:h-10"
+              loading="lazy"
+            />
+            <img
+              src={`${SVG}/avagolf-stacked-logo-mid.svg`}
+              alt="Mid stacked logo"
+              class="h-10 w-auto md:h-12"
+              loading="lazy"
+            />
+            <img
+              src={`${SVG}/avagolf-stacked-logo-small-mid.svg`}
+              alt="Mid small stacked logo"
+              class="h-6 w-auto md:h-8"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIGHT + BRIGHT -->
+    <section class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr] md:items-start">
+      <div>
+        <h3 class="text-h2 text-green-900 mb-3">Light + Bright</h3>
+        <p class="text-body text-green-900">
+          These dark variations of the logo are best used on light and bright
+          backgrounds, they should not be used over imagery or video and should
+          always be as a secondary option fallback. Wordmarks use the white dark
+          versions.
+        </p>
+      </div>
+      <div
+        class="bg-yellow-500 flex aspect-[16/6] w-full flex-col items-center justify-around rounded-lg p-6"
+      >
+        <img
+          src={`${SVG}/avagolf-sxs-dark.svg`}
+          alt="Dark mark on yellow"
+          class="h-6 w-auto md:h-7"
+          loading="lazy"
+        />
+        <div class="flex w-full items-center justify-around">
+          <img
+            src={`${SVG}/avagolf-icon-dark.svg`}
+            alt="Dark icon"
+            class="h-8 w-auto md:h-10"
+            loading="lazy"
+          />
+          <img
+            src={`${SVG}/avagolf-stacked-logo-dark.svg`}
+            alt="Dark stacked logo"
+            class="h-10 w-auto md:h-12"
+            loading="lazy"
+          />
+          <img
+            src={`${SVG}/avagolf-stacked-logo-small-dark.svg`}
+            alt="Dark small stacked logo"
+            class="h-6 w-auto md:h-8"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- MONO -->
+    <section class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr] md:items-start">
+      <div>
+        <h3 class="text-h2 text-green-900 mb-3">Mono</h3>
+        <p class="text-body text-green-900">
+          These are for when color is not available or the logo needs to be
+          colored to work with a partner's brand.
+        </p>
+      </div>
+      <div class="grid aspect-[16/6] w-full grid-cols-2 gap-4">
+        <div class="bg-white flex flex-col items-center justify-around rounded-lg p-6">
+          <img
+            src={`${SVG}/avagolf-sxs-black.svg`}
+            alt="Black mono on white"
+            class="h-6 w-auto md:h-7"
+            loading="lazy"
+          />
+          <div class="flex w-full items-center justify-around">
+            <img
+              src={`${SVG}/avagolf-icon-black.svg`}
+              alt="Black icon"
+              class="h-8 w-auto md:h-10"
+              loading="lazy"
+            />
+            <img
+              src={`${SVG}/avagolf-stacked-logo-black.svg`}
+              alt="Black stacked logo"
+              class="h-10 w-auto md:h-12"
+              loading="lazy"
+            />
+            <img
+              src={`${SVG}/avagolf-stacked-logo-small-black.svg`}
+              alt="Black small stacked logo"
+              class="h-6 w-auto md:h-8"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <div class="bg-dark-green-900 flex flex-col items-center justify-around rounded-lg p-6">
+          <img
+            src={`${SVG}/avagolf-sxs-white.svg`}
+            alt="White mono on black"
+            class="h-6 w-auto md:h-7"
+            loading="lazy"
+          />
+          <div class="flex w-full items-center justify-around">
+            <img
+              src={`${SVG}/avagolf-icon-white.svg`}
+              alt="White icon on black"
+              class="h-8 w-auto md:h-10"
+              loading="lazy"
+            />
+            <img
+              src={`${SVG}/avagolf-stacked-logo-white.svg`}
+              alt="White stacked logo on black"
+              class="h-10 w-auto md:h-12"
+              loading="lazy"
+            />
+            <img
+              src={`${SVG}/avagolf-stacked-logo-small-white.svg`}
+              alt="White small stacked logo on black"
+              class="h-6 w-auto md:h-8"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLEARSPACE -->
+    <section
+      class="grid grid-cols-1 gap-8 border-t border-green-300/40 pt-12 md:grid-cols-[1fr_2fr] md:items-start"
+    >
+      <div>
+        <h2 class="text-h2 text-green-900 mb-3">Clearspace</h2>
+        <p class="text-body text-green-900">
+          Like us, logos need room to breathe. We have recommended minimum
+          clearspaces, but it's important to remember that more space is better,
+          up until the point where the logo feels lost. Find that balance.
+        </p>
+        <p class="text-body text-green-900 mt-4">
+          Minimum clearspace on the icon and combination marks is 50% of the
+          icon size.
+        </p>
+        <p class="text-body text-green-900 mt-4">
+          Minimum clearspace on wordmarks is 100% of the Y axis.
+        </p>
+        <p class="text-body text-green-900 mt-4">
+          Clearspace excludes the TM symbol for the purposes of boundries.
+        </p>
+      </div>
+      <div class="bg-grey-300 flex aspect-[16/9] w-full flex-col items-center justify-around gap-8 rounded-lg p-10 md:p-14">
+        <div class="relative">
+          <div
+            class="border-green-500 pointer-events-none absolute rounded-sm border"
+            style="inset: -22%;"
+          >
+          </div>
+          <img
+            src={`${SVG}/avagolf-sxs-dark.svg`}
+            alt="Side by Side with clearspace guides"
+            class="relative h-16 w-auto md:h-20"
+            loading="lazy"
+          />
+        </div>
+        <div class="relative">
+          <div
+            class="border-green-500 pointer-events-none absolute rounded-sm border"
+            style="inset: -100% 0;"
+          >
+          </div>
+          <img
+            src={`${SVG}/avagolf-wordmark-dark.svg`}
+            alt="Wordmark with clearspace guides"
+            class="relative h-6 w-auto md:h-8"
+            loading="lazy"
+          />
+          <span
+            class="text-code text-dark-green-700 absolute top-full mt-1 left-1/2 -translate-x-1/2"
+            >x</span
+          >
+          <span
+            class="text-code text-dark-green-700 absolute top-full mt-1 right-0"
+            >100% y</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- DON'TS -->
+    <section
+      class="grid grid-cols-1 gap-8 border-t border-green-300/40 pt-12 md:grid-cols-[1fr_2fr] md:items-start"
+    >
+      <div>
+        <h2 class="text-h2 text-green-900 mb-3">Logo Don'ts</h2>
+        <p class="text-body text-green-900">
+          We always want our brand to look best. Whilst we can't list every
+          single thing to not do, these are some common mistakes people make. If
+          you are ever unsure or think something doesn't look right, it probably
+          isn't. Always check with a brand ambassador the design team.
+        </p>
+      </div>
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+        {
+          donts.map((d) => (
+            <figure class="flex flex-col gap-3">
+              <div class="bg-grey-300 relative flex aspect-[7/5] items-center justify-center overflow-hidden rounded-lg p-6">
+                {d.extraTouching ? (
+                  <div class="flex items-center gap-1">
+                    <img
+                      src={`${SVG}/${d.file}`}
+                      alt=""
+                      class="h-5 w-auto md:h-6"
+                      loading="lazy"
+                    />
+                    <img
+                      src={`${SVG}/avagolf-icon-black.svg`}
+                      alt=""
+                      class="h-6 w-auto md:h-8"
+                      loading="lazy"
+                    />
+                  </div>
+                ) : (
+                  <img
+                    src={`${SVG}/${d.file}`}
+                    alt={d.label}
+                    class="h-6 w-auto md:h-8"
+                    style={d.style}
+                    loading="lazy"
+                  />
+                )}
+                <svg
+                  class="pointer-events-none absolute inset-0 h-full w-full"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <line
+                    x1="0"
+                    y1="0"
+                    x2="100"
+                    y2="100"
+                    stroke="#349683"
+                    stroke-width="0.5"
+                    vector-effect="non-scaling-stroke"
+                  />
+                </svg>
+              </div>
+              <figcaption class="text-body-mono text-green-900 text-xs leading-snug">
+                {d.label}
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</BrandLayout>

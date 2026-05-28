@@ -1,0 +1,34 @@
+---
+interface Props {
+  name: string;
+  hex: string;
+  cmyk?: string;
+  textClass?: string;
+  class?: string;
+  size?: "lg" | "md" | "sm";
+}
+
+const {
+  name,
+  hex,
+  cmyk,
+  textClass = "text-white",
+  class: className = "",
+  size = "md",
+} = Astro.props;
+
+const padding = size === "lg" ? "p-8" : size === "sm" ? "p-4" : "p-6";
+---
+
+<div
+  class:list={[
+    "relative flex flex-col justify-end rounded-md",
+    padding,
+    className,
+  ]}
+  style={`background-color: ${hex}`}
+>
+  <p class:list={["text-button", textClass]}>{name}</p>
+  <p class:list={["text-code mt-2", textClass]}>HEX: {hex.toUpperCase()}</p>
+  {cmyk && <p class:list={["text-code", textClass]}>CMYK: {cmyk}</p>}
+</div>

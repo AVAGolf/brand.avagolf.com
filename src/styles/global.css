@@ -1,0 +1,242 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+ * Fonts
+ * Google Sans Flex is a variable font (weight axis 100–1000).
+ * Construct Mono ships Regular only. DM Mono ships Regular + Medium.
+ * ------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Google Sans Flex";
+  src: url("/fonts/GoogleSansFlex.woff2") format("woff2-variations"),
+       url("/fonts/GoogleSansFlex.woff2") format("woff2");
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Construct Mono";
+  src: url("/fonts/ConstructMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Mono";
+  src: url("/fonts/DMMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Mono";
+  src: url("/fonts/DMMono-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------------------------------------------------------------------------
+ * Design tokens — mirrors Figma paint styles 1:1.
+ * Tailwind v4 generates utilities from these (bg-*, text-*, border-*, etc.).
+ * ------------------------------------------------------------------------- */
+
+@theme {
+  /* Brand colors — literal names matching Figma */
+  --color-white: #ffffff;
+  --color-grey-300: #f4f4f2;
+
+  --color-green-300: #95cbc1;
+  --color-green-500: #349683;
+  --color-green-700: #225142;
+  --color-green-900: #16382e;
+
+  --color-dark-green-300: #132a23;
+  --color-dark-green-500: #10211c;
+  --color-dark-green-700: #0b1c16;
+  --color-dark-green-900: #070e0c;
+
+  --color-yellow-300: #ffff4a;
+  --color-yellow-500: #ffe708;
+
+  --color-bright-green-500: #17deb7;
+
+  /* Font families */
+  --font-sans: "Google Sans Flex", "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Google Sans Flex", "Inter", system-ui, sans-serif;
+  --font-stat: "Construct Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Drop shadow from Figma (y:10, blur:25, color: dark-green-900) */
+  --shadow-drop: 0 10px 25px 0 rgba(7, 14, 12, 1);
+
+  /* Brand gradients */
+  --gradient-green-fade: linear-gradient(90deg, #349683 0%, #16382e 100%);
+  --gradient-dark-green-fade: linear-gradient(90deg, #16382e 0%, #070e0c 100%);
+  --gradient-yellow-fade: linear-gradient(90deg, #ffff4a 0%, #ffe708 100%);
+}
+
+/* ---------------------------------------------------------------------------
+ * Typography utilities
+ * Each class bundles family + size + line-height + weight + tracking + case
+ * exactly as defined in the Figma typography frame. Apply to any element:
+ *   <h1 class="text-display">…</h1>
+ *   <p class="text-body">…</p>
+ * ------------------------------------------------------------------------- */
+
+@utility text-display {
+  font-family: var(--font-display);
+  font-size: 64px;
+  line-height: 56px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+@utility text-h1 {
+  font-family: var(--font-display);
+  font-size: 48px;
+  line-height: 42px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+@utility text-h2 {
+  font-family: var(--font-display);
+  font-size: 36px;
+  line-height: 32px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+@utility text-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 22px;
+  line-height: 22px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+@utility text-body {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 400;
+}
+
+@utility text-body-strong {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 600;
+}
+
+@utility text-label {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+@utility text-button {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+@utility text-nav {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@utility text-code {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+@utility text-body-mono {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 28px;
+  font-weight: 400;
+}
+
+@utility text-footer-link {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+@utility text-micro {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@utility text-stat {
+  font-family: var(--font-stat);
+  font-size: 64px;
+  line-height: 56px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+/* Gradient backgrounds (Figma paint styles) */
+@utility bg-green-fade {
+  background-image: var(--gradient-green-fade);
+}
+@utility bg-dark-green-fade {
+  background-image: var(--gradient-dark-green-fade);
+}
+@utility bg-yellow-fade {
+  background-image: var(--gradient-yellow-fade);
+}
+
+/* ---------------------------------------------------------------------------
+ * Base layer — page defaults
+ * ------------------------------------------------------------------------- */
+
+@layer base {
+  html {
+    background-color: var(--color-dark-green-900);
+    color: var(--color-white);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background-color: var(--color-yellow-500);
+    color: var(--color-dark-green-900);
+  }
+}

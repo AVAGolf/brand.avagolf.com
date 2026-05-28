@@ -1,0 +1,61 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+
+const sections = [
+  {
+    title: "Thumbnails",
+    body: "Editorial and article thumbnails. Use the wordmark in the corner and keep typography uppercase and impactful.",
+    img: "/brand/application/thumbnails.png",
+    aspect: "aspect-[16/9]",
+  },
+  {
+    title: "Social Media",
+    body: "Story, feed, and reels treatments. Lead with the wordmark, keep composition strong, and lean into brand color blocking.",
+    img: "/brand/application/social.png",
+    aspect: "aspect-square",
+  },
+  {
+    title: "POS",
+    body: "Point-of-sale executions used at retail, simulator bays, and partnership activations.",
+    img: "/brand/application/pos.png",
+    aspect: "aspect-[16/9]",
+  },
+  {
+    title: "Merchandising",
+    body: "Soft goods and headwear. Embroidery should reproduce the wordmark or icon with high contrast — never both at once.",
+    img: "/brand/application/merch.png",
+    aspect: "aspect-[16/9]",
+  },
+];
+---
+
+<BrandLayout
+  slug="application"
+  eyebrow="Brand Elements"
+  title="Application"
+  subtitle="Brand Application — How the AVA Golf brand shows up across surfaces, from editorial to social to merchandise."
+>
+  <div class="mx-auto max-w-6xl space-y-16">
+    {
+      sections.map((s, i) => (
+        <section
+          class:list={[
+            "grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:items-start",
+            i > 0 && "border-t border-green-500/30 pt-12",
+          ]}
+        >
+          <div>
+            <h2 class="text-h2 text-dark-green-900 mb-4">{s.title}</h2>
+            <p class="text-body text-dark-green-700">{s.body}</p>
+          </div>
+          <img
+            src={s.img}
+            alt={`${s.title} application examples`}
+            class:list={["w-full rounded-lg object-cover", s.aspect]}
+            loading="lazy"
+          />
+        </section>
+      ))
+    }
+  </div>
+</BrandLayout>

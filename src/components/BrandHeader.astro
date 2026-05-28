@@ -1,0 +1,62 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
+  variant?: "default" | "hero";
+}
+
+const { eyebrow, title, subtitle, variant = "default" } = Astro.props;
+const isHero = variant === "hero";
+---
+
+<header
+  class:list={[
+    "bg-dark-green-900 relative overflow-hidden border-b border-dark-green-300",
+    isHero ? "py-28" : "py-16",
+  ]}
+>
+  {
+    isHero && (
+      <img
+        src="/brand/assets/hero-noise-green.jpg"
+        alt=""
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-90"
+      />
+    )
+  }
+
+  <div class="relative mx-auto max-w-5xl px-12 text-center">
+    {
+      isHero ? (
+        <img
+          src="/avagolf-sxs-all-white.svg"
+          alt="AVA Golf"
+          class="mx-auto mb-10 h-9 w-auto"
+        />
+      ) : (
+        <p class="text-label text-green-300 mb-4">{eyebrow}</p>
+      )
+    }
+    <h1
+      class:list={["text-white", isHero ? "text-display whitespace-nowrap" : "text-h1"]}
+      style={isHero ? "font-size:96px;line-height:80px;" : undefined}
+    >
+      {title}
+    </h1>
+    {
+      subtitle && (
+        <p
+          class:list={[
+            "text-grey-300 mx-auto",
+            isHero ? "mt-8 max-w-3xl text-[22px] leading-snug" : "text-body mt-6 max-w-2xl",
+          ]}
+        >
+          {subtitle}
+        </p>
+      )
+    }
+    <slot name="cta" />
+  </div>
+</header>

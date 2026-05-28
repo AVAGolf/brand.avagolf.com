@@ -1,0 +1,87 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+
+const segments = [
+    {
+        title: "The Competitive Improver",
+        body: "Dedicated golfers who actively work to lower their handicap and measure progress. They take pride in their form and how they compare to their friends. They take lessons, analyze their rounds, and invest in tools that help them improve. They value structure and clarity in their development rather than scattered tips or guesswork.",
+    },
+    {
+        title: "The Tech-Enabled Golfer",
+        body: "Golfers who already use simulators, launch monitors, shot-tracking apps, or swing analysis tools. They appreciate data but often struggle to interpret it effectively. AVA becomes the system that connects and translates this information into clear actions.",
+    },
+    {
+        title: "The Self-Guided Athlete",
+        body: "Golfers who want to take ownership of their improvement. They practice independently, study their performance, and seek marginal gains through disciplined effort. AVA empowers them with a structured pathway that helps them to master their game with confidence.",
+    },
+];
+---
+
+<BrandLayout slug="audience" eyebrow="Communication" title="Audience">
+    <div class="mx-auto max-w-6xl space-y-12">
+        <section>
+            <h2 class="text-h2 text-dark-green-900 mb-4">Our Audience</h2>
+            <p class="text-body text-dark-green-700 max-w-3xl">
+                AVA is built for committed golfers who are actively invested in
+                improving their performance. They are data-aware, self-motivated
+                players who use technology, track progress, and value structured
+                guidance over guesswork. Whether through simulators, coaching,
+                or independent practice, they are constantly seeking smarter
+                ways to refine their game and gain a competitive edge.
+                Understanding our audience is essential because it shapes how we
+                communicate, design experiences, and deliver value — creating a
+                platform that feels intelligent, empowering, and accessible to
+                ambitious golfers without becoming intimidating or exclusive.
+            </p>
+        </section>
+
+        <section class="border-t border-green-500/30 pt-12">
+            <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
+                {
+                    segments.map((s) => (
+                        <article>
+                            <h3 class="text-h2 text-green-900 mb-4">
+                                {s.title}
+                            </h3>
+                            <p class="text-body text-dark-green-700">
+                                {s.body}
+                            </p>
+                        </article>
+                    ))
+                }
+            </div>
+        </section>
+
+        <section class="border-t border-green-500/30 pt-12">
+            <div class="grid grid-cols-1 gap-10 md:grid-cols-2">
+                <article>
+                    <h3 class="text-h2 text-green-900 mb-4">
+                        We Are <span
+                            class="underline decoration-green-900 decoration-4 underline-offset-4"
+                            >Not</span
+                        >
+                    </h3>
+                    <p class="text-body text-dark-green-700">
+                        We are not for beginners nor are we elitist.
+                    </p>
+                </article>
+                <article>
+                    <h3 class="text-h2 text-green-900 mb-4">Considerations</h3>
+                    <div class="text-body text-dark-green-700 space-y-4">
+                        <p>
+                            We should consider how we can direct beginners on a
+                            path to develop to be ready to use AVA (education,
+                            resources, etc.).
+                        </p>
+                        <p>
+                            Our current instructor base is 64% male and 33%
+                            female. While this is a male-dominated sport, we are
+                            represented by women and want to be as accessible as
+                            possible to women to support growing that space.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+</BrandLayout>

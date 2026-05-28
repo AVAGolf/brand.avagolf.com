@@ -1,0 +1,45 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+---
+
+<BrandLayout
+  slug="introduction"
+  eyebrow="AVA Golf"
+  title="Brand Guidelines"
+  subtitle="Guidelines on how to implement and use the AVA Golf brand."
+  variant="hero"
+>
+  <div slot="hero-cta" class="mt-10 flex flex-col items-center gap-4">
+    <a
+      href="#"
+      class="text-button hover:bg-yellow-300 hover:text-dark-green-900 inline-flex h-12 w-80 items-center justify-center rounded-full border-2 border-yellow-300 text-white transition-colors"
+      style="letter-spacing:0.1em;"
+    >
+      Download Brand Pack
+    </a>
+    <p class="text-micro text-bright-green-500">V1.0.0</p>
+  </div>
+
+  <div class="max-w-[750px]">
+    <p class="text-label text-green-500 mb-6 uppercase tracking-widest">
+      Introduction
+    </p>
+    <div class="text-body text-dark-green-700 space-y-5">
+      <p>
+        Our brand is built through consistency. However consistency should never
+        come at the expense of creativity. These guidelines are designed to
+        provide a clear framework for how the brand is expressed — not as a
+        rigid rulebook, but as a foundation for thoughtful and confident
+        application.
+      </p>
+      <p>
+        Within these pages you'll find the core elements of the brand identity,
+        from logo marks, color palette, and typography through to brand
+        elements, application, and communication principles. Together, they
+        define how the brand looks, feels, and speaks across every touchpoint,
+        ensuring every interaction remains cohesive, recognizable, and true to
+        the AVA Golf identity.
+      </p>
+    </div>
+  </div>
+</BrandLayout>

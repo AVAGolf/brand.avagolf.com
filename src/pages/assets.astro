@@ -1,0 +1,52 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+---
+
+<BrandLayout
+  slug="assets"
+  eyebrow="Brand Elements"
+  title="Assets"
+  subtitle="Brand Assets — Part of our brand identity is made up of brand elements, this include textures, graphics and icons."
+>
+  <div class="mx-auto max-w-6xl space-y-20">
+    <section>
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:items-start">
+        <div>
+          <h2 class="text-h2 text-dark-green-900 mb-4">Texture</h2>
+          <p class="text-body text-dark-green-700">
+            This texture and treatment can be used as a background to create
+            depth and personality to a page or piece of collateral.
+          </p>
+          <p class="text-code text-green-700 mt-6">Wave / Gradient</p>
+        </div>
+        <img
+          src="/brand/assets/texture.png"
+          alt="AVA Golf brand texture — green wave gradient"
+          class="aspect-[16/9] w-full rounded-lg object-cover"
+          loading="lazy"
+        />
+      </div>
+    </section>
+
+    <section>
+      <div class="grid grid-cols-1 gap-10 border-t border-green-500/30 pt-12 md:grid-cols-[1fr_2fr] md:items-start">
+        <div>
+          <h2 class="text-h2 text-dark-green-900 mb-4">Halftones</h2>
+          <p class="text-body text-dark-green-700">
+            Halftoning can be used to create an extra layer of graphical
+            detail. This can be used over the texture or on top of elements such
+            as photography etc. Ideally these should be kept to the primary
+            color palette.
+          </p>
+          <p class="text-code text-green-700 mt-6">Halftone dot pattern</p>
+        </div>
+        <img
+          src="/brand/assets/halftones.png"
+          alt="AVA Golf brand halftone pattern"
+          class="aspect-[16/9] w-full rounded-lg object-cover"
+          loading="lazy"
+        />
+      </div>
+    </section>
+  </div>
+</BrandLayout>
