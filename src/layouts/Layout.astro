@@ -4,24 +4,81 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  ogType?: "website" | "article";
 }
 
 const {
   title = "AVA Golf — Brand Guidelines",
-  description = "Brand identity, design tokens, and guidelines for AVA Golf.",
+  description = "Brand identity, design tokens, and guidelines for AVA Golf — logo marks, color palette, typography, and application principles.",
+  image = "/og-image.png",
+  ogType = "website",
 } = Astro.props;
+
+const site = Astro.site ?? new URL("https://brand.avagolf.com");
+const canonicalUrl = new URL(Astro.url.pathname, site).href;
+const socialImage = new URL(image, site).href;
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "AVA Golf",
+  alternateName: "AVA",
+  url: "https://avagolf.com",
+  logo: new URL("/avagolf-icon.svg", site).href,
+  image: socialImage,
+  description:
+    "AVA Golf delivers precision performance intelligence for golfers, translating complex performance data into clear, prioritized actions that drive measurable improvement.",
+  slogan: "Golf Intelligence",
+};
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Essentials -->
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
 
+    <!-- Primary SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="AVA Golf" />
+
+    <!-- Theme / color scheme -->
+    <meta name="theme-color" content="#070e0c" />
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- Icons / PWA -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="AVA Golf — Brand Guidelines" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="AVA Golf — Brand Guidelines" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content="AVA Golf — Brand Guidelines" />
+
+    <!-- Fonts: preload critical above-the-fold fonts -->
     <link
       rel="preload"
       href="/fonts/GoogleSansFlex.woff2"
@@ -44,7 +101,15 @@ const {
       crossorigin
     />
 
-    <title>{title}</title>
+    <!-- Page-specific head -->
+    <slot name="head" />
+
+    <!-- Structured data -->
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(organizationSchema)}
+    />
   </head>
   <body>
     <slot />
