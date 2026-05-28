@@ -22,7 +22,7 @@ const pageTitle = current ? `${current.title} — AVA Golf Brand Guide` : title;
 <Layout title={pageTitle} description={subtitle}>
   <BrandSidebar activeSlug={slug} />
 
-  <div class="ml-[260px] flex min-h-screen flex-col">
+  <div class="flex min-h-screen flex-col lg:ml-[260px]">
     <BrandHeader
       eyebrow={eyebrow}
       title={title}
@@ -32,7 +32,7 @@ const pageTitle = current ? `${current.title} — AVA Golf Brand Guide` : title;
       <slot name="hero-cta" slot="cta" />
     </BrandHeader>
 
-    <main class="bg-grey-300 flex-1 px-12 py-16">
+    <main class="bg-grey-300 flex-1 px-6 py-10 lg:px-12 lg:py-16">
       <slot />
     </main>
 

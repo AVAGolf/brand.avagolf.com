@@ -13,7 +13,7 @@ const isHero = variant === "hero";
 <header
   class:list={[
     "bg-dark-green-900 relative overflow-hidden border-b border-dark-green-300",
-    isHero ? "py-28" : "py-16",
+    isHero ? "py-16 lg:py-28" : "py-10 lg:py-16",
   ]}
 >
   <img
@@ -23,21 +23,21 @@ const isHero = variant === "hero";
     class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-90"
   />
 
-  <div class="relative mx-auto max-w-5xl px-12 text-center">
+  <div class="relative mx-auto max-w-5xl px-6 text-center lg:px-12">
     {
       isHero ? (
         <img
           src="/avagolf-sxs-all-white.svg"
           alt="AVA Golf"
-          class="mx-auto mb-10 h-9 w-auto"
+          class="mx-auto mb-8 h-8 w-auto lg:mb-10 lg:h-9"
         />
       ) : (
         <p class="text-label text-green-300 mb-4">{eyebrow}</p>
       )
     }
     <h1
-      class:list={["text-white", isHero ? "text-display whitespace-nowrap" : "text-h1"]}
-      style={isHero ? "font-size:96px;line-height:80px;" : undefined}
+      class:list={["text-white", isHero ? "font-display font-extrabold uppercase lg:whitespace-nowrap" : "text-h1"]}
+      style={isHero ? "font-size:clamp(40px,12vw,96px);line-height:0.85;" : undefined}
     >
       {title}
     </h1>
@@ -46,7 +46,7 @@ const isHero = variant === "hero";
         <p
           class:list={[
             "text-grey-300 mx-auto",
-            isHero ? "mt-8 max-w-3xl text-[22px] leading-snug" : "text-body mt-6 max-w-2xl",
+            isHero ? "mt-6 max-w-3xl text-[18px] leading-snug lg:mt-8 lg:text-[22px]" : "text-body mt-6 max-w-2xl",
           ]}
         >
           {subtitle}
