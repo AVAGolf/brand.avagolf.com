@@ -7,7 +7,7 @@ export interface Section {
 }
 
 export const sections: Section[] = [
-  { slug: "introduction", title: "Introduction", group: "Core Identity" },
+  { slug: "", title: "Introduction", group: "Core Identity" },
   { slug: "logo-marks", title: "Logo Marks", group: "Core Identity" },
   { slug: "colors", title: "Colors", group: "Core Identity" },
   { slug: "typography", title: "Typography", group: "Core Identity" },
