@@ -72,3 +72,5 @@ Allow: /
 # Default: allow everything else (catches unlisted AI crawlers)
 User-agent: *
 Allow: /
+
+Sitemap: https://brand.avagolf.com/sitemap-index.xml
