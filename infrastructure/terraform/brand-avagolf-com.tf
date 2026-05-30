@@ -39,31 +39,6 @@ resource "fastly_service_vcl" "brand_avagolf_com" {
     force_ssl = true
   }
 
-  snippet {
-    name     = "brand-pack-download-redirect"
-    type     = "recv"
-    priority = 90
-    content  = <<-VCL
-      if (req.url.path == "/download" || req.url.path == "/download/") {
-        error 618 "brand-pack-download";
-      }
-    VCL
-  }
-
-  snippet {
-    name     = "brand-pack-download-redirect-error"
-    type     = "error"
-    priority = 90
-    content  = <<-VCL
-      if (obj.status == 618 && obj.response == "brand-pack-download") {
-        set obj.status = 302;
-        set obj.http.Location = "https://assets.parone.io/avagolf/AVA_Golf_Brand_Pack.zip";
-        set obj.http.Cache-Control = "max-age=0";
-        return (deliver);
-      }
-    VCL
-  }
-
   header {
     action        = "set"
     destination   = "http.Access-Control-Allow-Origin"
