@@ -76,7 +76,7 @@ Brand concepts: **Personalized Progression** and **Mastery Without Guesswork**
 ## Download Brand Pack
 
 All logo files (SVG, PNG), color swatches, and font references are available via the brand guide:  
-[brand.avagolf.com/assets](https://brand.avagolf.com/assets)
+[Download Brand Pack](https://brand.avagolf.com/public/AVA_Golf_Brand_Pack.zip)
 
 ---
 
