@@ -34,7 +34,12 @@ const organizationSchema = {
     "https://www.youtube.com/@avagolfofficial",
     "https://facebook.com/avagolf",
     "https://www.tiktok.com/@ava.golf"
-  ]
+  ],
+  parentOrganization: {
+    "@type": "Organization",
+    name: "ParOne, Inc.",
+    url: "https://parone.com"
+  }
 };
 
 const webSiteSchema = {
@@ -43,10 +48,20 @@ const webSiteSchema = {
   name: "AVA Golf Brand Guidelines",
   url: "https://brand.avagolf.com",
   description: "Official brand guidelines for AVA Golf — covering logo marks, color palette, typography, brand elements, and communication principles.",
+  version: "1.0.0",
   publisher: {
     "@type": "Organization",
     name: "AVA Golf, Inc.",
     url: "https://avagolf.com"
+  },
+  mainEntity: {
+    "@type": "CreativeWork",
+    name: "AVA Golf Brand Identity System",
+    description: "Complete visual and communication identity for AVA Golf including logo marks, color palette, typography, brand elements, and voice guidelines.",
+    creator: {
+      "@type": "Organization",
+      name: "AVA Golf, Inc."
+    }
   }
 };
 ---
@@ -133,10 +148,10 @@ const webSiteSchema = {
       set:html={JSON.stringify(organizationSchema)}
     />
 
-    <script 
-      type="application/ld+json" 
-      is:inline 
-      set:html={JSON.stringify(webSiteSchema)} 
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(webSiteSchema)}
     />
   </head>
   <body>
