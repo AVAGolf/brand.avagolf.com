@@ -34,6 +34,23 @@ resource "fastly_service_vcl" "brand_avagolf_com" {
     port          = 80
   }
 
+  # Range-capable REST endpoint used only for large /files/*.zip downloads.
+  # The website endpoint (backend "s3") ignores Range requests, so segmented
+  # caching cannot work against it; the path-style REST endpoint does. Bucket
+  # name has dots, so virtual-hosted-style TLS would fail — path-style keeps the
+  # host as s3.<region>.amazonaws.com (snippet prepends the bucket to the path).
+  backend {
+    address           = "s3.us-east-2.amazonaws.com"
+    name              = "s3_rest"
+    override_host     = "s3.us-east-2.amazonaws.com"
+    ssl_cert_hostname = "s3.us-east-2.amazonaws.com"
+    ssl_sni_hostname  = "s3.us-east-2.amazonaws.com"
+    use_ssl           = true
+    weight            = 100
+    shield            = "iad-va-us"
+    port              = 443
+  }
+
   request_setting {
     name      = "force-ssl"
     force_ssl = true
@@ -58,6 +75,17 @@ resource "fastly_service_vcl" "brand_avagolf_com" {
 
   product_enablement {
     brotli_compression = true
+  }
+
+  # Large downloads (e.g. the brand pack zip) exceed Fastly's 20MB single-object
+  # cache limit and 503 without this. Segmented caching splits them into <=20MB
+  # blocks so they stay edge-cached (cheap egress) instead of refetching origin.
+  # Priority 10: must run in vcl_recv before FASTLY's return(lookup).
+  snippet {
+    name     = "enable-segmented-caching-large-files"
+    type     = "recv"
+    priority = 10
+    content  = "if (req.url.path ~ \"^/files/.*\\.zip$\") { set req.enable_segmented_caching = true; set req.backend = F_s3_rest; set req.url = \"/brand.avagolf.com\" req.url; }"
   }
 
   gzip {
