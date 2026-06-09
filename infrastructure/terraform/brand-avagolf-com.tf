@@ -36,13 +36,18 @@ resource "fastly_service_vcl" "brand_avagolf_com" {
 
   # Range-capable REST endpoint used only for large /files/*.zip downloads.
   # The website endpoint (backend "s3") ignores Range requests, so segmented
-  # caching cannot work against it; the path-style REST endpoint does. Bucket
-  # name has dots, so virtual-hosted-style TLS would fail — path-style keeps the
-  # host as s3.<region>.amazonaws.com (snippet prepends the bucket to the path).
+  # caching cannot work against it; the REST endpoint honours Range.
+  #
+  # Addressing: virtual-hosted via the domain-named bucket. The Host header is
+  # the bucket name (brand.avagolf.com), so S3 resolves the bucket from Host and
+  # the request path is the object key verbatim (no bucket prefix). The dotted
+  # bucket name would normally break virtual-hosted TLS, so SNI and cert
+  # validation are pinned to the regional endpoint while only the Host header
+  # carries the bucket — TLS terminates against s3.us-east-2 with a valid cert.
   backend {
     address           = "s3.us-east-2.amazonaws.com"
     name              = "s3_rest"
-    override_host     = "s3.us-east-2.amazonaws.com"
+    override_host     = "brand.avagolf.com"
     ssl_cert_hostname = "s3.us-east-2.amazonaws.com"
     ssl_sni_hostname  = "s3.us-east-2.amazonaws.com"
     use_ssl           = true
@@ -85,7 +90,7 @@ resource "fastly_service_vcl" "brand_avagolf_com" {
     name     = "enable-segmented-caching-large-files"
     type     = "recv"
     priority = 10
-    content  = "if (req.url.path ~ \"^/files/.*\\.zip$\") { set req.enable_segmented_caching = true; set req.backend = F_s3_rest; set req.url = \"/brand.avagolf.com\" req.url; }"
+    content  = "if (req.url.path ~ \"^/files/.*\\.zip$\") { set req.enable_segmented_caching = true; set req.backend = F_s3_rest; }"
   }
 
   gzip {
