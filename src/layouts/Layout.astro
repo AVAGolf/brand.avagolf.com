@@ -153,6 +153,16 @@ const webSiteSchema = {
       is:inline
       set:html={JSON.stringify(webSiteSchema)}
     />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X34R7TJNMF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-X34R7TJNMF');
+    </script>
   </head>
   <body>
     <slot />
