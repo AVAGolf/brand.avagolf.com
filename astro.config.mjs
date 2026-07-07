@@ -9,7 +9,6 @@ export const siteUrl = 'https://brand.avagolf.com';
 export default defineConfig({
   site: siteUrl,
   server: { port: 3000 },
-  trailingSlash: 'always',
   build: {
     format: 'directory',
   },

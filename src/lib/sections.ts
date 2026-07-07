@@ -13,6 +13,7 @@ export const sections: Section[] = [
   { slug: "typography", title: "Typography", group: "Core Identity" },
   { slug: "assets", title: "Assets", group: "Brand Elements" },
   { slug: "application", title: "Application", group: "Brand Elements" },
+  { slug: "video", title: "Video", group: "Brand Elements" },
   { slug: "overview", title: "Overview", group: "Communication" },
   { slug: "values", title: "Values", group: "Communication" },
   { slug: "pillars", title: "Pillars", group: "Communication" },

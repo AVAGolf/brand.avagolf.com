@@ -1,0 +1,74 @@
+---
+import { Code } from "astro:components";
+import BrandLayout from "../layouts/BrandLayout.astro";
+
+const embedCode = `<iframe width="560" height="315" src="https://www.youtube.com/embed/3ETmhzPHFP0?si=zxh0bX2d1MGc6vuK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+
+const embedCodeDisplay = `<iframe
+  src="https://www.youtube.com/embed/3ETmhzPHFP0?si=zxh0bX2d1MGc6vuK"
+  title="AVA Golf Explainer Video"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>`;
+---
+
+<BrandLayout
+  slug="video"
+  eyebrow="Brand Elements"
+  title="Video"
+  subtitle="The official AVA Golf Explainer video, for embedding wherever a video placement is needed."
+>
+  <div class="mx-auto max-w-4xl">
+    <div class="aspect-video overflow-hidden rounded-lg shadow-lg">
+      <iframe
+        class="h-full w-full"
+        src="https://www.youtube.com/embed/3ETmhzPHFP0?si=zxh0bX2d1MGc6vuK"
+        title="AVA Golf Explainer Video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <div class="mt-10">
+      <p class="text-label text-dark-green-700 mb-3 font-bold uppercase tracking-widest">
+        Embed Code
+      </p>
+      <div class="relative overflow-hidden rounded-lg">
+        <button
+          type="button"
+          data-copy-button
+          data-copy-text={embedCode}
+          class="text-code bg-dark-green-700 text-white hover:bg-dark-green-500 absolute top-3 right-3 z-10 rounded-md px-3 py-1.5 transition-colors"
+        >
+          Copy
+        </button>
+        <Code
+          code={embedCodeDisplay}
+          lang="html"
+          theme="github-dark"
+          class="text-code overflow-x-auto p-6 pr-24!"
+        />
+      </div>
+    </div>
+  </div>
+</BrandLayout>
+
+<script>
+  document.addEventListener("click", async (e) => {
+    const button = (e.target as HTMLElement).closest<HTMLButtonElement>(
+      "[data-copy-button]",
+    );
+    if (!button) return;
+
+    const text = button.dataset.copyText ?? "";
+    await navigator.clipboard.writeText(text);
+
+    const original = button.textContent;
+    button.textContent = "Copied!";
+    setTimeout(() => {
+      button.textContent = original;
+    }, 1500);
+  });
+</script>
