@@ -1,61 +1,83 @@
 ---
+import { Code } from "astro:components";
 import BrandLayout from "../layouts/BrandLayout.astro";
+import { siteUrl } from "../../astro.config.mjs";
 
-const sections = [
-  {
-    title: "Social Media",
-    body: "Story, feed, and reels treatments. Lead with the wordmark, keep composition strong, and lean into brand color blocking.",
-    img: "/brand/application/social.png",
-    aspect: "aspect-square",
-  },
-  {
-    title: "Press",
-    body: "Official AVA Golf application graphics for editorial, partner, and promotional use.",
-    img: "/brand/application/press.png",
-    aspect: "aspect-[16/9]",
-  },
-  {
-    title: "Experiential",
-    body: "Used at trade shows, simulator bays, industry events, and partner activations.",
-    img: "/brand/application/pos.png",
-    aspect: "aspect-[16/9]",
-  },
-  {
-    title: "Merchandising",
-    body: "Soft goods and headwear. Embroidery should reproduce the wordmark or icon with high contrast — never both at once.",
-    img: "/brand/application/merch.png",
-    aspect: "aspect-[16/9]",
-  },
-];
+const imgSrc = `${siteUrl}/brand/application/press.png`;
+const imgAlt = "AVA Golf Rounds screen";
+
+const embedCode = `<img src="${imgSrc}" alt="${imgAlt}" />`;
 ---
 
 <BrandLayout
   slug="application"
   eyebrow="Brand Elements"
-  title="Application"
-  subtitle="How the AVA Golf brand shows up across surfaces, from social to merchandise."
+  title="App Screenshots"
+  subtitle="How the AVA Golf brand comes to life on screen, straight from the product."
 >
-  <div class="mx-auto max-w-6xl space-y-16">
-    {
-      sections.map((s, i) => (
-        <section
-          class:list={[
-            "grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:items-start",
-            i > 0 && "border-t border-green-500/30 pt-12",
-          ]}
-        >
+  <div class="mx-auto max-w-6xl space-y-10">
+    <section>
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:items-start">
+        <div class="space-y-6">
           <div>
-            <h2 class="text-h2 text-dark-green-900 mb-4">{s.title}</h2>
-            <p class="text-body text-dark-green-700">{s.body}</p>
+            <h2 class="text-h2 text-dark-green-900 mb-4">Rounds</h2>
+            <p class="text-body text-dark-green-700">
+              Rounds is where the game lives — captured from shot tracking devices like Arccos, Garmin and direct imports.
+            </p>
           </div>
-          <img
-            src={s.img}
-            alt={`${s.title} application examples`}
-            class:list={["w-full rounded-lg object-cover", s.aspect]}
-            loading="lazy"
+          <div>
+            <p class="text-body text-dark-green-700">
+              The Ghost Mode feature allows players to review against themselves, with a visual representation of their performance on the course.
+            </p>
+          </div>
+        </div>
+        <img
+          src="/brand/application/rounds.png"
+          alt={imgAlt}
+          class="aspect-video w-full rounded-lg object-cover"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="mt-10">
+        <p class="text-label text-dark-green-700 mb-3 font-bold uppercase tracking-widest">
+          Copy Image Embed
+        </p>
+        <div class="relative overflow-hidden rounded-lg">
+          <button
+            type="button"
+            data-copy-button
+            data-copy-text={embedCode}
+            class="text-code bg-dark-green-700 text-white hover:bg-dark-green-500 absolute top-3 right-3 z-10 rounded-md px-3 py-1.5 transition-colors"
+          >
+            Copy
+          </button>
+          <Code
+            code={embedCode}
+            lang="html"
+            theme="github-dark"
+            class="text-code overflow-x-auto p-6 pr-24!"
           />
-        </section>
-      ))
-    }
+        </div>
+      </div>
+    </section>
   </div>
 </BrandLayout>
+
+<script>
+  document.addEventListener("click", async (e) => {
+    const button = (e.target as HTMLElement).closest<HTMLButtonElement>(
+      "[data-copy-button]",
+    );
+    if (!button) return;
+
+    const text = button.dataset.copyText ?? "";
+    await navigator.clipboard.writeText(text);
+
+    const original = button.textContent;
+    button.textContent = "Copied!";
+    setTimeout(() => {
+      button.textContent = original;
+    }, 1500);
+  });
+</script>
