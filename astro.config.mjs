@@ -21,12 +21,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
     build: {
       rollupOptions: {
-        // Astro statically imports this optional Rust compiler even though
-        // it's gated behind the (unused) experimental.rustCompiler flag —
-        // Rollup can't resolve it since it's never installed. Safe to
-        // externalize since that code path is never executed.
-        external: ["@astrojs/compiler-rs"],
-      },
+        external: ['fsevents'],
     },
   },
 });
