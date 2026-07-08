@@ -21,7 +21,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
     build: {
       rollupOptions: {
-        external: ['fsevents'],
+        external: ['fsevents', '@astrojs/compiler-rs'],
       },
     },
   },
