@@ -17,5 +17,12 @@
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.3.8",
     "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "css-tree": "3.2.1",
+    "csso": "5.0.5",
+    "esbuild": "0.27.7",
+    "svgo": "4.0.1",
+    "vite": "7.3.3"
   }
 }
