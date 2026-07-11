@@ -1,92 +1,380 @@
 ---
-const footerLinks = [
-  { label: "News", href: "https://news.avagolf.com" },
-  { label: "Partners", href: "https://avagolf.com/partners" },
-  { label: "Privacy Policy", href: "https://avagolf.com/privacy" },
-  { label: "Terms", href: "https://avagolf.com/terms" },
-];
+const copy = {
+    brandAltNavFooter: "AVA Golf",
 
-const socials = [
-  {
-    label: "Facebook",
-    href: "https://facebook.com/avagolf",
-    path: "M22 12.061C22 6.504 17.523 2 12 2S2 6.504 2 12.061c0 5.022 3.657 9.184 8.438 9.939v-7.03H7.898v-2.909h2.54V9.845c0-2.522 1.493-3.915 3.776-3.915 1.094 0 2.238.196 2.238.196v2.476h-1.26c-1.243 0-1.63.775-1.63 1.57v1.885h2.773l-.443 2.909h-2.33V22c4.78-.755 8.438-4.917 8.438-9.939Z",
-  },
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/avagolfofficial/",
-    path: "M12 2c-2.717 0-3.057.012-4.123.06-1.064.05-1.79.218-2.428.465a4.901 4.901 0 0 0-1.772 1.153A4.902 4.902 0 0 0 2.525 5.45c-.247.637-.415 1.363-.465 2.427C2.012 8.943 2 9.283 2 12s.012 3.057.06 4.123c.05 1.064.218 1.79.465 2.428a4.902 4.902 0 0 0 1.153 1.772 4.901 4.901 0 0 0 1.772 1.153c.637.247 1.363.415 2.427.465 1.067.048 1.407.06 4.124.06s3.057-.012 4.123-.06c1.064-.05 1.79-.218 2.428-.465a4.901 4.901 0 0 0 1.772-1.153 4.902 4.902 0 0 0 1.153-1.772c.247-.637.415-1.363.465-2.427.048-1.067.06-1.407.06-4.124s-.012-3.057-.06-4.123c-.05-1.064-.218-1.79-.465-2.428a4.902 4.902 0 0 0-1.153-1.772A4.901 4.901 0 0 0 18.55 2.525c-.637-.247-1.363-.415-2.427-.465C15.057 2.012 14.717 2 12 2Zm0 1.802c2.67 0 2.985.01 4.04.058.975.045 1.504.207 1.857.344.466.181.8.398 1.15.748.35.35.566.683.748 1.15.137.353.3.882.344 1.857.048 1.054.058 1.37.058 4.04 0 2.668-.01 2.985-.058 4.04-.045.975-.207 1.504-.344 1.857a3.097 3.097 0 0 1-.748 1.15c-.35.35-.683.566-1.15.748-.353.137-.882.3-1.857.344-1.054.048-1.37.058-4.04.058-2.67 0-2.985-.01-4.04-.058-.975-.045-1.504-.207-1.857-.344a3.098 3.098 0 0 1-1.15-.748 3.098 3.098 0 0 1-.748-1.15c-.137-.353-.3-.882-.344-1.857-.048-1.054-.058-1.37-.058-4.04 0-2.67.01-2.985.058-4.04.045-.975.207-1.504.344-1.857.181-.466.398-.8.748-1.15.35-.35.683-.566 1.15-.748.353-.137.882-.3 1.857-.344C9.015 3.811 9.331 3.802 12 3.802ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.243a3.243 3.243 0 1 1 0-6.486 3.243 3.243 0 0 1 0 6.486ZM18.406 6.794a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0Z",
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/company/avagolf/",
-    path: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124ZM7.119 20.452H3.554V9h3.565v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z",
-  },
-  {
-    label: "TikTok",
-    href: "https://www.tiktok.com/@ava.golf",
-    path: "M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.97a8.16 8.16 0 0 0 4.77 1.52V7.04a4.85 4.85 0 0 1-1.84-.35Z",
-  },
-  {
-    label: "YouTube",
-    href: "https://www.youtube.com/@avagolfofficial",
-    path: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814ZM9.545 15.568V8.432L15.818 12l-6.273 3.568Z",
-  },
-];
+    footerCopyrightSuffix: "AVA Golf™. All rights reserved.",
+    footerNavWaitlist: "Waitlist",
+    footerNavPrivacyPolicy: "Privacy Policy",
+    footerNavTerms: "Terms of Service",
+    footerNavAUP: "Acceptable Use",
+    footerNavHome: "Home",
+    footerNavAbout: "About",
+    footerNavNews: "News",
+    footerNavContact: "Contact",
+    footerNavFaq: "FAQ",
+    footerNavCoaches: "Coaches",
+    footerNavPricing: "Pricing",
+    footerNavTour: "Tour",
+    footerNavLogin: "Login",
+    footerNavPartnerships: "Partner",
+    footerNavDocs: "Docs",
+    footerNavBrand: "Brand",
+    footerColCompany: "Company",
+    footerColProduct: "Product",
+    footerColSupport: "Support",
+    footerColResources: "Resources",
+    footerNewsletterHeading: "Never miss an update",
+    footerNewsletterBody:
+        "Be the first to hear about new features, product updates, partnerships, and everything happening at AVA Golf.",
+    footerEmailPlaceholder: "Email Address",
+    footerNewsletterCta: "Sign Up",
+
+    socialAriaInstagram: "Instagram",
+    socialAriaFacebook: "Facebook",
+    socialAriaTikTok: "TikTok",
+    socialAriaYouTube: "YouTube",
+    socialAriaLinkedIn: "LinkedIn",
+};
+const year = new Date().getFullYear();
 ---
 
-<footer class="bg-dark-green-900 px-6 py-8 lg:px-12 lg:py-10">
-  <div
-    class="flex flex-col items-center gap-6 md:flex-row md:justify-between md:gap-8"
-  >
-    <div class="flex items-center gap-6">
-      <img
-        src="/avagolf-sxs-color.svg"
-        alt="AVA Golf"
-        class="h-9 w-auto"
-      />
-      <p class="text-micro text-green-300">
-        © 2026 AVA Golf. All rights reserved.
-      </p>
+<footer class="site-footer">
+    <!-- decorative backgrounds (Figma node 97:4809) -->
+    <img src="/footer-left-graphic.png" alt="" class="footer-bg-left" aria-hidden="true" />
+    <img src="/footer-halftone.png" alt="" class="footer-bg-halftone" aria-hidden="true" />
+
+    <!-- ── Main: left logo + right content ── -->
+    <div class="footer-main">
+        <div class="footer-logo-panel">
+            <a href="/" class="footer-logo-link">
+                <img
+                    src="/avagolf-stacked-logo-primary.svg"
+                    alt={copy.brandAltNavFooter}
+                    class="footer-logo"
+                    width="748"
+                    height="316"
+                />
+            </a>
+        </div>
+
+        <div class="footer-content">
+            <div class="footer-top">
+                <div class="footer-newsletter">
+                    <h2 class="footer-newsletter-heading">{copy.footerNewsletterHeading}</h2>
+                    <p class="footer-newsletter-body">{copy.footerNewsletterBody}</p>
+                </div>
+                <form class="footer-signup" action="https://avagolf.com/waitlist" method="get" data-track="footer_clicked" data-footer-item={copy.footerNewsletterCta} data-footer-destination="https://avagolf.com/waitlist">
+                    <input
+                        type="email"
+                        name="email"
+                        class="footer-signup-input"
+                        placeholder={copy.footerEmailPlaceholder}
+                        aria-label={copy.footerEmailPlaceholder}
+                    />
+                    <button type="submit" class="footer-signup-btn">{copy.footerNewsletterCta}</button>
+                </form>
+            </div>
+
+            <div class="footer-cols">
+                <nav class="footer-col" aria-label={copy.footerColCompany}>
+                    <span class="footer-col-title">{copy.footerColCompany}</span>
+                    <a href="https://avagolf.com/" data-track="footer_clicked" data-footer-item={copy.footerNavHome} data-footer-destination="https://avagolf.com/">{copy.footerNavHome}</a>
+                    <a href="https://avagolf.com/#about" data-track="footer_clicked" data-footer-item={copy.footerNavAbout} data-footer-destination="https://avagolf.com/#about">{copy.footerNavAbout}</a>
+                    <a href="https://news.avagolf.com" target="_blank" rel="noopener" data-track="footer_clicked" data-footer-item={copy.footerNavNews} data-footer-destination="https://news.avagolf.com">{copy.footerNavNews}</a>
+                    <a href="https://avagolf.com/partners" data-track="footer_clicked" data-footer-item={copy.footerNavPartnerships} data-footer-destination="https://avagolf.com/partners">{copy.footerNavPartnerships}</a>
+                </nav>
+                <nav class="footer-col" aria-label={copy.footerColProduct}>
+                    <span class="footer-col-title">{copy.footerColProduct}</span>
+                    <a href="https://app.avagolf.com" data-track="footer_clicked" data-footer-item={copy.footerNavLogin} data-footer-destination="https://app.avagolf.com">{copy.footerNavLogin}</a>
+                    <a href="https://avagolf.com/coaches" data-track="footer_clicked" data-footer-item={copy.footerNavCoaches} data-footer-destination="https://avagolf.com/coaches">{copy.footerNavCoaches}</a>
+                    <a href="https://avagolf.com/pricing" data-track="footer_clicked" data-footer-item={copy.footerNavPricing} data-footer-destination="https://avagolf.com/pricing">{copy.footerNavPricing}</a>
+                    <a href="https://app.avagolf.com/demo" data-track="footer_clicked" data-footer-item={copy.footerNavTour} data-footer-destination="https://app.avagolf.com/demo">{copy.footerNavTour}</a>
+                </nav>
+                <nav class="footer-col" aria-label={copy.footerColSupport}>
+                    <span class="footer-col-title">{copy.footerColSupport}</span>
+                    <a href="https://avagolf.com/support" data-track="footer_clicked" data-footer-item={copy.footerNavContact} data-footer-destination="https://avagolf.com/support">{copy.footerNavContact}</a>
+                    <a href="https://docs.avagolf.com" target="_blank" rel="noopener" data-track="footer_clicked" data-footer-item={copy.footerNavDocs} data-footer-destination="https://docs.avagolf.com">{copy.footerNavDocs}</a>
+                    <a href="https://avagolf.com/faq" data-track="footer_clicked" data-footer-item={copy.footerNavFaq} data-footer-destination="https://avagolf.com/faq">{copy.footerNavFaq}</a>
+                    <a href="https://avagolf.com/waitlist" data-track="footer_clicked" data-footer-item={copy.footerNavWaitlist} data-footer-destination="https://avagolf.com/waitlist">{copy.footerNavWaitlist}</a>
+                </nav>
+                <nav class="footer-col" aria-label={copy.footerColResources}>
+                    <span class="footer-col-title">{copy.footerColResources}</span>
+                    <a href="/" data-track="footer_clicked" data-footer-item={copy.footerNavBrand} data-footer-destination="/">{copy.footerNavBrand}</a>
+                    <a href="https://avagolf.com/aup" data-track="footer_clicked" data-footer-item={copy.footerNavAUP} data-footer-destination="https://avagolf.com/aup">{copy.footerNavAUP}</a>
+                    <a href="https://avagolf.com/privacy" data-track="footer_clicked" data-footer-item={copy.footerNavPrivacyPolicy} data-footer-destination="https://avagolf.com/privacy">{copy.footerNavPrivacyPolicy}</a>
+                    <a href="https://avagolf.com/terms" data-track="footer_clicked" data-footer-item={copy.footerNavTerms} data-footer-destination="https://avagolf.com/terms">{copy.footerNavTerms}</a>
+                </nav>
+            </div>
+        </div>
     </div>
 
-    <ul class="flex flex-wrap items-center gap-x-10 gap-y-3">
-      {
-        footerLinks.map((l) => (
-          <li>
-            <a
-              href={l.href}
-              class="text-footer-link text-grey-300 hover:text-white transition-colors"
-            >
-              {l.label}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <!-- ── Bottom bar: copyright · social · yellow corner ── -->
+    <div class="footer-bottom">
+        <p class="footer-copy">© {year} {copy.footerCopyrightSuffix}</p>
 
-    <ul class="flex items-center gap-6">
-      {
-        socials.map((s) => (
-          <li>
-            <a
-              href={s.href}
-              aria-label={s.label}
-              class="text-green-300 hover:text-white block transition-colors"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                width="22"
-                height="22"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d={s.path} />
-              </svg>
+        <div class="footer-social">
+            <a href="https://facebook.com/avagolf" class="social-link" aria-label={copy.socialAriaFacebook} target="_blank" rel="noopener" data-track="footer_clicked" data-footer-item={copy.socialAriaFacebook} data-footer-destination="https://facebook.com/avagolf">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             </a>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
+            <a href="https://instagram.com/avagolfofficial" class="social-link" aria-label={copy.socialAriaInstagram} target="_blank" rel="noopener" data-track="footer_clicked" data-footer-item={copy.socialAriaInstagram} data-footer-destination="https://instagram.com/avagolfofficial">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="https://linkedin.com/company/avagolf" class="social-link" aria-label={copy.socialAriaLinkedIn} target="_blank" rel="noopener" data-track="footer_clicked" data-footer-item={copy.socialAriaLinkedIn} data-footer-destination="https://linkedin.com/company/avagolf">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://tiktok.com/@ava.golf" class="social-link" aria-label={copy.socialAriaTikTok} target="_blank" rel="noopener" data-track="footer_clicked" data-footer-item={copy.socialAriaTikTok} data-footer-destination="https://tiktok.com/@ava.golf">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+            </a>
+            <a href="https://youtube.com/@avagolfofficial" class="social-link" aria-label={copy.socialAriaYouTube} target="_blank" rel="noopener" data-track="footer_clicked" data-footer-item={copy.socialAriaYouTube} data-footer-destination="https://youtube.com/@avagolfofficial">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+            </a>
+        </div>
+
+        <a href="/" class="footer-corner" aria-label={copy.brandAltNavFooter}>
+            <img src="/footer-corner-icon.svg" alt="" class="footer-corner-mark" width="97" height="52" />
+        </a>
+    </div>
 </footer>
+
+<style>
+    /* v2 footer — Figma node 97:4809. Full-bleed, left logo + right content, dark bottom bar w/ yellow corner */
+    .site-footer {
+        position: relative;
+        overflow: hidden;
+        background: var(--color-dark-green-700); /* #0B1C16 */
+        color: var(--color-white);
+    }
+
+    /* Decorative backgrounds (absolutely positioned, clipped by overflow:hidden) */
+    .footer-bg-left {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: clamp(300px, 34vw, 640px);
+        max-width: 50%;
+        height: auto;
+        opacity: 0.5;
+        pointer-events: none;
+        z-index: 0;
+    }
+    .footer-bg-halftone {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: clamp(220px, 24vw, 460px);
+        max-width: 45%;
+        height: auto;
+        opacity: 0.9;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* ── Main region ── */
+    .footer-main {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+        align-items: center;
+        padding: 4.5rem 5% 3.5rem;
+        max-width: 1920px;
+        margin: 0 auto;
+    }
+
+    /* Left: logo, bottom-left like Figma */
+    .footer-logo-panel {
+        display: flex;
+        align-items: flex-end;
+        padding: 1rem 0 1.5rem 1.5rem;
+    }
+    .footer-logo-link { display: block; line-height: 0; }
+    .footer-logo {
+        width: clamp(180px, 19vw, 300px);
+        height: auto;
+    }
+
+    /* Right: content */
+    .footer-content {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    /* Newsletter row */
+    .footer-top {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+        align-items: start;
+    }
+    .footer-newsletter-heading {
+        font-family: "Google Sans Flex", sans-serif;
+        font-weight: 600;
+        font-size: clamp(1.15rem, 1.4vw, 1.35rem);
+        line-height: 1.1;
+        text-transform: uppercase;
+        color: var(--color-white);
+        margin: 0 0 1rem;
+    }
+    .footer-newsletter-body {
+        font-family: "Google Sans Flex", sans-serif;
+        font-weight: 400;
+        font-size: 0.78rem;
+        line-height: 1.48;
+        color: color-mix(in srgb, var(--color-white) 90%, transparent);
+        margin: 0;
+        max-width: 44ch;
+    }
+    .footer-signup {
+        display: flex;
+        gap: 0.6rem;
+        align-items: center;
+    }
+    .footer-signup-input {
+        flex: 1;
+        min-width: 0;
+        font-family: "Google Sans Flex", sans-serif;
+        font-weight: 500;
+        font-size: 0.85rem;
+        color: var(--color-white);
+        background: transparent;
+        border: 1px solid var(--color-white);
+        border-radius: 100px;
+        padding: 0.8rem 1.6rem;
+        transition: border-color 0.2s;
+    }
+    .footer-signup-input::placeholder { color: color-mix(in srgb, var(--color-white) 80%, transparent); }
+    .footer-signup-input:focus {
+        outline: none;
+        border-color: var(--color-yellow-500);
+    }
+    .footer-signup-btn {
+        font-family: "Google Sans Flex", sans-serif;
+        font-weight: 600;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-dark-green-500); /* #10211C */
+        background: var(--color-yellow-500); /* #FFE708 */
+        border: none;
+        border-radius: 100px;
+        padding: 0.8rem 1.9rem;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background-color 0.2s;
+    }
+    .footer-signup-btn:hover { background: var(--color-yellow-300); }
+
+    /* Link columns */
+    .footer-cols {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 2rem;
+    }
+    .footer-col {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+    .footer-col-title {
+        font-family: "Google Sans Flex", sans-serif;
+        font-size: 0.62rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: color-mix(in srgb, var(--color-white) 40%, transparent);
+        margin-bottom: 1rem;
+    }
+    .footer-col a {
+        font-family: "Google Sans Flex", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 0.86rem;
+        font-weight: 400;
+        color: color-mix(in srgb, var(--color-white) 60%, transparent);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--color-white); }
+
+    /* ── Bottom bar ── */
+    .footer-bottom {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        background: var(--color-dark-green-900); /* #070E0C */
+        padding: 1.5rem 2.5rem;
+        padding-right: clamp(150px, 15vw, 260px); /* reserve space for yellow corner */
+        min-height: 110px;
+    }
+    .footer-copy {
+        font-family: "DM Mono", monospace;
+        font-size: 0.62rem;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-green-300); /* #95CBC1 */
+        margin: 0;
+    }
+    .footer-social {
+        display: flex;
+        gap: 1.6rem;
+        align-items: center;
+        margin-left: auto;
+    }
+    .social-link {
+        color: var(--color-white);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        transition: opacity 0.2s;
+    }
+    .social-link:hover { opacity: 0.7; }
+
+    /* Yellow angled corner, flush to bottom-right edge.
+       Sized independently of bar height so it never distorts. */
+    .footer-corner {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: clamp(140px, 14vw, 240px);
+        aspect-ratio: 229 / 135;
+        background: url("/footer-corner.svg") right bottom / 100% 100% no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    /* Both dims explicit + px margins: the source SVG sets width/height="100%"
+       (no intrinsic size, so height:auto collapses) and % padding/margin would
+       resolve against the bottom bar's width, not the corner. */
+    .footer-corner-mark {
+        width: clamp(46px, 4.6vw, 80px);
+        height: clamp(24px, 2.45vw, 43px);
+        object-fit: contain;
+        margin-right: clamp(28px, 2.9vw, 50px);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+        .footer-main { grid-template-columns: 1fr; gap: 2.5rem; padding: 3.5rem 1.75rem; }
+        .footer-logo-panel { padding: 0; justify-content: flex-start; }
+        .footer-bg-left { opacity: 0.3; }
+        .footer-cols { grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; }
+    }
+    @media (max-width: 768px) {
+        .footer-top { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+    @media (max-width: 600px) {
+        .footer-signup { flex-direction: column; align-items: stretch; }
+        .footer-bottom {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.25rem;
+            padding: 1.5rem;
+            min-height: 0;
+        }
+        .footer-social { margin: 0; }
+        .footer-corner { display: none; }
+    }
+</style>

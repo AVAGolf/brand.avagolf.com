@@ -1,0 +1,17 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 97 51.7002" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon">
+<path id="Vector" d="M0 51.7002H22.3524L51.8983 7.32622e-09H33.8374C31.167 7.32622e-09 28.6823 1.51029 27.2598 3.99903L0 51.7002Z" fill="url(#paint0_linear_0_14)"/>
+<path id="Vector_2" d="M24.3258 38.3885C29.6815 38.3885 34.0231 34.0728 34.0231 28.7491C34.0231 23.4255 29.6815 19.1098 24.3258 19.1098C18.9701 19.1098 14.6285 23.4255 14.6285 28.7491C14.6285 34.0728 18.9701 38.3885 24.3258 38.3885Z" fill="var(--fill-0, white)"/>
+<path id="Vector_3" d="M85.8151 51.7002H63.4627L33.9152 0H51.9761C54.6466 0 57.1312 1.51029 58.5537 3.99903L85.8151 51.7002Z" fill="var(--fill-0, #349683)"/>
+<g id="TradeMark">
+<path id="Vector_4" d="M88.1267 47.9568H89.3793V51.7002H90.2271V47.9568H91.4719V47.1646H88.1267V47.9568Z" fill="var(--fill-0, #16382E)"/>
+<path id="Vector_5" d="M95.9172 47.1646L94.563 50.5765H94.5408L93.177 47.1646H92.0974V51.7002H92.9277V49.2619L92.9023 48.4918H92.9245L94.2153 51.7002H94.8821L96.1744 48.4918H96.1935L96.1713 49.2619V51.7002H97V47.1646H95.9172Z" fill="var(--fill-0, #16382E)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_14" x1="25.95" y1="51.7002" x2="25.95" y2="7.32621e-09" gradientUnits="userSpaceOnUse">
+<stop stop-color="#359683"/>
+<stop offset="1" stop-color="#16382E"/>
+</linearGradient>
+</defs>
+</svg>
