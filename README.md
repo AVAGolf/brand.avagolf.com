@@ -76,20 +76,47 @@ Brand concepts: **Personalized Progression** and **Mastery Without Guesswork**
 ## Download Brand Pack
 
 All logo files (SVG, PNG), color swatches, and font references are available via the brand guide:  
-[Download Brand Pack](https://brand.avagolf.com/public/AVA_Golf_Brand_Pack.zip)
+[Download Brand Pack](https://brand.avagolf.com/AVA_Golf_Brand_Pack.zip)
 
 ---
 
 ## Tech Stack
 
-Built with [Astro](https://astro.build), deployed via GitHub Actions to Fastly/S3, served through Cloudflare.
+Built with [Astro](https://astro.build) (static output) + Tailwind CSS v4, deployed via GitHub Actions to S3, served through Fastly and Cloudflare.
 
 ```
 pnpm install     # Install dependencies
-pnpm dev         # Local dev at localhost:4321
+pnpm dev         # Local dev at localhost:3000
 pnpm build       # Build to ./dist/
 pnpm preview     # Preview build locally
 ```
+
+All dependencies live in `devDependencies` — this is a static site with no server runtime, so nothing here needs to ship to production; `astro build` just emits plain HTML/CSS/JS to `dist/`.
+
+---
+
+## Project Structure
+
+```
+src/
+├── components/    # Reusable UI: BrandFooter, BrandHeader, BrandSidebar,
+│                  # BrandPagination, ColorSwatch, CopyCodeBlock,
+│                  # LogoMarkSet, LogoBackgroundBox
+├── layouts/       # Layout.astro (HTML shell, SEO/OG/JSON-LD) and
+│                  # BrandLayout.astro (sidebar + header + pagination + footer)
+├── lib/           # sections.ts (nav/pagination ordering), colors.ts (color tokens)
+├── styles/        # global.css — Tailwind v4 theme + typography utilities
+└── pages/         # One .astro file per route, each wrapped in BrandLayout
+```
+
+**Conventions:**
+- Every page composes `BrandLayout`; page-specific content goes in the default slot.
+- Repeated content (color swatches, nav links, logo variants, etc.) is defined as a
+  data array in the page/component frontmatter and rendered with `.map()` — avoid
+  hand-writing near-identical markup blocks more than once.
+- Color hex values are defined once in `src/lib/colors.ts` and imported wherever
+  needed (`colors.astro`, `tokens.astro`) rather than re-typed.
+- Nav/pagination ordering is defined once in `src/lib/sections.ts`.
 
 ---
 
