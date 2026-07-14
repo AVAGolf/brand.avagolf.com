@@ -33,6 +33,11 @@
 - Parent company: ParOne, Inc.
 - Category: AI golf performance
  
+### Messaging
+- Tagline: Get Better. Faster.
+- Short description: AVA Golf is a golf intelligence system that unifies your performance data — from simulators, launch monitors, and on-course tracking — and turns it into personalized, video-led coaching from Top 100 instructors.
+- Brand pillars: Data with Direction, Personalized Progression, Mastery without Guesswork
+
 ### Logo
 - Primary logo: Side by Side combination mark (icon + wordmark, horizontal)
 - Secondary: Icon (standalone), Stacked Logo
