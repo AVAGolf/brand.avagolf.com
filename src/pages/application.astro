@@ -1,6 +1,6 @@
 ---
-import { Code } from "astro:components";
 import BrandLayout from "../layouts/BrandLayout.astro";
+import CopyCodeBlock from "../components/CopyCodeBlock.astro";
 import { siteUrl } from "../../astro.config.mjs";
 
 const imgSrc = `${siteUrl}/brand/application/rounds.webp`;
@@ -40,44 +40,8 @@ const embedCode = `<img src="${imgSrc}" alt="${imgAlt}" />`;
       </div>
 
       <div class="mt-10">
-        <p class="text-label text-dark-green-700 mb-3 font-bold uppercase tracking-widest">
-          Copy Image Embed
-        </p>
-        <div class="relative overflow-hidden rounded-lg">
-          <button
-            type="button"
-            data-copy-button
-            data-copy-text={embedCode}
-            class="text-code bg-dark-green-700 text-white hover:bg-dark-green-500 absolute top-3 right-3 z-10 rounded-md px-3 py-1.5 transition-colors"
-          >
-            Copy
-          </button>
-          <Code
-            code={embedCode}
-            lang="html"
-            theme="github-dark"
-            class="text-code overflow-x-auto p-6 pr-24!"
-          />
-        </div>
+        <CopyCodeBlock code={embedCode} label="Copy Image Embed" />
       </div>
     </section>
   </div>
 </BrandLayout>
-
-<script>
-  document.addEventListener("click", async (e) => {
-    const button = (e.target as HTMLElement).closest<HTMLButtonElement>(
-      "[data-copy-button]",
-    );
-    if (!button) return;
-
-    const text = button.dataset.copyText ?? "";
-    await navigator.clipboard.writeText(text);
-
-    const original = button.textContent;
-    button.textContent = "Copied!";
-    setTimeout(() => {
-      button.textContent = original;
-    }, 1500);
-  });
-</script>

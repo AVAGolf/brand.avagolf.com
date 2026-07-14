@@ -1,11 +1,15 @@
 ---
-import { Code } from "astro:components";
 import BrandLayout from "../layouts/BrandLayout.astro";
+import CopyCodeBlock from "../components/CopyCodeBlock.astro";
 
-const embedCode = `<iframe width="560" height="315" src="https://www.youtube.com/embed/ZN1NzcLFoNQ?si=zxh0bX2d1MGc6vuK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+const YOUTUBE_ID = "ZN1NzcLFoNQ";
+const YOUTUBE_SI = "W_4GB18q7tdxDOnC";
+const embedUrl = `https://www.youtube.com/embed/${YOUTUBE_ID}?si=${YOUTUBE_SI}`;
+
+const embedCode = `<iframe width="560" height="315" src="${embedUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
 
 const embedCodeDisplay = `<iframe
-  src="https://www.youtube.com/embed/ZN1NzcLFoNQ?si=zxh0bX2d1MGc6vuK"
+  src="${embedUrl}"
   title="AVA Golf Explainer Video"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   referrerpolicy="strict-origin-when-cross-origin"
@@ -23,7 +27,7 @@ const embedCodeDisplay = `<iframe
     <div class="aspect-video overflow-hidden rounded-lg shadow-lg">
       <iframe
         class="h-full w-full"
-        src="https://www.youtube.com/embed/ZN1NzcLFoNQ?si=W_4GB18q7tdxDOnC"
+        src={embedUrl}
         title="AVA Golf Explainer Video"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerpolicy="strict-origin-when-cross-origin"
@@ -32,43 +36,7 @@ const embedCodeDisplay = `<iframe
     </div>
 
     <div class="mt-10">
-      <p class="text-label text-dark-green-700 mb-3 font-bold uppercase tracking-widest">
-        Embed Code
-      </p>
-      <div class="relative overflow-hidden rounded-lg">
-        <button
-          type="button"
-          data-copy-button
-          data-copy-text={embedCode}
-          class="text-code bg-dark-green-700 text-white hover:bg-dark-green-500 absolute top-3 right-3 z-10 rounded-md px-3 py-1.5 transition-colors"
-        >
-          Copy
-        </button>
-        <Code
-          code={embedCodeDisplay}
-          lang="html"
-          theme="github-dark"
-          class="text-code overflow-x-auto p-6 pr-24!"
-        />
-      </div>
+      <CopyCodeBlock code={embedCode} displayCode={embedCodeDisplay} label="Embed Code" />
     </div>
   </div>
 </BrandLayout>
-
-<script>
-  document.addEventListener("click", async (e) => {
-    const button = (e.target as HTMLElement).closest<HTMLButtonElement>(
-      "[data-copy-button]",
-    );
-    if (!button) return;
-
-    const text = button.dataset.copyText ?? "";
-    await navigator.clipboard.writeText(text);
-
-    const original = button.textContent;
-    button.textContent = "Copied!";
-    setTimeout(() => {
-      button.textContent = original;
-    }, 1500);
-  });
-</script>

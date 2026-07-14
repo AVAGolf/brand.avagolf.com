@@ -1,0 +1,45 @@
+---
+const SVG = "/brand/logo-marks/svg";
+
+interface Mark {
+  file: string;
+  alt: string;
+}
+
+interface Props {
+  primary: Mark;
+  icon: Mark;
+  stacked: Mark;
+  stackedSmall: Mark;
+  relative?: boolean;
+}
+
+const { primary, icon, stacked, stackedSmall, relative = false } = Astro.props;
+---
+
+<img
+  src={`${SVG}/${primary.file}`}
+  alt={primary.alt}
+  class:list={[relative && "relative", "h-6 w-auto md:h-7"]}
+  loading="lazy"
+/>
+<div class:list={[relative && "relative", "flex w-full items-center justify-around"]}>
+  <img
+    src={`${SVG}/${icon.file}`}
+    alt={icon.alt}
+    class="h-8 w-auto md:h-10"
+    loading="lazy"
+  />
+  <img
+    src={`${SVG}/${stacked.file}`}
+    alt={stacked.alt}
+    class="h-10 w-auto md:h-12"
+    loading="lazy"
+  />
+  <img
+    src={`${SVG}/${stackedSmall.file}`}
+    alt={stackedSmall.alt}
+    class="h-6 w-auto md:h-8"
+    loading="lazy"
+  />
+</div>

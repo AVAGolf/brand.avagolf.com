@@ -1,21 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-const brandColors = [
-  { name: "green-300", hex: "#95CBC1" },
-  { name: "green-500", hex: "#349683" },
-  { name: "green-700", hex: "#225142" },
-  { name: "green-900", hex: "#16382E" },
-  { name: "dark-green-300", hex: "#132A23" },
-  { name: "dark-green-500", hex: "#10211C" },
-  { name: "dark-green-700", hex: "#0B1C16" },
-  { name: "dark-green-900", hex: "#070E0C" },
-  { name: "yellow-300", hex: "#FFFF4A" },
-  { name: "yellow-500", hex: "#FFE708" },
-  { name: "bright-green-500", hex: "#17DEB7" },
-  { name: "white", hex: "#FFFFFF" },
-  { name: "grey-300", hex: "#F4F4F2" },
-];
+import { allColors } from "../lib/colors";
 
 const typeRamp = [
   { class: "text-display", label: "Display — 64 / 56 ExtraBold Upper" },
@@ -52,7 +37,7 @@ const typeRamp = [
       <h2 class="text-h2 text-yellow-500 mb-8">Color</h2>
       <div class="grid grid-cols-2 gap-2 md:grid-cols-4">
         {
-          brandColors.map((c) => (
+          allColors.map((c) => (
             <div class="overflow-hidden rounded-md border border-dark-green-300">
               <div
                 class="aspect-[5/3] w-full"

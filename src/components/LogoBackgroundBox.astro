@@ -1,0 +1,37 @@
+---
+import LogoMarkSet from "./LogoMarkSet.astro";
+
+interface Mark {
+  file: string;
+  alt: string;
+}
+
+interface Props {
+  class?: string;
+  style?: string;
+  overlayStyle?: string;
+  marks: {
+    primary: Mark;
+    icon: Mark;
+    stacked: Mark;
+    stackedSmall: Mark;
+  };
+}
+
+const { class: className, style, overlayStyle, marks } = Astro.props;
+const usesStyleBg = Boolean(style);
+---
+
+<div
+  class:list={[
+    "flex flex-col items-center justify-around rounded-lg p-6",
+    usesStyleBg && "relative overflow-hidden",
+    className,
+  ]}
+  style={style}
+>
+  {overlayStyle && (
+    <div class="pointer-events-none absolute inset-0 opacity-40" style={overlayStyle} />
+  )}
+  <LogoMarkSet {...marks} relative={Boolean(overlayStyle)} />
+</div>
