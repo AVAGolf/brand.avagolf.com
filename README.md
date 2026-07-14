@@ -39,7 +39,9 @@ The brand guide covers everything needed to implement AVA Golf's visual and comm
 - **Confident** — assured, never exaggerated, grounded in real outcomes
 - **Grounded** — no hype, no gimmicks, precision and trust above all
 
-Brand concepts: **Personalized Progression** and **Mastery Without Guesswork**
+Tagline: **Get Better. Faster.**
+
+Brand pillars: **Data with Direction**, **Personalized Progression**, and **Mastery Without Guesswork**
 
 ---
 
