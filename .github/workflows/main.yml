@@ -29,7 +29,7 @@ jobs:
         with:
           # files/* binaries are uploaded out-of-band (manual / scripts/sync-files.mjs)
           # and must survive the --delete sync; they are not in git.
-          args: --acl public-read --follow-symlinks --delete --exclude 'files/*'
+          args: --acl public-read --follow-symlinks --delete --exclude 'files/*' --exclude 'AVA_Golf_Brand_Pack.zip'
         env:
           AWS_S3_BUCKET: brand.avagolf.com
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
