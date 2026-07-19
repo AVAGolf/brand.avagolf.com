@@ -78,7 +78,7 @@ Brand pillars: **Data with Direction**, **Personalized Progression**, and **Mast
 ## Download Brand Pack
 
 All logo files (SVG, PNG), color swatches, and font references are available via the brand guide:  
-[Download Brand Pack](https://brand.avagolf.com/AVA_Golf_Brand_Pack.zip)
+[Download Brand Pack](https://brand.avagolf.com/files/AVA_Golf_Brand_Pack.zip)
 
 ---
 
