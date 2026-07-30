@@ -6,7 +6,7 @@ const alphabet = "AaBbCcDdEeFfGgHh\nIiJjKkLlMmNnOoPpQq\nRrSsTtUuVvWwXxYyZz\n1234
 const sansWeights = [
   { name: "Regular", weight: 400 },
   { name: "SemiBold", weight: 600 },
-  { name: "ExtraBold", weight: 800 },
+  { name: "Black", weight: 1000 },
 ];
 
 const dmMonoWeights = [
@@ -31,17 +31,16 @@ const sampleCopy =
         <h2 class="text-h2 text-dark-green-900 mb-3">Display Type</h2>
         <p class="text-body text-dark-green-700 max-w-3xl">
           Google Sans Flex is for use in headings with few words where we want
-          big impact. It should always be in uppercase. Bold and Extra Bold
-          weights can be used depending on how the software renders the font
-          and the desired impact needed. The result should look heavy.
+          big impact. It should always be in uppercase and set in the Black
+          (1000) weight for maximum impact. The result should look heavy.
         </p>
         <p class="text-code text-green-700 mt-4">
-          Display Type / Headings — Google Sans Flex Bold + Extra Bold Uppercase
+          Display Type / Headings — Google Sans Flex Black (1000) Uppercase
         </p>
       </header>
       <p
         class="text-dark-green-900 uppercase whitespace-pre-line"
-        style="font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 6vw, 80px); line-height: 0.95;"
+        style="font-family: var(--font-display); font-weight: 1000; font-size: clamp(40px, 6vw, 80px); line-height: 0.95;"
       >
         {alphabet}
       </p>

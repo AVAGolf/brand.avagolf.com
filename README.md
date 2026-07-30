@@ -68,7 +68,7 @@ Brand pillars: **Data with Direction**, **Personalized Progression**, and **Mast
 
 | Role | Typeface |
 |---|---|
-| Display / Headings | Google Sans Flex Bold + Extra Bold (uppercase) |
+| Display / Headings | Google Sans Flex Black (1000, uppercase) |
 | Body / Titles | Google Sans Flex (full weight range) |
 | Stats / Secondary Display | Construct Mono |
 | Technical Text | DM Mono |

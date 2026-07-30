@@ -57,7 +57,7 @@
 - dark-green-900: #070E0C (page background)
  
 ### Typography
-- Display / Headings: Google Sans Flex Bold + Extra Bold, always uppercase
+- Display / Headings: Google Sans Flex Black (1000), always uppercase
 - Body / Titles: Google Sans Flex (full weight range)
 - Stats / Secondary Display: Construct Mono
 - Technical Text: DM Mono

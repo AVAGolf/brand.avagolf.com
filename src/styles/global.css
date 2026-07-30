@@ -93,7 +93,7 @@
   font-family: var(--font-display);
   font-size: 64px;
   line-height: 56px;
-  font-weight: 800;
+  font-weight: 1000;
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -102,7 +102,7 @@
   font-family: var(--font-display);
   font-size: 48px;
   line-height: 42px;
-  font-weight: 700;
+  font-weight: 1000;
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -111,7 +111,7 @@
   font-family: var(--font-display);
   font-size: 36px;
   line-height: 32px;
-  font-weight: 700;
+  font-weight: 1000;
   letter-spacing: 0;
   text-transform: uppercase;
 }
