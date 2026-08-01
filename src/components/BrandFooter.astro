@@ -8,7 +8,6 @@ const copy = {
     footerNavTerms: "Terms of Service",
     footerNavAUP: "Acceptable Use",
     footerNavHome: "Home",
-    footerNavAbout: "About",
     footerNavNews: "News",
     footerNavContact: "Contact",
     footerNavFaq: "FAQ",
@@ -19,6 +18,7 @@ const copy = {
     footerNavPartnerships: "Partner",
     footerNavDocs: "Docs",
     footerNavBrand: "Brand",
+    footerNavAccessibility: "Accessibility",
     footerColCompany: "Company",
     footerColProduct: "Product",
     footerColSupport: "Support",
@@ -49,7 +49,7 @@ const navColumns: { title: string; ariaLabel: string; links: NavLink[] }[] = [
         ariaLabel: copy.footerColCompany,
         links: [
             { label: copy.footerNavHome, href: "https://avagolf.com/" },
-            { label: copy.footerNavAbout, href: "https://parone.com/about" },
+            { label: copy.footerNavBrand, href: "/" },
             { label: copy.footerNavNews, href: "https://news.avagolf.com", external: true },
             { label: copy.footerNavPartnerships, href: "https://avagolf.com/partners" },
         ],
@@ -78,10 +78,10 @@ const navColumns: { title: string; ariaLabel: string; links: NavLink[] }[] = [
         title: copy.footerColResources,
         ariaLabel: copy.footerColResources,
         links: [
-            { label: copy.footerNavBrand, href: "/" },
             { label: copy.footerNavAUP, href: "https://avagolf.com/aup" },
             { label: copy.footerNavPrivacyPolicy, href: "https://avagolf.com/privacy" },
             { label: copy.footerNavTerms, href: "https://avagolf.com/terms" },
+            { label: copy.footerNavAccessibility, href: "https://avagolf.com/legal/accesibility" },
         ],
     },
 ];
