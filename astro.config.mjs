@@ -12,6 +12,10 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
+  // Pages are emitted as `/<slug>/index.html` and served by the S3 website
+  // endpoint, which 302s `/<slug>` -> `/<slug>/`. Internal links must include
+  // the trailing slash or Google indexes them as "Page with redirect".
+  trailingSlash: 'always',
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'hover',

@@ -26,7 +26,7 @@ const nextSection = next ? sections.find((x) => x.slug === next.slug) : null;
           {groupLabel(prevSection)}: {prev.title}
         </span>
         <a
-          href={`/${prev.slug}`}
+          href={prev.slug ? `/${prev.slug}/` : "/"}
           class="text-dark-green-900 flex h-9 w-32 items-center rounded-3xl border-2 border-transparent text-base font-medium uppercase tracking-[0.1em] [background:linear-gradient(var(--color-grey-300),_var(--color-grey-300))_padding-box,linear-gradient(91.29deg,_#349683,_#16382e)_border-box] transition-opacity hover:opacity-90 lg:w-60"
         >
           <svg
@@ -62,7 +62,7 @@ const nextSection = next ? sections.find((x) => x.slug === next.slug) : null;
           {groupLabel(nextSection)}: {next.title}
         </span>
         <a
-          href={`/${next.slug}`}
+          href={next.slug ? `/${next.slug}/` : "/"}
           class="text-dark-green-900 flex h-9 w-32 items-center rounded-3xl border-2 border-transparent text-base font-medium uppercase tracking-[0.1em] [background:linear-gradient(var(--color-grey-300),_var(--color-grey-300))_padding-box,linear-gradient(91.29deg,_#349683,_#16382e)_border-box] transition-opacity hover:opacity-90 lg:w-60"
         >
           <span class="flex-1 text-center pl-6">Next</span>

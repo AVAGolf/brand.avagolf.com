@@ -91,7 +91,7 @@ const groups = sectionsByGroup();
               return (
                 <li>
                   <a
-                    href={`/${s.slug}`}
+                    href={s.slug ? `/${s.slug}/` : "/"}
                     class:list={[
                       "text-nav relative flex h-9 items-center px-12 font-normal uppercase tracking-widest transition-colors",
                       isActive
