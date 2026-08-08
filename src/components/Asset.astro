@@ -1,0 +1,54 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type Item = CollectionEntry<"assets">["data"]["items"][number];
+
+interface Props {
+  item: Item;
+  divider?: boolean;
+}
+
+const { item, divider = false } = Astro.props;
+const { title, alt, image, caption, preview, formats, body } = item;
+---
+
+<section class:list={[divider && "border-t border-green-500/30 pt-12"]}>
+  <div class="grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:items-start">
+    <div>
+      <h2 class="text-h2 text-dark-green-900 mb-4">{title}</h2>
+      <div class="text-body text-dark-green-700 space-y-6">
+        {body.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      {caption && <p class="text-code text-green-700 mt-6">{caption}</p>}
+      <p
+        class="text-label text-dark-green-700 mt-4 font-bold uppercase tracking-widest"
+      >
+        {
+          formats.map((ext, i) => (
+            <>
+              {i > 0 && (
+                <span class="text-green-500/50 mx-2" aria-hidden="true">
+                  |
+                </span>
+              )}
+              <a
+                href={`/brand/assets/${image}.${ext}`}
+                download
+                aria-label={`Download ${image}.${ext}`}
+                class="text-green-500 hover:text-green-700 underline underline-offset-4 transition-colors"
+              >
+                {ext.toUpperCase()}
+              </a>
+            </>
+          ))
+        }
+      </p>
+    </div>
+    <img
+      src={`/brand/assets/${image}.${preview}`}
+      alt={alt}
+      class="aspect-video w-full rounded-lg object-cover"
+      loading="lazy"
+    />
+  </div>
+</section>

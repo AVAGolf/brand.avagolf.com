@@ -1,12 +1,10 @@
 ---
+import { getCollection } from "astro:content";
 import BrandLayout from "../layouts/BrandLayout.astro";
-import CopyCodeBlock from "../components/CopyCodeBlock.astro";
-import { siteUrl } from "../../astro.config.mjs";
+import Screenshot from "../components/Screenshot.astro";
 
-const imgSrc = `${siteUrl}/brand/application/rounds.webp`;
-const imgAlt = "AVA Golf Rounds screen";
-
-const embedCode = `<img src="${imgSrc}" alt="${imgAlt}" />`;
+const [screenshots] = await getCollection("screenshots");
+const items = screenshots.data.items;
 ---
 
 <BrandLayout
@@ -15,33 +13,7 @@ const embedCode = `<img src="${imgSrc}" alt="${imgAlt}" />`;
   title="App Screenshots"
   subtitle="How the AVA Golf brand comes to life on screen, straight from the product."
 >
-  <div class="mx-auto max-w-6xl space-y-10">
-    <section>
-      <div class="grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:items-start">
-        <div class="space-y-6">
-          <div>
-            <h2 class="text-h2 text-dark-green-900 mb-4">Rounds</h2>
-            <p class="text-body text-dark-green-700">
-              Rounds is where the game lives — captured from shot tracking devices like Arccos, Garmin and direct imports.
-            </p>
-          </div>
-          <div>
-            <p class="text-body text-dark-green-700">
-              The Ghost Mode feature allows players to review against themselves, with a visual representation of their performance on the course.
-            </p>
-          </div>
-        </div>
-        <img
-          src="/brand/application/rounds.webp"
-          alt={imgAlt}
-          class="aspect-video w-full rounded-lg object-cover"
-          loading="lazy"
-        />
-      </div>
-
-      <div class="mt-10">
-        <CopyCodeBlock code={embedCode} label="Copy Image Embed" />
-      </div>
-    </section>
+  <div class="mx-auto max-w-6xl space-y-20">
+    {items.map((item, i) => <Screenshot item={item} divider={i > 0} />)}
   </div>
 </BrandLayout>
