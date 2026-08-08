@@ -1,40 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="AVA_Golf_Logo" data-name="AVA Golf Logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 516 512">
+<!--
+  AVA Golf icon, framed for favicon use.
+
+  Square 512 viewBox with the mark centred on both axes. The artwork's own
+  bounding box (x 30.97-436.22) centres at x=233.595, so the group is nudged
+  +22.405 to sit on the canvas centre; the previous 516x512 viewBox left it
+  visibly off to one side at every rendered size. The trademark glyph is
+  omitted here — it is illegible below ~64px and only unbalances the frame.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <style>
-      .cls-1 {
-        fill: url(#linear-gradient-2);
-      }
-
-      .cls-2 {
-        fill: url(#linear-gradient);
-      }
-
-      .cls-3 {
-        fill: #fff;
-      }
-
-      .cls-4 {
-        fill: #15382e;
-      }
-    </style>
-    <linearGradient id="linear-gradient" x1="153.51" y1="135.19" x2="153.51" y2="380.81" gradientTransform="translate(0 514) scale(1 -1)" gradientUnits="userSpaceOnUse">
+    <linearGradient id="g1" x1="153.51" y1="135.19" x2="153.51" y2="380.81" gradientTransform="translate(0 514) scale(1 -1)" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#359683"/>
       <stop offset="1" stop-color="#359683" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="linear-gradient-2" x1="191.13" y1="258" x2="436.22" y2="258" gradientTransform="translate(0 514) scale(1 -1)" gradientUnits="userSpaceOnUse">
+    <linearGradient id="g2" x1="191.13" y1="258" x2="436.22" y2="258" gradientTransform="translate(0 514) scale(1 -1)" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#ffff4a"/>
       <stop offset="1" stop-color="#ffe708"/>
     </linearGradient>
   </defs>
-  <rect class="cls-4" width="516" height="512"/>
-  <g id="icon">
-    <path class="cls-2" d="M30.97,378.81h105.56l139.53-245.62h-85.29c-12.61,0-24.34,7.18-31.06,19L30.97,378.81Z"/>
-    <circle class="cls-3" cx="145.84" cy="269.77" r="45.79"/>
-    <path class="cls-1" d="M436.22,378.81h-105.56l-139.53-245.62h85.29c12.61,0,24.34,7.18,31.06,19l128.74,226.62Z"/>
-    <g id="TradeMark">
-      <polygon class="cls-3" points="447.13 361.02 453.05 361.02 453.05 378.81 457.05 378.81 457.05 361.02 462.93 361.02 462.93 357.26 447.13 357.26 447.13 361.02"/>
-      <polygon class="cls-3" points="483.92 357.26 477.53 373.47 477.42 373.47 470.98 357.26 465.88 357.26 465.88 378.81 469.8 378.81 469.8 367.22 469.68 363.57 469.79 363.57 475.88 378.81 479.03 378.81 485.14 363.57 485.23 363.57 485.12 367.22 485.12 378.81 489.03 378.81 489.03 357.26 483.92 357.26"/>
-    </g>
+  <rect width="512" height="512" fill="#070e0c"/>
+  <g transform="translate(22.405 0)">
+    <path fill="url(#g1)" d="M30.97,378.81h105.56l139.53-245.62h-85.29c-12.61,0-24.34,7.18-31.06,19L30.97,378.81Z"/>
+    <circle fill="#fff" cx="145.84" cy="269.77" r="45.79"/>
+    <path fill="url(#g2)" d="M436.22,378.81h-105.56l-139.53-245.62h85.29c12.61,0,24.34,7.18,31.06,19l128.74,226.62Z"/>
   </g>
 </svg>
