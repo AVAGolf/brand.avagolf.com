@@ -16,11 +16,13 @@ terraform {
     }
   }
 
+  # No hardcoded `profile` so the same backend works in CI (GitHub OIDC creds
+  # via env) and locally (export AWS_PROFILE=ava-prod). The standard AWS
+  # credential chain resolves both.
   backend "s3" {
-    bucket  = "ava-golf-prod-tf-state-bucket"
-    key     = "brand-avagolf-com/terraform.tfstate"
-    region  = "us-east-2"
-    profile = "ava-prod"
+    bucket = "ava-golf-prod-tf-state-bucket"
+    key    = "brand-avagolf-com/terraform.tfstate"
+    region = "us-east-2"
   }
 }
 

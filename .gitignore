@@ -31,3 +31,5 @@ infrastructure/terraform/.build/
 infrastructure/terraform.tfvars
 infrastructure/terraform/terraform.tfvars
 infrastructure/terraform/plan.out
+infrastructure/terraform/tfplan
+infrastructure/terraform/.terraform/

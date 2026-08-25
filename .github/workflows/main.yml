@@ -4,7 +4,60 @@ on:
     branches:
       - main
 jobs:
+  # Converge infrastructure (Fastly, S3, Cloudflare) BEFORE the site is
+  # published. Gating the deploy on this is deliberate: the Fastly
+  # canonical-URL snippets and the segmented-caching rule for the brand-pack
+  # downloads both live in Terraform, so a push that syncs pages without
+  # applying them ships the content but not the routing that serves it.
+  terraform:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: us-east-2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: '1.14.5'
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        working-directory: infrastructure/terraform
+        run: terraform init -input=false
+
+      - name: Terraform Plan
+        working-directory: infrastructure/terraform
+        env:
+          # aws_profile is forced empty so the provider uses the OIDC env creds.
+          # terraform.tfvars, which sets it to "ava-prod" for local runs, is
+          # gitignored and absent in CI.
+          TF_VAR_aws_profile: ''
+          TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
+          TF_VAR_fastly_api_token: ${{ secrets.FASTLY_API_TOKEN }}
+        run: terraform plan -input=false -out=tfplan
+
+      - name: Terraform Apply
+        working-directory: infrastructure/terraform
+        env:
+          TF_VAR_aws_profile: ''
+          TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
+          TF_VAR_fastly_api_token: ${{ secrets.FASTLY_API_TOKEN }}
+        run: terraform apply -input=false tfplan
+
   deploy:
+    needs: terraform
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
