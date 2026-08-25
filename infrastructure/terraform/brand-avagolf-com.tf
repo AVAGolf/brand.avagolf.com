@@ -82,6 +82,74 @@ resource "fastly_service_vcl" "brand_avagolf_com" {
     brotli_compression = true
   }
 
+  # One canonical URL per page: the real path, with its trailing slash.
+  #
+  # Search Console was filing /typography and /pillars under "Page with
+  # redirect" because S3 answered them with a 302 to the slashed form — a
+  # temporary redirect, which consolidates no ranking signal into the page it
+  # points at. And /index.html returned 200, so the homepage had two addresses
+  # that both worked. Both become a single 301 to the one real URL.
+  #
+  # Priority 5, ahead of the segmented-caching snippet below: a request that is
+  # going to be redirected has no backend to choose. Explicit because two recv
+  # snippets at the same priority have no visible ordering.
+  #
+  # Materialized through custom status 750 in vcl_error, the only way to
+  # synthesize a response from vcl_recv. The Location is always absolute https,
+  # so this agrees with the force_ssl request setting above rather than fighting
+  # it: whichever matches first, an http request lands on the same URL.
+  snippet {
+    name     = "canonical-url-recv"
+    type     = "recv"
+    priority = 5
+    content  = <<-EOT
+      declare local var.path STRING;
+      declare local var.canonical STRING;
+      declare local var.current STRING;
+
+      set var.path = req.url.path;
+
+      set var.path = regsub(var.path, "/index\.html$", "/");
+
+      # Every page builds to a directory, so a bare path gets its slash back.
+      # Skipped for anything with a file extension, which is a real file: the
+      # /files/*.zip brand packs, /llms.txt, /favicon.svg, /_astro/*.js.
+      if (var.path !~ "/$" && var.path !~ "\.[^/]+$") {
+        set var.path = var.path + "/";
+      }
+
+      set var.canonical = "https://brand.avagolf.com" + var.path;
+
+      if (req.url.qs != "") {
+        set var.canonical = var.canonical + "?" + req.url.qs;
+      }
+
+      # req.http.Host is absent only on malformed requests; with no host there
+      # is no absolute URL to send anyone to, so those fall through to origin.
+      set var.current = if(req.http.Fastly-SSL, "https://", "http://") + req.http.Host + req.url;
+
+      if (req.http.Host && var.canonical != var.current) {
+        set req.http.X-Canonical-Location = var.canonical;
+        error 750 "canonical redirect";
+      }
+    EOT
+  }
+
+  snippet {
+    name     = "canonical-url-error"
+    type     = "error"
+    priority = 10
+    content  = <<-EOT
+      if (obj.status == 750) {
+        set obj.http.Location = req.http.X-Canonical-Location;
+        set obj.status = 301;
+        set obj.response = "Moved Permanently";
+        synthetic "";
+        return (deliver);
+      }
+    EOT
+  }
+
   # Large downloads (e.g. the brand pack zip) exceed Fastly's 20MB single-object
   # cache limit and 503 without this. Segmented caching splits them into <=20MB
   # blocks so they stay edge-cached (cheap egress) instead of refetching origin.
