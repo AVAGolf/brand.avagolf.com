@@ -68,4 +68,37 @@ items:
         Tap-in rate by distance, the average leave, and how much of it finishes
         short turn a vague sense of poor speed control into the exact tendency
         behind the three-putts.
+
+  - title: Lesson Voice Note (Approach Dispersion)
+    alt: >-
+      AVA Golf approach dispersion chart with a coach's voice note callout on
+      the cluster of misses
+    image: lesson-voice-note-dispersion
+    body:
+      - >-
+        On the approach dispersion chart, the cluster of misses short and left
+        of the pin is circled, with a coach's voice note pinned right to it —
+        "Let's work on this in our next lesson!" — matching the read-out beside
+        it: 54% green hit, misses running 77% short.
+      - >-
+        Rather than reacting to one approach shot or one round, the lesson
+        starts from the pattern the dispersion chart already shows, with the
+        coach's own note carrying that context into the next session.
+
+  - title: Lesson Voice Note (Shot Tracer)
+    alt: >-
+      AVA Golf hole shot tracer and strokes gained breakdown with a coach's
+      voice note callout on a cluster of approach shots
+    image: lesson-voice-note-shot-tracer
+    body:
+      - >-
+        On this hole's shot tracer, the cluster of approach shots coming up
+        short near the pond is circled, with a coach's voice note pinned right
+        to it — "Let's work on this in our next lesson!" — matching the
+        strokes gained breakdown, where approach is the biggest loss at -1.82
+        on a hole that finished +8 to par.
+      - >-
+        The lesson starts from the exact stretch of the hole that gave strokes
+        back, not from a generic take on a 79 — turning one round's shot
+        history into the next session's plan.
 ---
