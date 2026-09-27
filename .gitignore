@@ -5,9 +5,9 @@ dist/
 
 # dependencies
 node_modules/
-# pnpm is the pinned package manager (see packageManager in package.json)
-package-lock.json
+# npm is the package manager (package-lock.json is committed)
 yarn.lock
+pnpm-lock.yaml
 
 # logs
 npm-debug.log*

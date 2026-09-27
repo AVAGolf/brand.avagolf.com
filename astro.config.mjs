@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from "@tailwindcss/vite";
+import { unified } from '@astrojs/markdown-remark';
 
 export const siteUrl = 'https://brand.avagolf.com';
 
@@ -20,29 +21,14 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: 'hover',
   },
+  markdown: {
+    // Astro 7.3 made its new Sätteri processor the default. The two content
+    // collections are Markdown files, so they stay on the remark/rehype
+    // pipeline they were written for.
+    processor: unified(),
+  },
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
-    build: {
-      rollupOptions: {
-        // Astro's prerender build bundles the whole `astro` package
-        // (including build-time-only internals) into each page chunk,
-        // which drags in these packages transitively. Rollup then
-        // inlines their filesystem-relative `require`s in a way that
-        // breaks once relocated into the chunk output (Linux-only,
-        // see https://github.com/withastro/astro/issues/16679).
-        // Externalizing them requires they also be resolvable via
-        // node_modules at runtime, hence the matching devDependencies.
-        external: [
-          'fsevents',
-          '@astrojs/compiler-rs',
-          'svgo',
-          'csso',
-          'css-tree',
-          /^vite($|\/)/,
-          /^esbuild($|\/)/,
-        ],
-      },
-    },
   },
 });

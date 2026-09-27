@@ -7,44 +7,40 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v7
         with:
-          version: 10.30.2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'pnpm'
+          node-version: '24'
+          cache: npm
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
       - name: Build
-        run: pnpm run build
+        run: npm run build
 
-      - uses: jakejarvis/s3-sync-action@master
-        with:
-          # files/* binaries are uploaded out-of-band (manual / scripts/sync-files.mjs)
-          # and must survive the --delete sync; they are not in git.
-          args: --acl public-read --follow-symlinks --delete --exclude 'files/*'
+      # The runner's own AWS CLI, in place of jakejarvis/s3-sync-action@master
+      # (unmaintained, and a container that installs the CLI on every run).
+      # files/* is the brand pack, uploaded out-of-band by
+      # AVAGolf/AVA-Golf-Brand-Assets; it is not in git and must survive the
+      # --delete sync.
+      - name: Sync to S3
+        run: |
+          aws s3 sync dist/ s3://brand.avagolf.com/ --no-progress \
+            --acl public-read --follow-symlinks --delete --exclude 'files/*'
         env:
-          AWS_S3_BUCKET: brand.avagolf.com
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.S3_BUCKET_REGION }}
-          SOURCE_DIR: 'dist/'
 
+      # purge_all, the one request jcoene/fastly-purge-action made. That action
+      # was last changed in 2021 and declares node12; avagolf.com and news
+      # replaced it with the same call.
       - name: Invalidate Fastly
-        uses: jcoene/fastly-purge-action@master
-        with:
-          api_key: "${{ secrets.FASTLY_API_KEY }}"
-          service_id: "iN42g1xAhUJCEMKjylOpRW"
-
-      - name: Purge Cloudflare Cache
-        uses: nathanvaughn/actions-cloudflare-purge@master
-        with:
-          cf_zone: "e690f4cbe14dc74233ccb7b3a76749cc"
-          cf_auth: ${{ secrets.CLOUDFLARE_PURGE_CACHE_API }}
+        env:
+          FASTLY_API_KEY: ${{ secrets.FASTLY_API_KEY }}
+        run: |
+          curl --fail-with-body --silent --show-error -X POST \
+            -H "Fastly-Key: $FASTLY_API_KEY" -H "Accept: application/json" \
+            https://api.fastly.com/service/iN42g1xAhUJCEMKjylOpRW/purge_all

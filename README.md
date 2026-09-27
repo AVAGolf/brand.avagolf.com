@@ -84,13 +84,13 @@ All logo files (SVG, PNG), color swatches, and font references are available via
 
 ## Tech Stack
 
-Built with [Astro](https://astro.build) (static output) + Tailwind CSS v4, deployed via GitHub Actions to S3, served through Fastly and Cloudflare.
+Built with [Astro](https://astro.build) (static output) + Tailwind CSS v4, deployed via GitHub Actions to S3, served through Fastly.
 
 ```
-pnpm install     # Install dependencies
-pnpm dev         # Local dev at localhost:3000
-pnpm build       # Build to ./dist/
-pnpm preview     # Preview build locally
+npm install      # Install dependencies
+npm run dev      # Local dev at localhost:3000
+npm run build    # Build to ./dist/
+npm run preview  # Preview build locally
 ```
 
 All dependencies live in `devDependencies` — this is a static site with no server runtime, so nothing here needs to ship to production; `astro build` just emits plain HTML/CSS/JS to `dist/`.

@@ -3,9 +3,8 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@10.30.2",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=24.16.0"
   },
   "scripts": {
     "dev": "astro dev",
@@ -14,19 +13,10 @@
     "astro": "astro"
   },
   "devDependencies": {
-    "@astrojs/sitemap": "^3.7.3",
-    "@tailwindcss/vite": "^4.3.2",
-    "astro": "^7.0.7",
-    "css-tree": "3.2.1",
-    "csso": "5.0.5",
-    "esbuild": "0.28.1",
-    "svgo": "4.0.2",
-    "tailwindcss": "^4.3.2",
-    "vite": "8.1.4"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
+    "@astrojs/markdown-remark": "^7.3.1",
+    "@astrojs/sitemap": "^3.7.4",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.5",
+    "tailwindcss": "^4.3.3"
   }
 }
