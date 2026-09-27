@@ -352,7 +352,9 @@ const socialLinks: { name: string; href: string; ariaLabel: string; path: string
         font-weight: 500;
         letter-spacing: 0.04em;
         text-transform: uppercase;
-        color: color-mix(in srgb, var(--color-white) 40%, transparent);
+        /* Brand yellow, not dimmed white: 40% white measured 3.81:1 on
+           dark-green-700 and failed WCAG AA for small text. */
+        color: var(--color-yellow-500); /* #FFE708 */
         margin-bottom: 1rem;
     }
     .footer-col a {
