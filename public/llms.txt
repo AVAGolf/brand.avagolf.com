@@ -1,78 +1,67 @@
-# AVA Golf — Brand Guidelines
- 
-> AVA Golf is the first golf intelligence system — a grand unifier of player data that aggregates and analyzes performance data from every platform a golfer uses, applies machine learning to identify exactly what to work on, and delivers a personalized video playlist from Top 100 teaching professionals to accelerate improvement. This site contains the official brand guidelines for AVA Golf — covering logo marks, color palette, typography, brand elements, and communication principles. It is intended for use by partners, agencies, designers, and AI systems that need accurate brand context for AVA Golf.
- 
-## Site
- 
-- Introduction: https://brand.avagolf.com/
-- Full brand guide: https://brand.avagolf.com/
- 
-## Core Identity
- 
-- Logo Marks: https://brand.avagolf.com/logo-marks
-- Colors: https://brand.avagolf.com/colors
-- Typography: https://brand.avagolf.com/typography
- 
-## Brand Elements
- 
-- Assets: https://brand.avagolf.com/assets
-- Application: https://brand.avagolf.com/application
- 
-## Communication
- 
-- Overview: https://brand.avagolf.com/overview
-- Values: https://brand.avagolf.com/values
-- Pillars: https://brand.avagolf.com/pillars
-- Voice: https://brand.avagolf.com/voice
-- Audience: https://brand.avagolf.com/audience
- 
-## Key Brand Facts
- 
-### Identity
-- Brand name: AVA Golf
-- Parent company: ParOne, Inc.
-- Category: AI golf performance
- 
-### Messaging
-- Tagline: Get Better. Faster.
-- Short description: AVA Golf is a golf intelligence system that unifies your performance data — from simulators, launch monitors, and on-course tracking — and turns it into personalized, video-led coaching from Top 100 instructors.
-- Brand pillars: Data with Direction, Personalized Progression, Mastery without Guesswork
+# AVA Golf Brand Guidelines
 
-### Logo
-- Primary logo: Side by Side combination mark (icon + wordmark, horizontal)
-- Secondary: Icon (standalone), Stacked Logo
+> The official brand guidelines for AVA Golf, the first golf intelligence system: it aggregates and analyzes performance data from every platform a golfer uses, applies machine learning to identify exactly what to work on, and delivers a personalized video playlist from Top 100 teaching professionals. This site covers logo marks, colors, typography, brand elements, and communication principles, for partners, agencies, designers, and AI systems that need accurate brand context.
+
+The guideline pages linked below are HTML. The facts most often needed are summarized here, so most brand questions can be answered from this file alone. For the product itself (pricing, integrations, coaches), use the main site's file at https://avagolf.com/llms.txt.
+
+**Identity.** Brand name: AVA Golf. Parent company: ParOne, Inc. Category: AI golf performance; AVA Golf describes itself as a golf intelligence system.
+
+**Name use.** Use "AVA Golf" when introducing the brand, and in all external communications where it appears for the first time. Once context is established, "AVA" is the more human, conversational name: an intelligent companion guiding golfers through their improvement. In logo lockups, never use "AVA" on its own.
+
+**Messaging:**
+
+- Tagline: "Get Better. Faster." Used for marketing at first contact with the brand, to create curiosity.
+- Short description: AVA Golf is a golf intelligence system that unifies your performance data (from simulators, launch monitors, and on-course tracking) and turns it into personalized, video-led coaching from Top 100 instructors.
+- Values: Precision, Discipline, Calibration
+- Pillars: Data with Direction, Personalized Progression, Mastery without Guesswork
+- Voice: Intelligent (clarity and expertise, accessible but performance-focused); Confident (assured, never exaggerated, grounded in real outcomes); Grounded (no hype, no gimmicks; precision and trust above all)
+- Audience: committed, data-aware golfers invested in improving: the Competitive Improver, the Tech-Enabled Golfer, and the Self-Guided Athlete. Not an entry-level platform, and never elitist.
+
+**Logo:**
+
+- Primary: Side by Side combination mark (icon plus wordmark, horizontal). Use it whenever possible.
+- Secondary: Icon (standalone, for audiences who already know the brand or as a graphic element) and Stacked Logo (for limited horizontal space)
 - Tertiary: Wordmark, Stacked Wordmark, Small Stacked Logo
-- The word "AVA" must never be used independently without "Golf"
-- Do not distort, rotate, recolor, or add effects to any logo mark
- 
-### Colors — Primary Palette
-- green-500: #349683
-- green-900: #16382E
-- yellow-500: #FFE708
-- yellow-300: #FFFF4A
-- white: #FFFFFF
- 
-### Colors — Secondary Palette
-- bright-green-500: #17DEB7
-- dark-green-900: #070E0C (page background)
- 
-### Typography
-- Display / Headings: Google Sans Flex Black (1000), always uppercase
-- Body / Titles: Google Sans Flex (full weight range)
-- Stats / Secondary Display: Construct Mono
-- Technical Text: DM Mono
- 
-### Voice
-- Intelligent: clarity and expertise, accessible but performance-focused
-- Confident: assured, never exaggerated, grounded in real outcomes
-- Grounded: no hype, no gimmicks, precision and trust above all
- 
-### Social
-- Instagram: https://www.instagram.com/avagolfofficial/
-- LinkedIn: https://www.linkedin.com/company/avagolf/
-- TikTok: https://www.tiktok.com/@ava.golf
-- YouTube: https://www.youtube.com/@avagolfofficial
-- Facebook: https://facebook.com/avagolf
- 
-### Main Site
-- https://avagolf.com
+- Color variants: Dark + Imagery (light logos for dark backgrounds, imagery, and video), Mid, Light + Bright (dark logos, never over imagery), and Mono
+- Clearspace: at least 50% of the icon size around the icon and combination marks; at least 100% of the Y axis around wordmarks; the TM symbol is excluded from the boundary
+- Never distort, stretch, rotate, recolor, outline, or add effects to a logo, rearrange a lockup, or use a low-resolution file
+
+**Colors.** Primary palette: green-500 #349683, green-900 #16382E, yellow-500 #FFE708, yellow-300 #FFFF4A, white #FFFFFF. Secondary: bright-green-500 #17DEB7 and the dark greens, with dark-green-900 #070E0C as the page background. Full scale: green-300 #95CBC1, green-700 #225142, dark-green-300 #132A23, dark-green-500 #10211C, dark-green-700 #0B1C16, grey-300 #F4F4F2. Gradients: green-fade (#349683 to #16382E), dark-green-fade (#16382E to #070E0C), yellow-fade (#FFFF4A to #FFE708).
+
+**Typography:**
+
+- Display and headings: Google Sans Flex Black (1000), always uppercase
+- Titles and body copy: Google Sans Flex (full weight range)
+- Stats and secondary display: Construct Mono
+- Technical text: DM Mono
+
+## Core identity
+
+- [Introduction](https://brand.avagolf.com/): what the guidelines cover and how to use them
+- [Logo marks](https://brand.avagolf.com/logo-marks/): the six-lockup logo family, color and background variants, clearspace, and logo don'ts
+- [Colors](https://brand.avagolf.com/colors/): primary and secondary palettes with HEX and CMYK values
+- [Typography](https://brand.avagolf.com/typography/): the three typefaces, where each is used, and the weights available
+
+## Brand elements
+
+- [Assets](https://brand.avagolf.com/assets/): background imagery, the green overlay texture, and halftones, with usage guidance and downloads
+- [Application](https://brand.avagolf.com/application/): approved product screenshots (Ghost Mode, hole-by-hole outcomes, dispersion and putting charts, coach voice notes) with embed code and downloads
+- [Video](https://brand.avagolf.com/video/): the AVA Golf explainer video and its embed code
+
+## Communication
+
+- [Overview](https://brand.avagolf.com/overview/): tagline, short and full descriptions and when to use each, what/how/why, and name use
+- [Values](https://brand.avagolf.com/values/): precision, discipline, and calibration
+- [Pillars](https://brand.avagolf.com/pillars/): data with direction, personalized progression, and mastery without guesswork
+- [Voice](https://brand.avagolf.com/voice/): intelligent, confident, and grounded
+- [Audience](https://brand.avagolf.com/audience/): the three golfer profiles AVA Golf is built for, and who it is not for
+
+## Optional
+
+- [Design tokens](https://brand.avagolf.com/tokens/): every color, gradient, and type style on one page
+- [AVA Golf main site](https://avagolf.com/llms.txt): the product, pricing, integrations, and coaches
+- [Instagram](https://www.instagram.com/avagolfofficial/)
+- [LinkedIn](https://www.linkedin.com/company/avagolf/)
+- [TikTok](https://www.tiktok.com/@ava.golf)
+- [YouTube](https://www.youtube.com/@avagolfofficial)
+- [Facebook](https://www.facebook.com/avagolf)
