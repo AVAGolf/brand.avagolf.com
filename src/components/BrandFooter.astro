@@ -3,26 +3,48 @@ const copy = {
     brandAltNavFooter: "AVA Golf",
 
     footerCopyrightSuffix: "AVA Golf™. All rights reserved.",
-    footerNavWaitlist: "Waitlist",
+
+    // Mirrors the footer on avagolf.com (src/components/Footer.astro there):
+    // same five columns, same links, same legal strip. Links are absolute, with
+    // trailing slashes so they skip the redirect hop.
+    footerNavStart: "Start Now for Free",
+    footerNavTour: "Take the Tour",
+    footerNavPricing: "Pricing",
+    footerNavLogin: "Log In",
+
+    footerNavForGolfers: "For Golfers",
+    footerNavForCoaches: "For Coaches",
+    footerNavPerformance: "Performance",
+    footerNavVideos: "Videos",
+
+    footerNavAnalyze: "Analyze Your Data",
+    footerNavRoundTrackers: "Round Trackers",
+    footerNavLaunchMonitors: "Launch Monitors",
+    footerNavIntegrations: "Integrations",
+
+    footerNavBrand: "Brand",
+    footerNavOurCoaches: "Our Coaches",
+    footerNavNews: "News",
+    footerNavPartnerships: "Partner With Us",
+
+    footerNavAccessibility: "Accessibility",
+    footerNavContact: "Contact",
+    footerNavDocs: "Docs",
+    footerNavFaq: "FAQ",
+
+    footerColGetStarted: "Get Started",
+    footerColProduct: "Product",
+    footerColAnalyze: "Analyze",
+    footerColCompany: "Company",
+    footerColSupport: "Support",
+
     footerNavPrivacyPolicy: "Privacy Policy",
     footerNavTerms: "Terms of Service",
     footerNavAUP: "Acceptable Use",
-    footerNavHome: "Home",
-    footerNavNews: "News",
-    footerNavContact: "Contact",
-    footerNavFaq: "FAQ",
-    footerNavCoaches: "Coaches",
-    footerNavPricing: "Pricing",
-    footerNavTour: "Tour",
-    footerNavLogin: "Login",
-    footerNavPartnerships: "Partner",
-    footerNavDocs: "Docs",
-    footerNavBrand: "Brand",
-    footerNavAccessibility: "Accessibility",
-    footerColCompany: "Company",
-    footerColProduct: "Product",
-    footerColSupport: "Support",
-    footerColResources: "Resources",
+    // CCPA/CPRA requires this exact wording as a link title; do not shorten it.
+    footerNavDoNotSell: "Do Not Sell or Share My Personal Information",
+    footerLegalAria: "Legal",
+
     footerNewsletterHeading: "Never miss an update",
     footerNewsletterBody:
         "Be the first to hear about new features, product updates, partnerships, and everything happening at AVA Golf.",
@@ -37,53 +59,83 @@ const copy = {
 };
 const year = new Date().getFullYear();
 
+// The app's signup. The old /waitlist/ URL 301s here with the query intact, so
+// the newsletter form posts straight to it and skips the hop.
+const signupUrl = "https://app.avagolf.com/onboarding/welcome";
+
 interface NavLink {
     label: string;
     href: string;
     external?: boolean;
+    /** Analytics label when it differs from the visible copy. Five links were
+     *  renamed on screen but keep their original label, so footer_clicked stays
+     *  one continuous series — the same labels avagolf.com keeps. */
+    track?: string;
 }
 
 const navColumns: { title: string; ariaLabel: string; links: NavLink[] }[] = [
     {
-        title: copy.footerColCompany,
-        ariaLabel: copy.footerColCompany,
+        title: copy.footerColGetStarted,
+        ariaLabel: copy.footerColGetStarted,
         links: [
-            { label: copy.footerNavHome, href: "https://avagolf.com/" },
-            { label: copy.footerNavBrand, href: "/" },
-            { label: copy.footerNavNews, href: "https://news.avagolf.com/", external: true },
-            { label: copy.footerNavPartnerships, href: "https://avagolf.com/partners/" },
+            { label: copy.footerNavStart, href: signupUrl },
+            { label: copy.footerNavTour, href: "https://app.avagolf.com/demo", track: "Tour" },
+            { label: copy.footerNavPricing, href: "https://avagolf.com/pricing/" },
+            { label: copy.footerNavLogin, href: "https://app.avagolf.com/", track: "Login" },
         ],
     },
     {
         title: copy.footerColProduct,
         ariaLabel: copy.footerColProduct,
         links: [
-            { label: copy.footerNavLogin, href: "https://app.avagolf.com/" },
-            { label: copy.footerNavCoaches, href: "https://avagolf.com/coaches/" },
-            { label: copy.footerNavPricing, href: "https://avagolf.com/pricing/" },
-            { label: copy.footerNavTour, href: "https://app.avagolf.com/demo" },
+            { label: copy.footerNavForGolfers, href: "https://avagolf.com/", track: "Home" },
+            { label: copy.footerNavForCoaches, href: "https://avagolf.com/coach/" },
+            { label: copy.footerNavPerformance, href: "https://avagolf.com/performance/" },
+            { label: copy.footerNavVideos, href: "https://avagolf.com/videos/" },
+        ],
+    },
+    {
+        title: copy.footerColAnalyze,
+        ariaLabel: copy.footerColAnalyze,
+        links: [
+            { label: copy.footerNavAnalyze, href: "https://avagolf.com/analyze/" },
+            { label: copy.footerNavRoundTrackers, href: "https://avagolf.com/analyze/rounds/" },
+            { label: copy.footerNavLaunchMonitors, href: "https://avagolf.com/analyze/sessions/" },
+            { label: copy.footerNavIntegrations, href: "https://avagolf.com/integrations/" },
+        ],
+    },
+    {
+        title: copy.footerColCompany,
+        ariaLabel: copy.footerColCompany,
+        links: [
+            { label: copy.footerNavBrand, href: "/" },
+            { label: copy.footerNavOurCoaches, href: "https://avagolf.com/coaches/", track: "Coaches" },
+            { label: copy.footerNavNews, href: "https://news.avagolf.com/", external: true },
+            { label: copy.footerNavPartnerships, href: "https://avagolf.com/partners/", track: "Partner" },
         ],
     },
     {
         title: copy.footerColSupport,
         ariaLabel: copy.footerColSupport,
         links: [
+            { label: copy.footerNavAccessibility, href: "https://avagolf.com/legal/accessibility/" },
             { label: copy.footerNavContact, href: "https://avagolf.com/support/" },
             { label: copy.footerNavDocs, href: "https://docs.avagolf.com/", external: true },
             { label: copy.footerNavFaq, href: "https://avagolf.com/faq/" },
-            { label: copy.footerNavWaitlist, href: "https://avagolf.com/waitlist/" },
         ],
     },
-    {
-        title: copy.footerColResources,
-        ariaLabel: copy.footerColResources,
-        links: [
-            { label: copy.footerNavAccessibility, href: "https://avagolf.com/legal/accessibility/" },
-            { label: copy.footerNavAUP, href: "https://avagolf.com/legal/aup/" },
-            { label: copy.footerNavPrivacyPolicy, href: "https://avagolf.com/legal/privacy/" },
-            { label: copy.footerNavTerms, href: "https://avagolf.com/legal/terms/" },
-        ],
-    },
+];
+
+// avagolf.com's strip also has "Cookie preferences", and its Do Not Sell item
+// opens that site's consent modal. This site has no consent manager, so the
+// preferences control has nothing to open and is left out, and Do Not Sell goes
+// to the policy section — the same place avagolf.com falls back to when its
+// modal cannot load.
+const legalLinks: NavLink[] = [
+    { label: copy.footerNavPrivacyPolicy, href: "https://avagolf.com/legal/privacy/" },
+    { label: copy.footerNavTerms, href: "https://avagolf.com/legal/terms/" },
+    { label: copy.footerNavAUP, href: "https://avagolf.com/legal/aup/" },
+    { label: copy.footerNavDoNotSell, href: "https://avagolf.com/legal/privacy/#131-california-residents-ccpacpra" },
 ];
 
 const socialLinks: { name: string; href: string; ariaLabel: string; path: string }[] = [
@@ -145,7 +197,7 @@ const socialLinks: { name: string; href: string; ariaLabel: string; path: string
                     <h2 class="footer-newsletter-heading">{copy.footerNewsletterHeading}</h2>
                     <p class="footer-newsletter-body">{copy.footerNewsletterBody}</p>
                 </div>
-                <form class="footer-signup" action="https://avagolf.com/waitlist/" method="get" data-track="footer_clicked" data-footer-item={copy.footerNewsletterCta} data-footer-destination="https://avagolf.com/waitlist/">
+                <form class="footer-signup" action={signupUrl} method="get" data-track="footer_clicked" data-footer-item={copy.footerNewsletterCta} data-footer-destination={signupUrl}>
                     <input
                         type="email"
                         name="email"
@@ -167,7 +219,7 @@ const socialLinks: { name: string; href: string; ariaLabel: string; path: string
                                 target={link.external ? "_blank" : undefined}
                                 rel={link.external ? "noopener" : undefined}
                                 data-track="footer_clicked"
-                                data-footer-item={link.label}
+                                data-footer-item={link.track ?? link.label}
                                 data-footer-destination={link.href}
                             >
                                 {link.label}
@@ -176,6 +228,20 @@ const socialLinks: { name: string; href: string; ariaLabel: string; path: string
                     </nav>
                 ))}
             </div>
+
+            <!-- Legal strip: statutory notices, one row under the columns. -->
+            <nav class="footer-legal" aria-label={copy.footerLegalAria}>
+                {legalLinks.map((link) => (
+                    <a
+                        href={link.href}
+                        data-track="footer_clicked"
+                        data-footer-item={link.label}
+                        data-footer-destination={link.href}
+                    >
+                        {link.label}
+                    </a>
+                ))}
+            </nav>
         </div>
     </div>
 
@@ -264,10 +330,15 @@ const socialLinks: { name: string; href: string; ariaLabel: string; path: string
     }
 
     /* Right: content */
+    /* A size container so the link grid can pick its column count from the
+       room it actually has: beside the brand-guide sidebar this box is much
+       narrower than the viewport, so the viewport breakpoints avagolf.com uses
+       would squeeze five columns until the labels wrap. */
     .footer-content {
         display: flex;
         flex-direction: column;
         gap: 3rem;
+        container-type: inline-size;
     }
 
     /* Newsletter row */
@@ -336,11 +407,24 @@ const socialLinks: { name: string; href: string; ariaLabel: string; path: string
     .footer-signup-btn:hover { background: var(--color-yellow-300); }
 
     /* Link columns */
+    /* Five groups of four, matching avagolf.com. Keep every group the same
+       length so the 5 → 3 → 2 column wraps still land on flush rows. The
+       breakpoints are the widths at which the longest label ("Start Now for
+       Free") would start to wrap. */
     .footer-cols {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 2rem;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 2rem 1.5rem;
     }
+    @container (max-width: 690px) {
+        .footer-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @container (max-width: 400px) {
+        .footer-cols { grid-template-columns: 1fr 1fr; }
+    }
+    /* The strip belongs to the column block, not to the 3rem rhythm between the
+       newsletter and the links. */
+    .footer-content > .footer-legal { margin-top: -1.25rem; }
     .footer-col {
         display: flex;
         flex-direction: column;
@@ -364,6 +448,27 @@ const socialLinks: { name: string; href: string; ariaLabel: string; path: string
         transition: color 0.2s;
     }
     .footer-col a:hover { color: var(--color-white); }
+
+    /* ── Legal strip ── statutory notices on one row under the columns, so the
+       un-shortenable Do Not Sell wording never makes one column taller. */
+    .footer-legal {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem 1.5rem;
+        padding-top: 1.75rem;
+        border-top: 1px solid color-mix(in srgb, var(--color-white) 12%, transparent);
+    }
+    .footer-legal a {
+        font-family: "Google Sans Flex", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 0.78rem;
+        font-weight: 400;
+        line-height: 1.35;
+        color: color-mix(in srgb, var(--color-white) 55%, transparent);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: var(--color-white); }
 
     /* ── Bottom bar ── */
     .footer-bottom {
@@ -430,7 +535,7 @@ const socialLinks: { name: string; href: string; ariaLabel: string; path: string
         .footer-main { grid-template-columns: 1fr; gap: 2.5rem; padding: 3.5rem 1.75rem; }
         .footer-logo-panel { padding: 0; justify-content: flex-start; }
         .footer-bg-left { opacity: 0.3; }
-        .footer-cols { grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; }
+        .footer-legal { gap: 0.5rem 1.25rem; padding-top: 1.5rem; }
     }
     @media (max-width: 768px) {
         .footer-top { grid-template-columns: 1fr; gap: 1.5rem; }
