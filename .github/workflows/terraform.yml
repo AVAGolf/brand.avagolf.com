@@ -1,0 +1,117 @@
+name: Terraform
+
+# The S3 bucket, the Fastly service and the DNS record for brand.avagolf.com
+# (infrastructure/terraform/). Planned on every pull request that changes them,
+# with the plan posted on the PR; applied when those changes reach main.
+#
+# redirects.json is an input: the Fastly service turns each entry into a 301,
+# so a new retired URL is a Terraform change as well as a site change.
+#
+# Needs three repository secrets besides the AWS keys the deploy already uses:
+# FASTLY_API_TOKEN (write access to the service), CLOUDFLARE_API_TOKEN and
+# CLOUDFLARE_EMAIL (the Global API Key pair the Cloudflare provider uses).
+# avagolf.com has the same three. Without them the job stops at "Check
+# secrets" and says which are missing.
+on:
+  pull_request:
+    paths:
+      - "infrastructure/**"
+      - "redirects.json"
+      - ".github/workflows/terraform.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "infrastructure/**"
+      - "redirects.json"
+      - ".github/workflows/terraform.yml"
+  workflow_dispatch:
+
+# One plan or apply at a time; the state lock would serialize them anyway.
+concurrency:
+  group: terraform
+  cancel-in-progress: false
+
+jobs:
+  terraform:
+    name: ${{ github.event_name == 'pull_request' && 'Plan' || 'Apply' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: write
+    defaults:
+      run:
+        working-directory: infrastructure/terraform
+    env:
+      # Access keys for now. avagolf.com assumes an OIDC role instead; moving
+      # here needs that role's trust policy to include this repo.
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: us-east-2
+      TF_VAR_aws_profile: ''
+      TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
+      TF_VAR_fastly_api_token: ${{ secrets.FASTLY_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check secrets
+        run: |
+          missing=""
+          [ -n "$AWS_ACCESS_KEY_ID" ] || missing="$missing AWS_ACCESS_KEY_ID"
+          [ -n "$TF_VAR_fastly_api_token" ] || missing="$missing FASTLY_API_TOKEN"
+          [ -n "$TF_VAR_cloudflare_api_token" ] || missing="$missing CLOUDFLARE_API_TOKEN"
+          [ -n "$TF_VAR_cloudflare_email" ] || missing="$missing CLOUDFLARE_EMAIL"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secrets:$missing. Add them under Settings > Secrets and variables > Actions (avagolf.com has the same ones)."
+            exit 1
+          fi
+
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: '1.16.4'
+          terraform_wrapper: false
+
+      - run: terraform fmt -check -recursive -diff
+
+      - run: terraform init -input=false
+
+      - run: terraform validate
+
+      - name: Plan
+        run: |
+          terraform plan -input=false -no-color -out=tfplan
+          {
+            grep -E '^(Plan:|No changes\.)' <(terraform show -no-color tfplan) || true
+            echo
+            echo '<details><summary>Full plan</summary>'
+            echo
+            echo '```'
+            terraform show -no-color tfplan
+            echo '```'
+            echo
+            echo '</details>'
+          } > "$RUNNER_TEMP/plan.md"
+          cat "$RUNNER_TEMP/plan.md" >> "$GITHUB_STEP_SUMMARY"
+
+      # One comment per PR, edited in place on every push.
+      - name: Post the plan
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          body="$(printf '<!-- ci:terraform-plan -->\n### Terraform plan (applies on merge)\n\n%s\n\n[Run](%s)\n' "$(cat "$RUNNER_TEMP/plan.md")" "$RUN_URL")"
+          id=$(gh api "repos/${{ github.repository }}/issues/$PR/comments" --paginate \
+            --jq '.[] | select(.body | startswith("<!-- ci:terraform-plan -->")) | .id' | head -1)
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/${{ github.repository }}/issues/comments/$id" -f body="$body" > /dev/null
+          else
+            gh api -X POST "repos/${{ github.repository }}/issues/$PR/comments" -f body="$body" > /dev/null
+          fi
+
+      - name: Apply
+        if: github.event_name != 'pull_request'
+        run: terraform apply -input=false -auto-approve tfplan

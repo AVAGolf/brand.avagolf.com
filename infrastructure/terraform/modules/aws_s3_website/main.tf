@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
+      source = "hashicorp/aws"
     }
   }
 }
@@ -20,7 +20,7 @@ resource "aws_s3_bucket_website_configuration" "this" {
   index_document {
     suffix = "index.html"
   }
-  error_document { key = "index.html" }
+  error_document { key = var.error_document }
 }
 
 resource "aws_s3_bucket_cors_configuration" "this" {
@@ -75,25 +75,30 @@ resource "aws_s3_bucket_acl" "this" {
 #
 resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.id
+
+  # New buckets default to Block Public Access = all true. Disabling it must
+  # land before the public policy, or PutBucketPolicy 403s on BlockPublicPolicy.
+  depends_on = [aws_s3_bucket_public_access_block.this]
+
   policy = jsonencode({
-  "Version": "2008-10-17",
-  "Id": "publicAccess",
-  "Statement": [
-    {
-      "Sid": "Prevent bucket delete",
-      "Effect": "Deny",
-      "Principal": "*",
-      "Action": "s3:DeleteBucket",
-      "Resource":  "${aws_s3_bucket.this.arn}"
-    },
-    {
-      "Sid": "allow public",
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": "s3:GetObject",
-      "Resource":  "${aws_s3_bucket.this.arn}/*"
-    }
-  ]
+    "Version" : "2008-10-17",
+    "Id" : "publicAccess",
+    "Statement" : [
+      {
+        "Sid" : "Prevent bucket delete",
+        "Effect" : "Deny",
+        "Principal" : "*",
+        "Action" : "s3:DeleteBucket",
+        "Resource" : "${aws_s3_bucket.this.arn}"
+      },
+      {
+        "Sid" : "allow public",
+        "Effect" : "Allow",
+        "Principal" : "*",
+        "Action" : "s3:GetObject",
+        "Resource" : "${aws_s3_bucket.this.arn}/*"
+      }
+    ]
   })
 }
 
