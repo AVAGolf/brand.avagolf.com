@@ -90,7 +90,7 @@ import { greens, yellows, neutrals, brightGreen, darkGreens, reds, gradients } f
     </section>
 
     <!-- SECONDARY PALETTE -->
-    <section>
+    <section class="render-when-near">
       <header class="mb-8 border-t border-green-500/30 pt-12">
         <h2 class="text-h2 text-dark-green-900 mb-3">Secondary Palette</h2>
       </header>
@@ -127,7 +127,7 @@ import { greens, yellows, neutrals, brightGreen, darkGreens, reds, gradients } f
     </section>
 
     <!-- RED PALETTE -->
-    <section>
+    <section class="render-when-near">
       <header class="mb-8 border-t border-green-500/30 pt-12">
         <h2 class="text-h2 text-dark-green-900 mb-3">Red</h2>
       </header>
@@ -145,7 +145,7 @@ import { greens, yellows, neutrals, brightGreen, darkGreens, reds, gradients } f
     </section>
 
     <!-- GRADIENTS -->
-    <section>
+    <section class="render-when-near">
       <header class="mb-8 border-t border-green-500/30 pt-12">
         <h2 class="text-h2 text-dark-green-900 mb-3">Gradients</h2>
         <p class="text-body text-dark-green-700">Color blends.</p>
@@ -174,7 +174,7 @@ import { greens, yellows, neutrals, brightGreen, darkGreens, reds, gradients } f
               textClass={g.text}
               class="aspect-[5/2]"
             />
-            <div class="flex items-center justify-center text-green-500 text-2xl">›</div>
+            <div class="flex items-center justify-center text-green-700 text-2xl" aria-hidden="true">›</div>
             <ColorSwatch
               name="To"
               hex={g.to}

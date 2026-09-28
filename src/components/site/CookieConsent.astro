@@ -1,0 +1,281 @@
+---
+// Copied from news.avagolf.com's src/components/site/CookieConsent.astro, unchanged.
+// Change it there first, then copy it here and to docs.avagolf.com.
+//
+// Cookie consent for news.avagolf.com: Consent Mode v2 defaults, then the
+// banner. Ported from avagolf.com's src/components/CookieConsent.astro with
+// four changes, all because this runs on a subdomain beside avagolf.com:
+//   - the consent cookie is set on `.avagolf.com`, so a choice made on news,
+//     brand or docs holds on the other two (avagolf.com's own cookie is
+//     host-only, so a choice made there is asked again here);
+//   - links to the privacy policy are absolute;
+//   - the Analytics category names the tools the shared GTM container
+//     actually runs (Google Analytics and Mouseflow);
+//   - the tagline is "Get Better. Faster."
+// brand.avagolf.com and docs.avagolf.com copy this file unchanged.
+---
+
+{/* Consent Mode v2 defaults — deny in the EEA/UK/CH, measure elsewhere.
+
+     `is:inline` is load-bearing, not a style choice. This has to execute before
+     the GTM container snippet that follows it in BaseLayout, and an Astro
+     <script> without it compiles to <script type="module">, which defers until
+     the document has been parsed — by which point the container has booted and
+     fired its first tags against no declared consent state at all. The comment
+     that used to sit here said this MUST run before any tag loads while the
+     build guaranteed the opposite; `wait_for_update: 500` softened the gap
+     without closing it.
+
+     Only the bootstrap is inline. The banner itself stays a module below, where
+     deferring is correct: it draws UI, it does not gate a tag. Keeping the two
+     apart is also what keeps this snippet small enough to inline into every
+     page in the site. */}
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  var gpc = navigator.globalPrivacyControl === true;
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'region': [
+      'AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE',
+      'IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE',
+      'GB','CH'
+    ],
+    'wait_for_update': 500
+  });
+  gtag('consent', 'default', {
+    'ad_storage': gpc ? 'denied' : 'granted',
+    'ad_user_data': gpc ? 'denied' : 'granted',
+    'ad_personalization': gpc ? 'denied' : 'granted',
+    'analytics_storage': 'granted',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+</script>
+
+{/* The bootstrap above is kept free of comments because it is inlined into
+    every page. What it does, in order:
+    - creates dataLayer and the gtag shim (window.gtag), which the banner
+      module and src/lib/analytics.ts both use;
+    - reads Global Privacy Control first: the non-EEA default GRANTS the
+      advertising types, and a GPC visitor must never have them granted, not
+      even before the banner library loads and calls `consent update`;
+    - EEA, UK and Switzerland: everything denied until the visitor opts in
+      (GDPR/ePrivacy). Google resolves the region server-side from the IP,
+      which is why region logic can only live here;
+    - everywhere else: measure by default and honour an opt-out (the model
+      CPRA is written around). Every tag keeps its consent requirement in GTM,
+      so Reject still stops all of them.
+    `is:inline` is load-bearing: a processed <script> becomes type="module",
+    which runs after parsing, after the container has already fired. */}
+
+{/* Cookie Consent banner */}
+<script>
+  import { analyticsDefaultsOn, marketingDefaultsOn } from '../../lib/consentRegion';
+
+  // Global Privacy Control. Recognized by several US state privacy laws as a
+  // valid opt-out preference signal, and required to back the "Do Not Sell or
+  // Share My Personal Information" right in Privacy Policy s13.1. When the
+  // browser sends it we treat marketing as denied no matter what the saved
+  // consent cookie says, so the signal beats a stale earlier "Accept all".
+  // Only a literal true counts — the property is absent, not false, in browsers
+  // that do not implement it.
+  //
+  // Read again rather than shared out of the bootstrap above: it is one property
+  // lookup, and a global passed between two script tags is a thing to keep in
+  // sync for no gain. The bootstrap needs it because the non-EEA default grants
+  // the advertising types; `updateConsent` below needs it so the signal also
+  // beats a stale earlier "Accept all".
+  const gpcOptOut = navigator.globalPrivacyControl === true;
+
+  // Where each category starts before the visitor chooses. Derived from the
+  // same regional rule as the Consent Mode defaults in the bootstrap above, so
+  // the toggles show the state the visitor is actually in instead of
+  // contradicting it. See src/lib/consentRegion.ts for why this is a proxy.
+  const analyticsOn = analyticsDefaultsOn();
+  const marketingOn = marketingDefaultsOn();
+
+  // The library and its stylesheet, both bundled from the npm package and both
+  // fetched only now, after the page has rendered — no third-party origin and
+  // nothing render-blocking.
+  //
+  // `?inline` is load-bearing. Astro collects every stylesheet a page's scripts
+  // import, dynamic imports included, into that page's <head> styles, so a
+  // plain import('../styles/cookieconsent.css') puts the sheet straight back on
+  // the critical path. `?inline` hands back the compiled CSS as a string, which
+  // Astro leaves alone; appending it just before `run` means the banner never
+  // draws unstyled.
+  // Loaded once the page has finished loading and the browser is idle, so the
+  // banner never competes with the page for the main thread. The footer's
+  // cookie buttons wait for window.showCookiePreferences if clicked sooner.
+  const whenIdle = (fn: () => void) => {
+    const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 200));
+    if (document.readyState === 'complete') idle();
+    else window.addEventListener('load', idle, { once: true });
+  };
+
+  whenIdle(() => Promise.all([
+    import('vanilla-cookieconsent'),
+    import('../../styles/cookieconsent.css?inline'),
+  ]).then(([{ run, showPreferences }, { default: css }]) => {
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.append(style);
+
+    run({
+      // One consent choice across news, brand and docs. Anywhere else (a local
+      // preview, the Lighthouse runner) the browser would refuse a cookie for
+      // .avagolf.com, so it stays on the current host there.
+      cookie: {
+        domain: location.hostname.endsWith('avagolf.com') ? '.avagolf.com' : location.hostname
+      },
+
+      guiOptions: {
+        consentModal: {
+          layout: 'box',
+          position: 'bottom left',
+          equalWeightButtons: true,
+          flipButtons: false
+        },
+        preferencesModal: {
+          layout: 'box',
+          position: 'right',
+          equalWeightButtons: true,
+          flipButtons: false
+        }
+      },
+
+      // `enabled` is the toggle's starting position, and it tracks the regional
+      // default rather than being hardcoded: pre-checking these in the EEA is
+      // the dark pattern the opt-in rule exists to stop, and leaving them
+      // unchecked in the US would tell a visitor their data is not being
+      // measured while it is. GPC forces Marketing off wherever it is sent.
+      categories: {
+        necessary: {
+          readOnly: true,
+          enabled: true
+        },
+        analytics: {
+          enabled: analyticsOn,
+          autoClear: {
+            cookies: [
+              { name: /^_ga/ },
+              { name: '_gid' },
+              // Mouseflow
+              { name: /^mf_/ }
+            ]
+          }
+        },
+        marketing: {
+          enabled: marketingOn,
+          autoClear: {
+            cookies: [
+              // Meta
+              { name: /^_fbp/ },
+              { name: /^_fbc/ },
+              // Reddit
+              { name: /^_rdt/ },
+              // OpenAI pixel — names per Privacy Policy s2A.6.
+              { name: '__obref' },
+              { name: '__oaiq_consent' }
+            ]
+          }
+        }
+      },
+
+      language: {
+        default: 'en',
+        translations: {
+          en: {
+            consentModal: {
+              title: 'Cookie preferences',
+              description: 'AVA Golf uses cookies to deliver a precise, personalized experience and to understand how golfers engage with the platform. You decide what we measure.',
+              acceptAllBtn: 'Accept all',
+              acceptNecessaryBtn: 'Reject all',
+              showPreferencesBtn: 'Manage preferences'
+            },
+            preferencesModal: {
+              title: 'Cookie preferences',
+              acceptAllBtn: 'Accept all',
+              acceptNecessaryBtn: 'Reject all',
+              savePreferencesBtn: 'Save preferences',
+              closeIconLabel: 'Close',
+              sections: [
+                {
+                  title: 'Your privacy, calibrated.',
+                  description: 'AVA Golf collects only the data needed to help you get better, faster, and to improve the platform. Use the controls below to manage what we measure.'
+                },
+                {
+                  title: 'Strictly necessary',
+                  description: 'Required for the site to function — authentication, security, and core preferences. These cannot be disabled.',
+                  linkedCategory: 'necessary'
+                },
+                {
+                  title: 'Analytics',
+                  description: 'Helps us understand how golfers use AVA Golf so we can refine the product. Includes Google Analytics and Mouseflow, which records how you move through a page, including a replay of your visit.',
+                  linkedCategory: 'analytics'
+                },
+                {
+                  title: 'Marketing',
+                  description: 'Helps us share AVA Golf with the right audience and measure the impact of our campaigns. Includes the Meta, Reddit and OpenAI pixels and Brevo.',
+                  linkedCategory: 'marketing'
+                },
+                {
+                  title: 'More information',
+                  description: 'For questions about how we handle your data, see our <a href="https://avagolf.com/legal/privacy/">Privacy Policy</a>.'
+                }
+              ]
+            }
+          }
+        }
+      },
+
+      onConsent: ({ cookie }) => updateConsent(cookie),
+      onChange: ({ cookie }) => updateConsent(cookie)
+    });
+
+    function updateConsent(cookie: { categories: string[] }) {
+      const analytics = cookie.categories.includes('analytics') ? 'granted' : 'denied';
+      // GPC overrides an accepted marketing category rather than merging with
+      // it. Analytics is untouched: GPC is an opt-out of sale/sharing for
+      // advertising, not of first-party measurement.
+      const marketingAccepted = cookie.categories.includes('marketing');
+      const marketing = marketingAccepted && !gpcOptOut ? 'granted' : 'denied';
+
+      // `window.gtag`, not a bare `gtag`: the shim is declared in the inline
+      // bootstrap above, which is a different script tag and so a different
+      // scope from this module.
+      window.gtag('consent', 'update', {
+        'analytics_storage': analytics,
+        'ad_storage': marketing,
+        'ad_user_data': marketing,
+        'ad_personalization': marketing
+      });
+
+      window.dataLayer.push({
+        event: 'cookie_consent_update',
+        analytics_consent: analytics,
+        marketing_consent: marketing,
+        gpc: gpcOptOut
+      });
+
+      // Extension point for a tag installed directly in the page rather than
+      // through GTM, which would not see Consent Mode. Nothing listens today —
+      // the OpenAI pixel was the last one, and it now rides the container under
+      // `ad_storage` — so this is kept for the next one rather than removed.
+      window.dispatchEvent(new CustomEvent('ava:consent-update', {
+        detail: { analytics, marketing }
+      }));
+    }
+
+    // Expose a function so a footer link can reopen the preferences modal
+    window.showCookiePreferences = () => showPreferences();
+  }));
+</script>

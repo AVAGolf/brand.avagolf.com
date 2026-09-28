@@ -1,0 +1,78 @@
+{
+  "_comment": [
+    "Pages and profiles for scripts/ci/lighthouse.mjs (taken from avagolf.com; see its header). Copied from news.avagolf.com's lighthouse.config.json.",
+    "One page per template: the homepage (hero header and the brand pack), a guideline page, a content-collection page, and the video page.",
+    "`served.headStart` is the edge tag-gateway bootstrap, byte for byte as Fastly injects it at the",
+    "top of <head> on brand.avagolf.com; if the gateway changes, copy it again from view-source of the live site.",
+    "The gateway also carries the GA4 hits (/cv9l/ga/g/c, /cv9l/ag/g/c): `only` keeps the proxy to the",
+    "gateway scripts, and */g/c* blocks the hits in Chrome as well, so no run sends a real hit.",
+    "brand's own gtag.js (G-X34R7TJNMF) loads in `served` and is blocked in `code`; its hits go to /g/collect, which *collect* blocks.",
+    "Gates sit a few points under the measured medians, so a real regression fails and runner noise does not.",
+    "`only` forwards just the gateway loader (/cv9l/) and its content-hashed scripts; the diagnostics ping (/cv9l/td) and the GA4 hits (/cv9l/ga/g/c, /cv9l/ag/g/c) are answered locally and never reach production."
+  ],
+  "pages": [
+    "/",
+    "/colors/",
+    "/assets/",
+    "/video/"
+  ],
+  "runs": 5,
+  "profiles": {
+    "code": {
+      "label": "Our code: every third-party script blocked",
+      "gate": 0.93,
+      "gates": {},
+      "block": [
+        "*googletagmanager.com*",
+        "*google-analytics.com*",
+        "*analytics.google.com*",
+        "*doubleclick.net*",
+        "*googleadservices.com*",
+        "*google.com/pagead*",
+        "*google.com/ccm*",
+        "*facebook.net*",
+        "*facebook.com*",
+        "*reddit.com*",
+        "*redditstatic.com*",
+        "*mouseflow.com*",
+        "*openai.com*",
+        "*brevo.com*",
+        "*sibautomation.com*",
+        "*clarity.ms*",
+        "*contentsquare.net*",
+        "*sentry.io*",
+        "*/cv9l/*"
+      ]
+    },
+    "served": {
+      "label": "As served: the edge's GTM loader injected, every beacon blocked",
+      "hostname": "brand.avagolf.com",
+      "proxy": {
+        "/cv9l/": {
+          "origin": "https://brand.avagolf.com",
+          "only": "^/cv9l/([A-Za-z0-9_-]{20,})?$"
+        }
+      },
+      "headStart": "<script>(function(w,i,g){w[g]=w[g]||[];if(typeof w[g].push=='function')w[g].push(i)})(window,'GTM-54XS4HQ8','google_tags_first_party');</script><script>(function(w,d,s,l){w[l]=w[l]||[];var f=d.getElementsByTagName(s)[0], j=d.createElement(s);j.async=true;j.src='/cv9l/'; f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer');</script>",
+      "block": [
+        "*collect*",
+        "*/g/c",
+        "*/g/c?*",
+        "*stats.g.doubleclick.net*",
+        "*ad.doubleclick.net*",
+        "*googleads.g.doubleclick.net/pagead/viewthroughconversion*",
+        "*google.com/pagead*",
+        "*google.com/ccm*",
+        "*facebook.com/tr*",
+        "*alb.reddit.com*",
+        "*bzr.openai.com*",
+        "*mouseflow.com*",
+        "*brevo.com*",
+        "*sibautomation.com*",
+        "*clarity.ms*",
+        "*contentsquare.net*",
+        "*sentry.io*"
+      ]
+    }
+  }
+}

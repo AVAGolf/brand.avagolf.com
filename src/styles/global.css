@@ -1,74 +1,56 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
- * Fonts
- * Google Sans Flex is a variable font (weight axis 100–1000).
- * Construct Mono ships Regular only. DM Mono ships Regular + Medium.
+ * Fonts and colours come from avagolf.com's shared-components/ (taken at
+ * build, see scripts/take-shared-components.sh), imported by Layout.astro:
+ *   styles/fonts.css   @font-face for Google Sans Flex, Construct Mono and
+ *                      DM Mono, with content-hashed file names
+ *   styles/tokens.css  the palette, as --color-* on :root
  * ------------------------------------------------------------------------- */
-
-@font-face {
-  font-family: "Google Sans Flex";
-  src: url("/fonts/GoogleSansFlex.woff2") format("woff2-variations"),
-       url("/fonts/GoogleSansFlex.woff2") format("woff2");
-  font-weight: 100 1000;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Construct Mono";
-  src: url("/fonts/ConstructMono-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DM Mono";
-  src: url("/fonts/DMMono-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DM Mono";
-  src: url("/fonts/DMMono-Medium.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
 
 /* ---------------------------------------------------------------------------
  * Design tokens — mirrors Figma paint styles 1:1.
  * Tailwind v4 generates utilities from these (bg-*, text-*, border-*, etc.).
  * ------------------------------------------------------------------------- */
 
+/* The palette is avagolf.com's (shared-components/styles/tokens.css, the
+ * same --color-* names the Figma uses), so tokens.css is the one place a
+ * colour is defined. This block only tells Tailwind the names exist, so it
+ * still generates bg-green-500, text-dark-green-900/70 and the rest.
+ * `reference` stops Tailwind emitting these variables itself, and `inline`
+ * writes each value, var(--color-…), straight into the utility, so every
+ * utility reads the shared token. */
+@theme inline reference {
+  --color-white: var(--color-white);
+  --color-grey-300: var(--color-grey-300);
+
+  --color-green-300: var(--color-green-300);
+  --color-green-500: var(--color-green-500);
+  --color-green-700: var(--color-green-700);
+  --color-green-900: var(--color-green-900);
+
+  --color-dark-green-300: var(--color-dark-green-300);
+  --color-dark-green-500: var(--color-dark-green-500);
+  --color-dark-green-700: var(--color-dark-green-700);
+  --color-dark-green-900: var(--color-dark-green-900);
+
+  --color-yellow-300: var(--color-yellow-300);
+  --color-yellow-500: var(--color-yellow-500);
+
+  --color-bright-green-500: var(--color-bright-green-500);
+}
+
 @theme {
-  /* Brand colors — literal names matching Figma */
-  --color-white: #ffffff;
-  --color-grey-300: #f4f4f2;
-
-  --color-green-300: #95cbc1;
-  --color-green-500: #349683;
-  --color-green-700: #225142;
-  --color-green-900: #16382e;
-
-  --color-dark-green-300: #132a23;
-  --color-dark-green-500: #10211c;
-  --color-dark-green-700: #0b1c16;
-  --color-dark-green-900: #070e0c;
-
-  --color-yellow-300: #ffff4a;
-  --color-yellow-500: #ffe708;
-
-  --color-bright-green-500: #17deb7;
-
   /* Font families */
   --font-sans: "Google Sans Flex", "Inter", system-ui, -apple-system, sans-serif;
   --font-display: "Google Sans Flex", "Inter", system-ui, sans-serif;
   --font-stat: "Construct Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Where avagolf.com's shared bar switches from its MENU button to its
+     desktop links (its max-width: 900px query), and so where the sidebar
+     takes over from the shared mobile menu. */
+  --breakpoint-sidebar: 56.3125rem;
 
   /* Drop shadow from Figma (y:10, blur:25, color: dark-green-900) */
   --shadow-drop: 0 10px 25px 0 rgba(7, 14, 12, 1);
@@ -231,6 +213,15 @@
   box-shadow: var(--shadow-sidebar);
 }
 
+/* Below-the-fold sections on the long pages: the browser skips styling and
+   laying them out until they near the viewport, as avagolf.com does for its
+   long sections and the shared footer does for itself. The intrinsic size
+   keeps the scrollbar honest before they render. */
+@utility render-when-near {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
+}
+
 /* ---------------------------------------------------------------------------
  * Base layer — page defaults
  * ------------------------------------------------------------------------- */
@@ -253,4 +244,46 @@
     background-color: var(--color-yellow-500);
     color: var(--color-dark-green-900);
   }
+}
+
+/* ---------------------------------------------------------------------------
+ * avagolf.com's shared bar, on a site with a sidebar. Unlayered, so these win
+ * over the Nav's own scoped styles.
+ * ------------------------------------------------------------------------- */
+
+/* From the sidebar breakpoint up the floating logo sits over the sidebar's
+   top-left corner, not over the content, so it stays after the header scrolls
+   away instead of fading (below that it fades, as on every AVA site). */
+@media (min-width: 56.3125rem) {
+  #navLogo.is-hidden {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Below 901px the bar is just the floating logo and a white MENU label, and
+   the logo fades once the header has scrolled away. avagolf.com's pages are
+   dark all the way down; brand's content is light grey, where the label
+   disappeared. A dark chip keeps it readable over anything. */
+@media (max-width: 900px) {
+  #menuToggle {
+    padding: 0.6rem 0.85rem;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--color-dark-green-900) 85%, transparent);
+    color: var(--color-white);
+  }
+}
+
+/* The mobile menu also carries the guideline pages (BrandMenu), which can
+   make it taller than a small phone; let it scroll instead of clipping.
+
+   And its frosted-glass blur, again. Nav.astro declares `backdrop-filter`
+   and then `-webkit-backdrop-filter`; Lightning CSS, Vite 8's CSS minifier,
+   reads the second as overriding the first and ships only the -webkit- one,
+   which Chrome ignores, so the page showed through the open menu unblurred.
+   Declared alone here, it comes out with both. Delete this once the shared
+   Nav lists the prefixed declaration first. */
+#mobileNav {
+  overflow-y: auto;
+  backdrop-filter: blur(15px);
 }

@@ -1,0 +1,72 @@
+name: Deploy
+
+# Builds the site and publishes it to the brand.avagolf.com bucket behind
+# Fastly. Every build takes avagolf.com's shared nav, footer and tokens from its
+# main (scripts/take-shared-components.sh), and reads the brand pack's version
+# from https://brand.avagolf.com/files/brand-pack.json (src/lib/brandPack.ts).
+# So besides every push to main, this runs:
+#   - weekly, which is how a change to avagolf.com's shared chrome reaches
+#     this site within a week;
+#   - on demand: AVAGolf/AVA-Golf-Brand-Assets starts it with
+#     `gh workflow run deploy.yml` after publishing a new brand pack, so the
+#     homepage shows the new version within minutes. Run it by hand ("Run
+#     workflow") to publish a shared-chrome change sooner.
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "17 9 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    env:
+      # Reads avagolf.com's shared-components/ and scripts/ci/ at build time.
+      AVAGOLF_READ_TOKEN: ${{ secrets.AVAGOLF_READ_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # The runner's own AWS CLI, in place of jakejarvis/s3-sync-action@master
+      # (unmaintained, and a container that installs the CLI on every run).
+      # files/* is the brand pack and its manifest, uploaded out-of-band by
+      # AVAGolf/AVA-Golf-Brand-Assets; neither is in git, and both must
+      # survive the --delete sync.
+      - name: Sync to S3
+        run: |
+          aws s3 sync dist/ s3://brand.avagolf.com/ --no-progress \
+            --acl public-read --follow-symlinks --delete --exclude 'files/*'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.S3_BUCKET_REGION }}
+
+      # purge_all, the one request jcoene/fastly-purge-action made. That action
+      # was last changed in 2021 and declares node12; avagolf.com and news
+      # replaced it with the same call.
+      - name: Invalidate Fastly
+        env:
+          FASTLY_API_KEY: ${{ secrets.FASTLY_API_KEY }}
+        run: |
+          curl --fail-with-body --silent --show-error -X POST \
+            -H "Fastly-Key: $FASTLY_API_KEY" -H "Accept: application/json" \
+            https://api.fastly.com/service/iN42g1xAhUJCEMKjylOpRW/purge_all

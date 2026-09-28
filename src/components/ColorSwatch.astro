@@ -18,6 +18,20 @@ const {
 } = Astro.props;
 
 const padding = size === "lg" ? "p-8" : size === "sm" ? "p-4" : "p-6";
+
+// White text is the default, but on mid-tones like green-500 (#349683, 3.6:1)
+// and red-400 (#D26B71, 3.4:1) it misses WCAG's 4.5:1 for text this size.
+// Where it does, the label switches to dark-green-900, which clears it on
+// every swatch in the palette. A dark textClass passed in is kept as it is.
+const luminance = (h: string) => {
+  const [r, g, b] = [1, 3, 5].map((i) => {
+    const c = parseInt(h.replace("#", "").slice(i - 1, i + 1), 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+const contrastWithWhite = 1.05 / (luminance(hex) + 0.05);
+const labelClass = textClass === "text-white" && contrastWithWhite < 4.5 ? "text-dark-green-900" : textClass;
 ---
 
 <div
@@ -28,7 +42,7 @@ const padding = size === "lg" ? "p-8" : size === "sm" ? "p-4" : "p-6";
   ]}
   style={`background-color: ${hex}`}
 >
-  <p class:list={["text-button", textClass]}>{name}</p>
-  <p class:list={["text-code mt-2", textClass]}>HEX: {hex.toUpperCase()}</p>
-  {cmyk && <p class:list={["text-code", textClass]}>CMYK: {cmyk}</p>}
+  <p class:list={["text-button", labelClass]}>{name}</p>
+  <p class:list={["text-code mt-2", labelClass]}>HEX: {hex.toUpperCase()}</p>
+  {cmyk && <p class:list={["text-code", labelClass]}>CMYK: {cmyk}</p>}
 </div>

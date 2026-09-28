@@ -3,11 +3,20 @@ dist/
 # generated types
 .astro/
 
+# taken from avagolf.com at build (scripts/take-shared-components.sh)
+shared-components/
+scripts/ci/
+
+# lighthouse and build-diff output
+lighthouse.md
+lighthouse-reports/
+build-diff.md
+
 # dependencies
 node_modules/
-# pnpm is the pinned package manager (see packageManager in package.json)
-package-lock.json
+# npm is the package manager (package-lock.json is committed)
 yarn.lock
+pnpm-lock.yaml
 
 # logs
 npm-debug.log*

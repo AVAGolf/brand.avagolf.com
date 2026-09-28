@@ -1,0 +1,142 @@
+name: Pull request checks
+
+# Everything a merge to main is about to ship, run first where it can still be
+# read and fixed: types, tests, lint, a build compared against main's, and
+# Lighthouse the way PageSpeed runs it. Copied from news.avagolf.com's ci.yml
+# (which follows avagolf.com's) without its post-contract step; the jobs call
+# the tools the build takes from avagolf.com's scripts/ci/ (see
+# scripts/take-shared-components.sh).
+on:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+# Reads avagolf.com's shared-components/ and scripts/ci/ at build time.
+env:
+  AVAGOLF_READ_TOKEN: ${{ secrets.AVAGOLF_READ_TOKEN }}
+
+jobs:
+  site:
+    name: Site
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Type check
+        run: npm run check
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      # Build the branch this PR merges into, then compare. The report is the
+      # evidence a refactor changed nothing, and the one-screen summary of what
+      # a real change ships. It never fails the job; it only has to be read.
+      - name: Check out the base branch
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: .base
+
+      # A base from before the move to npm has only pnpm-lock.yaml. It is
+      # installed flat (node-linker=hoisted), as npm would: .base sits inside
+      # this checkout, and in pnpm's nested layout the prerender chunk's bare
+      # imports walk up into this branch's node_modules instead.
+      - name: Build the base branch
+        working-directory: .base
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npx --yes pnpm@10.30.2 install --frozen-lockfile --config.node-linker=hoisted; fi
+          if [ -f scripts/take-shared-components.sh ]; then bash scripts/take-shared-components.sh; fi
+          npx astro build
+
+      - name: Compare the two builds
+        run: |
+          node scripts/ci/diff-dist.mjs .base/dist dist --summary build-diff.md
+          cat build-diff.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Post the comparison
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: bash scripts/ci/sticky-comment.sh ci:build-diff "Build output vs ${{ github.event.pull_request.base.ref }}" build-diff.md
+
+  # Median of five mobile runs per page, in the two profiles in
+  # lighthouse.config.json: `code` (third parties blocked) gates, `served`
+  # (the edge's GTM loader put back, every beacon blocked) reports what the
+  # tags cost. Separate runners so neither competes with the other for CPU.
+  lighthouse:
+    name: Lighthouse (${{ matrix.profile }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [code, served]
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - name: Lighthouse
+        id: lh
+        run: |
+          set +e
+          node scripts/ci/lighthouse.mjs --profile "${{ matrix.profile }}" \
+            --summary lighthouse.md --dump lighthouse-reports
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          cat lighthouse.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Keep the full reports
+        uses: actions/upload-artifact@v7
+        with:
+          name: lighthouse-${{ matrix.profile }}
+          path: lighthouse-reports/
+          retention-days: 7
+
+      - name: Post the scores
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          bash scripts/ci/sticky-comment.sh "ci:lighthouse-${{ matrix.profile }}" "Lighthouse: ${{ matrix.profile }}" lighthouse.md
+
+      # Last, so the scores are posted either way.
+      - name: Gate
+        if: steps.lh.outputs.status != '0'
+        run: |
+          echo "::error::A page's median performance score is below this profile's gate in lighthouse.config.json."
+          exit 1
