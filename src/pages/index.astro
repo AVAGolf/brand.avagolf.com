@@ -4,7 +4,9 @@ import { brandPack, packSummary, PACK_PATH } from "../lib/brandPack";
 
 // Version, date and size from the manifest the brand-pack workflow publishes
 // (src/lib/brandPack.ts). The zip keeps one URL; `download` saves it under the
-// version's own name, e.g. AVA_Golf_Brand_Pack_v1.0.3.zip.
+// version's own name, e.g. AVA_Golf_Brand_Pack_v1.0.3.zip. The build writes the
+// numbers into the page; the script below re-reads the manifest in the browser,
+// so a pack published since the last build shows its own number at once.
 const pack = await brandPack();
 ---
 
@@ -19,12 +21,13 @@ const pack = await brandPack();
     <a
       href={PACK_PATH}
       download={pack.filename}
+      data-pack-download
       class="text-button hover:bg-yellow-300 hover:text-dark-green-900 inline-flex h-12 w-80 items-center justify-center rounded-full border-2 border-yellow-300 text-white transition-colors"
       style="letter-spacing:0.1em;"
     >
       Download Brand Pack
     </a>
-    <p class="text-micro text-bright-green-500">{packSummary(pack)}</p>
+    <p class="text-micro text-bright-green-500" data-pack-summary data-version={pack.version}>{packSummary(pack)}</p>
   </div>
 
   <div class="max-w-[750px]">
@@ -47,3 +50,32 @@ and the people who share their ambition.
     </div>
   </div>
 </BrandLayout>
+
+<script>
+  // The brand pack can be republished between site builds (the brand-pack
+  // workflow in AVA-Golf-Brand-Assets writes /files/brand-pack.json next to
+  // the zip). Read it once the page is idle and, if it names a newer pack than
+  // the build did, show that one. Same origin, no-cache (S3's ETag makes it a
+  // 304 when nothing changed), and silent on any failure: the built-in numbers
+  // stay.
+  import { parseManifest, packSummary } from "../lib/brandPack";
+
+  const refresh = () =>
+    fetch("/files/brand-pack.json", { cache: "no-cache" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!data) return;
+        const pack = parseManifest(data);
+        const summary = document.querySelector<HTMLElement>("[data-pack-summary]");
+        if (summary && summary.dataset.version !== pack.version) {
+          summary.textContent = packSummary(pack);
+          summary.dataset.version = pack.version;
+        }
+        document.querySelector("[data-pack-download]")?.setAttribute("download", pack.filename);
+      })
+      .catch(() => {});
+
+  const idle = () => ("requestIdleCallback" in window ? requestIdleCallback(refresh) : setTimeout(refresh, 200));
+  if (document.readyState === "complete") idle();
+  else window.addEventListener("load", idle, { once: true });
+</script>

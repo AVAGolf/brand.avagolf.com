@@ -7,9 +7,11 @@
 //
 //   { version, tag, published (ISO 8601), bytes, sha256, commit, url, filename }
 //
-// and starts this repo's deploy.yml, so the site shows the new number within
-// minutes. The homepage, the JSON-LD and llms.txt all read it through
-// brandPack(), which fetches it once per build.
+// The homepage, the JSON-LD and llms.txt all read it through brandPack(),
+// which fetches it once per build (the weekly deploy, or any push). The
+// homepage also re-reads it in the browser (src/pages/index.astro), so a pack
+// published between builds shows its own number straight away with no
+// cross-repo token.
 //
 // Until that workflow has run once the manifest 404s. The build then falls back
 // to the number the site showed before versioning (1.0.0) and prints a warning,
