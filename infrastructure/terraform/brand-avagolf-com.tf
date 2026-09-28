@@ -27,10 +27,10 @@ module "brand_avagolf_com_storage" {
   bucket_name           = "brand.avagolf.com"
   enable_access_logging = true
 
-  # Still index.html: this site has no 404 page yet. Switch to "404.html"
-  # once src/pages/404.astro exists, or every dead URL keeps getting the
-  # homepage under a 404 status.
-  error_document = "index.html"
+  # src/pages/404.astro builds to this key (added in the app PR, #10, which
+  # merges first). With index.html here, every dead URL got the homepage
+  # under a 404 status, which a crawler reads as a duplicate of it.
+  error_document = "404.html"
 }
 
 # The service used to be declared inline here. It is the module's now; this
