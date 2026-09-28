@@ -7,16 +7,37 @@
     "node": ">=24.16.0"
   },
   "scripts": {
+    "take": "bash scripts/take-shared-components.sh",
+    "predev": "bash scripts/take-shared-components.sh --if-missing",
     "dev": "astro dev",
+    "prebuild": "bash scripts/take-shared-components.sh",
     "build": "astro build",
     "preview": "astro preview",
+    "precheck": "bash scripts/take-shared-components.sh --if-missing",
+    "check": "astro check",
+    "pretest": "bash scripts/take-shared-components.sh --if-missing",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "lighthouse": "node scripts/ci/lighthouse.mjs",
     "astro": "astro"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@astrojs/markdown-remark": "^7.3.1",
     "@astrojs/sitemap": "^3.7.4",
     "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.19.0",
     "astro": "^7.3.5",
-    "tailwindcss": "^4.3.3"
+    "chrome-launcher": "1.2.1",
+    "eslint": "^10.11.0",
+    "eslint-plugin-astro": "^3.2.1",
+    "js-yaml": "^5.4.2",
+    "lighthouse": "13.5.0",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.70.1",
+    "vanilla-cookieconsent": "3.1.0",
+    "vitest": "^5.0.2"
   }
 }

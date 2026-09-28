@@ -12,11 +12,16 @@ export default defineConfig({
   server: { port: 3000 },
   build: {
     format: 'directory',
+    // Every page's CSS in its own <head>: no render-blocking stylesheet
+    // request. The pages are small, so inlining costs less than a round trip.
+    inlineStylesheets: 'always',
   },
   // Pages are emitted as `/<slug>/index.html` and served by the S3 website
   // endpoint, which 302s `/<slug>` -> `/<slug>/`. Internal links must include
   // the trailing slash or Google indexes them as "Page with redirect".
   trailingSlash: 'always',
+  // Hover prefetch works without a client-side router: each page is a full
+  // load (the shared Nav binds its menu once per load), fetched ahead.
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'hover',

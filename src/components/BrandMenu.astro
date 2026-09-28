@@ -1,0 +1,69 @@
+---
+// The guideline pages, inside avagolf.com's shared mobile menu (passed in
+// through <Nav>'s slot, as news passes its SubNav). Below the shared bar's
+// 901px breakpoint the sidebar is gone and the bar's MENU button is the one
+// menu on the page, so this is where phones find Logo Marks, Colors and the
+// rest. From 901px up the sidebar shows the same list; the shared menu can't
+// be opened there.
+import { groupOrder, sectionHref, sectionsByGroup } from "../lib/sections";
+
+interface Props {
+  activeSlug?: string;
+}
+const { activeSlug } = Astro.props;
+const groups = sectionsByGroup();
+---
+
+<nav class="brand-menu" aria-label="Brand guidelines">
+  {
+    groupOrder.map((group) => (
+      <div class="brand-menu__group">
+        <p class="brand-menu__title">{group}</p>
+        <ul>
+          {groups[group].map((s) => (
+            <li>
+              <a href={sectionHref(s)} aria-current={s.slug === activeSlug ? "page" : undefined}>
+                {s.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</nav>
+
+<style>
+  .brand-menu {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 2rem 0 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-white) 18%, transparent);
+  }
+  .brand-menu__title {
+    margin-bottom: 0.75rem;
+    font: 400 10px/1.2 var(--font-mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-green-300);
+  }
+  .brand-menu ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .brand-menu a {
+    font: 500 12px/1.3 var(--font-sans);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-white) 80%, transparent);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .brand-menu a:hover,
+  .brand-menu a[aria-current="page"] {
+    color: var(--color-bright-green-500);
+  }
+</style>

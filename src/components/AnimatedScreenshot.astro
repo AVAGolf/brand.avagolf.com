@@ -2,10 +2,12 @@
 interface Props {
   src: string;
   alt: string;
+  width: number;
+  height: number;
   class?: string;
 }
 
-const { src, alt, class: className } = Astro.props;
+const { src, alt, width, height, class: className } = Astro.props;
 
 // A 1x1 transparent GIF stands in until the real source is attached, so the
 // browser shows an empty frame rather than the alt text or a broken-image icon.
@@ -17,6 +19,8 @@ const PLACEHOLDER =
   src={PLACEHOLDER}
   data-animate-src={src}
   alt={alt}
+  width={width}
+  height={height}
   decoding="async"
   class:list={[
     "bg-green-900/10 opacity-0 transition-opacity duration-500",
@@ -30,29 +34,24 @@ const PLACEHOLDER =
   // already run several times by the time anyone scrolls down to it, so the
   // source is withheld until the frame is half in view — that also keeps the
   // multi-megabyte files off the initial page load.
-  function initAnimatedScreenshots() {
-    const images = document.querySelectorAll<HTMLImageElement>(
-      "img[data-animate-src]",
-    );
-    if (!images.length) return;
+  //
+  // The same files are what the page's embed code hands out
+  // (brand.avagolf.com/brand/application/<name>.webp), so they stay WebPs.
+  //
+  // Runs once per page load: the site has no client-side router.
+  const images = document.querySelectorAll<HTMLImageElement>("img[data-animate-src]");
 
-    const start = (img: HTMLImageElement) => {
-      const src = img.dataset.animateSrc;
-      if (!src) return;
-      delete img.dataset.animateSrc;
-      img.addEventListener(
-        "load",
-        () => img.classList.remove("opacity-0"),
-        { once: true },
-      );
-      img.src = src;
-    };
+  const start = (img: HTMLImageElement) => {
+    const src = img.dataset.animateSrc;
+    if (!src) return;
+    delete img.dataset.animateSrc;
+    img.addEventListener("load", () => img.classList.remove("opacity-0"), { once: true });
+    img.src = src;
+  };
 
-    if (!("IntersectionObserver" in window)) {
-      images.forEach(start);
-      return;
-    }
-
+  if (!("IntersectionObserver" in window)) {
+    images.forEach(start);
+  } else {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -63,10 +62,6 @@ const PLACEHOLDER =
       },
       { threshold: 0.5 },
     );
-
     images.forEach((img) => observer.observe(img));
   }
-
-  // Fires on first load and after every client-side navigation (ClientRouter).
-  document.addEventListener("astro:page-load", initAnimatedScreenshots);
 </script>

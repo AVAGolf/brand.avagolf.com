@@ -1,170 +1,136 @@
 ---
-import { ClientRouter } from "astro:transitions";
-import "../styles/global.css";
+// The document every page renders through: <head>, consent, the site's GA4
+// tag, and avagolf.com's shared top bar.
+//
+// The chrome is avagolf.com's: <Nav>, <MobileMenuFooter> and <Footer> come
+// from shared-components/, which the build takes from avagolf.com's main (see
+// scripts/take-shared-components.sh). Change a link there and this site picks
+// it up on its next build. What the shared chrome leaves to the site that
+// renders it lives in src/components/site/ and src/lib/, copied from
+// news.avagolf.com: consent, the mobile-menu focus fix, meta tags, JSON-LD and
+// the app-link attribution. The footer is placed by the page layouts
+// (BrandLayout, tokens), because on guideline pages it sits beside the sidebar.
+import Nav from "@shared/Nav.astro";
+import MobileMenuFooter from "@shared/MobileMenuFooter.astro";
+import sansFlexUrl from "@shared/fonts/GoogleSansFlex.woff2?url";
+import CookieConsent from "@/components/site/CookieConsent.astro";
+import Head from "@/components/site/Head.astro";
+import MenuInert from "@/components/site/MenuInert.astro";
+import BrandMenu from "@/components/BrandMenu.astro";
+import { brandPack } from "@/lib/brandPack";
+import { graph, SITE, type Node } from "@/lib/schema";
+import "@shared/styles/tokens.css";
+import "@shared/styles/fonts.css";
+import "@/styles/global.css";
 
 interface Props {
   title?: string;
   description?: string;
-  image?: string;
-  ogType?: "website" | "article";
+  /** The guideline page being shown, marked current in the mobile menu. */
+  activeSlug?: string;
+  /** The LCP image, preloaded at high priority with its <img>'s srcset. */
+  preloadImage?: { srcset: string; sizes: string };
+  /** Page-specific JSON-LD nodes (breadcrumbs), added to the site graph. */
+  schema?: Node[];
 }
 
 const {
   title = "AVA Golf — Brand Guidelines",
   description = "Brand identity, design tokens, and guidelines for AVA Golf — logo marks, color palette, typography, and application principles.",
-  image = "/og-image.png",
-  ogType = "website",
+  activeSlug,
+  preloadImage,
+  schema = [],
 } = Astro.props;
 
-const site = Astro.site ?? new URL("https://brand.avagolf.com");
-const canonicalUrl = new URL(Astro.url.pathname, site).href;
-const socialImage = new URL(image, site).href;
-
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "AVA Golf, Inc.",
-  alternateName: "AVA Golf",
-  url: "https://avagolf.com/",
-  logo: "https://brand.avagolf.com/avagolf-sxs-color.svg",
-  description: "AVA Golf is the first golf intelligence system, unifying player data from simulators, launch monitors, and on-course tracking to deliver personalized coaching and improvement plans.",
-  sameAs: [
-    "https://www.instagram.com/avagolfofficial/",
-    "https://www.linkedin.com/company/avagolf/",
-    "https://www.youtube.com/@avagolfofficial",
-    "https://www.facebook.com/avagolf",
-    "https://www.tiktok.com/@ava.golf"
-  ],
-  parentOrganization: {
-    "@type": "Organization",
-    name: "ParOne, Inc.",
-    url: "https://parone.com/"
-  }
-};
-
-const webSiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "AVA Golf Brand Guidelines",
-  url: "https://brand.avagolf.com/",
-  description: "Official brand guidelines for AVA Golf — covering logo marks, color palette, typography, brand elements, and communication principles.",
-  version: "1.0.0",
-  publisher: {
-    "@type": "Organization",
-    name: "AVA Golf, Inc.",
-    url: "https://avagolf.com/"
-  },
-  mainEntity: {
-    "@type": "CreativeWork",
-    name: "AVA Golf Brand Identity System",
-    description: "Complete visual and communication identity for AVA Golf including logo marks, color palette, typography, brand elements, and voice guidelines.",
-    creator: {
-      "@type": "Organization",
-      name: "AVA Golf, Inc."
-    }
-  }
+const canonicalUrl = new URL(Astro.url.pathname, SITE).href;
+const pack = await brandPack();
+const socialImage = {
+  url: `${SITE}/og-image.jpg`,
+  width: 1200,
+  height: 630,
+  type: "image/jpeg",
+  alt: "AVA Golf — Brand Guidelines",
 };
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Essentials -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="generator" content={Astro.generator} />
 
-    <!-- Primary SEO -->
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="author" content="AVA Golf" />
+    {/* Consent Mode defaults. Inline, and first after the meta tags: they must
+        be in the dataLayer before the edge's GTM container or the gtag.js
+        below runs anything. */}
+    <CookieConsent />
 
-    <!-- Theme / color scheme -->
-    <meta name="theme-color" content="#070e0c" />
-    <meta name="color-scheme" content="light dark" />
-
-    <!-- Icons / PWA -->
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-
-    <!-- Open Graph -->
-    <meta property="og:type" content={ogType} />
-    <meta property="og:site_name" content="AVA Golf — Brand Guidelines" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={socialImage} />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="AVA Golf — Brand Guidelines" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter / X -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={socialImage} />
-    <meta name="twitter:image:alt" content="AVA Golf — Brand Guidelines" />
-
-    <!-- Fonts: preload critical above-the-fold fonts -->
-    <link
-      rel="preload"
-      href="/fonts/GoogleSansFlex.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/ConstructMono-Regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/DMMono-Regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-
-    <!-- Page-specific head -->
-    <slot name="head" />
-
-    <ClientRouter />
-
-    <!-- Structured data -->
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify(organizationSchema)}
-    />
-
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify(webSiteSchema)}
-    />
-
+    {/* brand.avagolf.com's own GA4 property, as it has always been set up.
+        The snippet is Google's, unchanged; `is:inline` keeps it a plain
+        script, as Google ships it, instead of a bundled module. */}
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-X34R7TJNMF"></script>
-    <script>
+    <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
       gtag('config', 'G-X34R7TJNMF');
     </script>
+
+    {/* The LCP image first, then the one face above the fold. The preload
+        carries the <img>'s srcset and sizes and no href, so the browser
+        fetches exactly the candidate the <img> will use, once. */}
+    {
+      preloadImage && (
+        <link
+          rel="preload"
+          as="image"
+          imagesrcset={preloadImage.srcset}
+          imagesizes={preloadImage.sizes}
+          fetchpriority="high"
+        />
+      )
+    }
+    <link rel="preload" href={sansFlexUrl} as="font" type="font/woff2" crossorigin />
+
+    <Head
+      siteName="AVA Golf — Brand Guidelines"
+      title={title}
+      description={description}
+      canonical={canonicalUrl}
+      author="AVA Golf"
+      image={socialImage}
+    />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
+
+    <slot name="head" />
+
+    <script type="application/ld+json" is:inline set:html={graph(pack, schema)} />
   </head>
   <body>
+    <Nav site="brand">
+      <BrandMenu activeSlug={activeSlug} />
+      <MobileMenuFooter site="brand" />
+    </Nav>
     <slot />
+    <MenuInert />
+
+    <script>
+      import { decorateAppLinks } from "@/lib/appLinks";
+
+      // app.avagolf.com links (the shared bar's Log In and Start Free) carry
+      // the visit's campaign and click IDs, as on avagolf.com and news.
+      try {
+        decorateAppLinks();
+      } catch {
+        // Attribution is a nice-to-have; a broken link never is.
+      }
+    </script>
   </body>
 </html>

@@ -3,6 +3,15 @@ dist/
 # generated types
 .astro/
 
+# taken from avagolf.com at build (scripts/take-shared-components.sh)
+shared-components/
+scripts/ci/
+
+# lighthouse and build-diff output
+lighthouse.md
+lighthouse-reports/
+build-diff.md
+
 # dependencies
 node_modules/
 # npm is the package manager (package-lock.json is committed)

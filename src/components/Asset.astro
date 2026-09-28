@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { rasterSize } from "../lib/imageSize";
 
 type Item = CollectionEntry<"assets">["data"]["items"][number];
 
@@ -10,9 +11,11 @@ interface Props {
 
 const { item, divider = false } = Astro.props;
 const { title, alt, image, caption, preview, formats, body } = item;
+const src = `/brand/assets/${image}.${preview}`;
+const { width, height } = await rasterSize(src);
 ---
 
-<section class:list={[divider && "border-t border-green-500/30 pt-12"]}>
+<section class:list={[divider && "render-when-near border-t border-green-500/30 pt-12"]}>
   <div class="grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:items-start">
     <div>
       <h2 class="text-h2 text-dark-green-900 mb-4">{title}</h2>
@@ -45,10 +48,13 @@ const { title, alt, image, caption, preview, formats, body } = item;
       </p>
     </div>
     <img
-      src={`/brand/assets/${image}.${preview}`}
+      src={src}
       alt={alt}
+      width={width}
+      height={height}
       class="aspect-video w-full rounded-lg object-cover"
       loading="lazy"
+      decoding="async"
     />
   </div>
 </section>
