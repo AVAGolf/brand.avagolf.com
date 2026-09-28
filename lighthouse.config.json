@@ -7,7 +7,8 @@
     "The gateway also carries the GA4 hits (/cv9l/ga/g/c, /cv9l/ag/g/c): `only` keeps the proxy to the",
     "gateway scripts, and */g/c* blocks the hits in Chrome as well, so no run sends a real hit.",
     "brand's own gtag.js (G-X34R7TJNMF) loads in `served` and is blocked in `code`; its hits go to /g/collect, which *collect* blocks.",
-    "Gates sit a few points under the measured medians, so a real regression fails and runner noise does not."
+    "Gates sit a few points under the measured medians, so a real regression fails and runner noise does not.",
+    "`only` forwards just the gateway loader (/cv9l/) and its content-hashed scripts; the diagnostics ping (/cv9l/td) and the GA4 hits (/cv9l/ga/g/c, /cv9l/ag/g/c) are answered locally and never reach production."
   ],
   "pages": [
     "/",
@@ -49,7 +50,7 @@
       "proxy": {
         "/cv9l/": {
           "origin": "https://brand.avagolf.com",
-          "only": "^/cv9l/[^/]*$"
+          "only": "^/cv9l/([A-Za-z0-9_-]{20,})?$"
         }
       },
       "headStart": "<script>(function(w,i,g){w[g]=w[g]||[];if(typeof w[g].push=='function')w[g].push(i)})(window,'GTM-54XS4HQ8','google_tags_first_party');</script><script>(function(w,d,s,l){w[l]=w[l]||[];var f=d.getElementsByTagName(s)[0], j=d.createElement(s);j.async=true;j.src='/cv9l/'; f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer');</script>",
