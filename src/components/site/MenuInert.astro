@@ -1,0 +1,38 @@
+---
+// Copied from news.avagolf.com's src/components/site/MenuInert.astro, unchanged.
+// Change it there first, then copy it here and to docs.avagolf.com.
+//
+// The shared mobile menu (shared-components/Nav.astro) hides itself with
+// aria-hidden="true", but its links stay focusable, so a keyboard or
+// screen-reader user can tab into a menu they can't see. Lighthouse fails both
+// the Accessibility and the Agentic Browsing audits on it.
+//
+// `inert` is the fix: it takes the subtree out of focus order and the
+// accessibility tree together. The menu's own script only toggles aria-hidden,
+// so this mirrors that attribute onto `inert` whenever it changes, and once at
+// load. Remove this if the shared Nav starts setting `inert` itself.
+//
+// brand.avagolf.com and docs.avagolf.com copy this file unchanged.
+---
+
+<script>
+  const menu = document.getElementById("mobileNav");
+  if (menu) {
+    const sync = () => {
+      menu.inert = menu.getAttribute("aria-hidden") !== "false";
+    };
+    sync();
+    new MutationObserver(sync).observe(menu, { attributes: true, attributeFilter: ["aria-hidden"] });
+    // Opening moves focus into the menu in the same click handler that shows
+    // it, before a MutationObserver callback could run. A capture listener on
+    // the toggle fires ahead of the menu's own, so the menu is focusable by
+    // the time it asks for focus.
+    document.getElementById("menuToggle")?.addEventListener(
+      "click",
+      () => {
+        menu.inert = false;
+      },
+      { capture: true },
+    );
+  }
+</script>

@@ -1,0 +1,90 @@
+---
+// Copied from news.avagolf.com's src/components/site/Head.astro, unchanged.
+// Change it there first, then copy it here and to docs.avagolf.com.
+//
+// Everything in <head> that describes the page: title, description,
+// canonical, robots, Open Graph, X, and the alternate formats. The layout
+// decides the values; this only writes them, so brand.avagolf.com and
+// docs.avagolf.com can copy it unchanged.
+
+export interface Props {
+  siteName: string;
+  title: string;
+  description: string;
+  canonical: string;
+  author?: string;
+  noindex?: boolean;
+  ogType?: "website" | "article";
+  image: { url: string; width?: number; height?: number; type?: string; alt: string };
+  publishedTime?: string;
+  modifiedTime?: string;
+  articleAuthor?: string;
+  publisher?: string;
+  /** Alternate representations of this page: RSS, Markdown. */
+  alternates?: { type: string; href: string; title?: string }[];
+  favicon?: string;
+  themeColor?: string;
+}
+
+const {
+  siteName,
+  title,
+  description,
+  canonical,
+  author,
+  noindex = false,
+  ogType = "website",
+  image,
+  publishedTime,
+  modifiedTime,
+  articleAuthor,
+  publisher,
+  alternates = [],
+  favicon = "/favicon.svg",
+  themeColor = "#070E0C",
+} = Astro.props;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{
+  noindex ? (
+    <meta name="robots" content="noindex, follow" />
+  ) : (
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  )
+}
+{author && <meta name="author" content={author} />}
+
+<link rel="icon" type="image/svg+xml" href={favicon} />
+<link rel="shortcut icon" href={favicon} />
+<meta name="theme-color" content={themeColor} />
+<meta name="color-scheme" content="dark" />
+{alternates.map((alt) => <link rel="alternate" type={alt.type} href={alt.href} title={alt.title} />)}
+
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={image.url} />
+{image.width && <meta property="og:image:width" content={String(image.width)} />}
+{image.height && <meta property="og:image:height" content={String(image.height)} />}
+{image.type && <meta property="og:image:type" content={image.type} />}
+<meta property="og:image:alt" content={image.alt} />
+<meta property="og:locale" content="en_US" />
+{ogType === "article" && publishedTime && <meta property="article:published_time" content={publishedTime} />}
+{
+  ogType === "article" && (modifiedTime || publishedTime) && (
+    <meta property="article:modified_time" content={modifiedTime || publishedTime} />
+  )
+}
+{ogType === "article" && articleAuthor && <meta property="article:author" content={articleAuthor} />}
+{ogType === "article" && publisher && <meta property="article:publisher" content={publisher} />}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image.url} />
+<meta name="twitter:image:alt" content={image.alt} />

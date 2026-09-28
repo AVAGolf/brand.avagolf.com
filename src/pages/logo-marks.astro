@@ -1,6 +1,7 @@
 ---
 import BrandLayout from "../layouts/BrandLayout.astro";
 import LogoBackgroundBox from "../components/LogoBackgroundBox.astro";
+import { svgSize } from "../lib/imageSize";
 
 const SVG = "/brand/logo-marks/svg";
 
@@ -129,7 +130,24 @@ const donts = [
 // Color + background use — each section shows the logo family against a
 // different environment. Box layout (grid of 2 vs. a single standalone box)
 // and background treatment vary, but the mark set inside each box is uniform.
-const backgroundSections = [
+interface Mark {
+  file: string;
+  alt: string;
+}
+interface BackgroundBox {
+  class?: string;
+  style?: string;
+  overlayStyle?: string;
+  marks: { primary: Mark; icon: Mark; stacked: Mark; stackedSmall: Mark };
+}
+interface BackgroundSection {
+  title: string;
+  body: string;
+  layout: "grid" | "standalone";
+  aspectClass: string;
+  boxes: BackgroundBox[];
+}
+const backgroundSections: BackgroundSection[] = [
   {
     title: "Dark + Imagery",
     body: "These light variations of the logo are best used on dark backgrounds and when required for use over imagery or video. Wordmarks use the white mono versions.",
@@ -264,6 +282,7 @@ const backgroundSections = [
       >
         <img
           src={`${SVG}/avagolf-sxs-light.svg`}
+          {...svgSize(`${SVG}/avagolf-sxs-light.svg`)}
           alt="Side by Side logo — primary"
           class="h-12 w-auto md:h-16"
           loading="lazy"
@@ -271,12 +290,14 @@ const backgroundSections = [
         <div class="flex w-full items-center justify-around gap-8">
           <img
             src={`${SVG}/avagolf-icon-light.svg`}
+            {...svgSize(`${SVG}/avagolf-icon-light.svg`)}
             alt="Icon"
             class="h-12 w-auto md:h-16"
             loading="lazy"
           />
           <img
             src={`${SVG}/avagolf-stacked-logo-light.svg`}
+            {...svgSize(`${SVG}/avagolf-stacked-logo-light.svg`)}
             alt="Stacked Logo"
             class="h-14 w-auto md:h-20"
             loading="lazy"
@@ -285,18 +306,21 @@ const backgroundSections = [
         <div class="flex w-full items-center justify-around gap-6">
           <img
             src={`${SVG}/avagolf-wordmark-light.svg`}
+            {...svgSize(`${SVG}/avagolf-wordmark-light.svg`)}
             alt="Wordmark"
             class="h-3 w-auto md:h-4"
             loading="lazy"
           />
           <img
             src={`${SVG}/avagolf-stacked-wordmark-light.svg`}
+            {...svgSize(`${SVG}/avagolf-stacked-wordmark-light.svg`)}
             alt="Stacked Wordmark"
             class="h-6 w-auto md:h-8"
             loading="lazy"
           />
           <img
             src={`${SVG}/avagolf-stacked-logo-small-light.svg`}
+            {...svgSize(`${SVG}/avagolf-stacked-logo-small-light.svg`)}
             alt="Small Stacked Logo"
             class="h-8 w-auto md:h-10"
             loading="lazy"
@@ -314,7 +338,7 @@ const backgroundSections = [
             <p class="text-body text-green-900">{group.body}</p>
           </section>
           {group.variants.map((v) => (
-            <section class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr] md:items-start">
+            <section class="render-when-near grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr] md:items-start">
               <div>
                 <h3 class="text-h2 text-green-900 mb-3">{v.title}</h3>
                 <p class="text-body text-green-900">{v.body}</p>
@@ -322,6 +346,7 @@ const backgroundSections = [
               <div class="bg-dark-green-700 flex aspect-[16/9] w-full items-center justify-center rounded-lg p-8">
                 <img
                   src={`${SVG}/${v.file}`}
+                  {...svgSize(`${SVG}/${v.file}`)}
                   alt={`${v.title} mark`}
                   class:list={[v.sizeClass, "w-auto"]}
                   loading="lazy"
@@ -344,7 +369,7 @@ const backgroundSections = [
 
     {
       backgroundSections.map((section) => (
-        <section class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr] md:items-start">
+        <section class="render-when-near grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr] md:items-start">
           <div>
             <h3 class="text-h2 text-green-900 mb-3">{section.title}</h3>
             <p class="text-body text-green-900">{section.body}</p>
@@ -374,7 +399,7 @@ const backgroundSections = [
 
     <!-- CLEARSPACE -->
     <section
-      class="grid grid-cols-1 gap-8 border-t border-green-300/40 pt-12 md:grid-cols-[1fr_2fr] md:items-start"
+      class="render-when-near grid grid-cols-1 gap-8 border-t border-green-300/40 pt-12 md:grid-cols-[1fr_2fr] md:items-start"
     >
       <div>
         <h2 class="text-h2 text-green-900 mb-3">Clearspace</h2>
@@ -403,6 +428,7 @@ const backgroundSections = [
           </div>
           <img
             src={`${SVG}/avagolf-sxs-dark.svg`}
+            {...svgSize(`${SVG}/avagolf-sxs-dark.svg`)}
             alt="Side by Side with clearspace guides"
             class="relative h-16 w-auto md:h-20"
             loading="lazy"
@@ -416,6 +442,7 @@ const backgroundSections = [
           </div>
           <img
             src={`${SVG}/avagolf-wordmark-dark.svg`}
+            {...svgSize(`${SVG}/avagolf-wordmark-dark.svg`)}
             alt="Wordmark with clearspace guides"
             class="relative h-6 w-auto md:h-8"
             loading="lazy"
@@ -434,7 +461,7 @@ const backgroundSections = [
 
     <!-- DON'TS -->
     <section
-      class="grid grid-cols-1 gap-8 border-t border-green-300/40 pt-12 md:grid-cols-[1fr_2fr] md:items-start"
+      class="render-when-near grid grid-cols-1 gap-8 border-t border-green-300/40 pt-12 md:grid-cols-[1fr_2fr] md:items-start"
     >
       <div>
         <h2 class="text-h2 text-green-900 mb-3">Logo Don'ts</h2>
@@ -454,12 +481,14 @@ const backgroundSections = [
                   <div class="flex items-center gap-1">
                     <img
                       src={`${SVG}/${d.file}`}
+                      {...svgSize(`${SVG}/${d.file}`)}
                       alt=""
                       class="h-5 w-auto md:h-6"
                       loading="lazy"
                     />
                     <img
                       src={`${SVG}/avagolf-icon-black.svg`}
+                      {...svgSize(`${SVG}/avagolf-icon-black.svg`)}
                       alt=""
                       class="h-6 w-auto md:h-8"
                       loading="lazy"
@@ -468,6 +497,7 @@ const backgroundSections = [
                 ) : (
                   <img
                     src={`${SVG}/${d.file}`}
+                    {...svgSize(`${SVG}/${d.file}`)}
                     alt={d.label}
                     class="h-6 w-auto md:h-8"
                     style={d.style}

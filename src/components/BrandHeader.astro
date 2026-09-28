@@ -4,22 +4,38 @@ interface Props {
   title: string;
   subtitle?: string;
   variant?: "default" | "hero";
+  /** The backdrop, from src/lib/heroImage.ts (BrandLayout preloads it). */
+  image: { src: string; srcset: string; sizes: string; width: number; height: number };
 }
 
-const { eyebrow, title, subtitle, variant = "default" } = Astro.props;
+const { eyebrow, title, subtitle, variant = "default", image } = Astro.props;
 const isHero = variant === "hero";
 ---
 
+{/* The shared bar is fixed over the top of the page and transparent, so the
+    header runs up beneath it and its top padding adds the bar's height (72px
+    on phones, 88px from 768px) to the spacing it always had. `data-nav-hero`
+    tells the shared Nav to fade its floating logo once this has scrolled
+    away, as it does over avagolf.com's hero. */}
 <header
+  data-nav-hero
   class:list={[
     "bg-dark-green-900 relative overflow-hidden border-b border-dark-green-300",
-    isHero ? "py-16 lg:py-28" : "py-10 lg:py-16",
+    isHero
+      ? "pt-[136px] pb-16 md:pt-[152px] lg:pt-[200px] lg:pb-28"
+      : "pt-[112px] pb-10 md:pt-[128px] lg:pt-[152px] lg:pb-16",
   ]}
 >
   <img
-    src="/brand/assets/hero-noise-green.jpg"
+    src={image.src}
+    srcset={image.srcset}
+    sizes={image.sizes}
+    width={image.width}
+    height={image.height}
     alt=""
     aria-hidden="true"
+    fetchpriority="high"
+    decoding="async"
     class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-90"
   />
 
@@ -29,6 +45,8 @@ const isHero = variant === "hero";
         <img
           src="/avagolf-wordmark-white.svg"
           alt="AVA Golf"
+          width="759"
+          height="77"
           class="mx-auto mb-8 h-8 w-auto lg:mb-10 lg:h-9"
         />
       ) : (

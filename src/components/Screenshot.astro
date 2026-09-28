@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import AnimatedScreenshot from "./AnimatedScreenshot.astro";
 import CopyCodeBlock from "./CopyCodeBlock.astro";
 import { siteUrl } from "../../astro.config.mjs";
+import { rasterSize } from "../lib/imageSize";
 
 type Item = CollectionEntry<"screenshots">["data"]["items"][number];
 
@@ -16,6 +17,7 @@ const { title, alt, image, body } = item;
 
 const webp = `/brand/application/${image}.webp`;
 const jpg = `/brand/application/${image}.jpg`;
+const { width, height } = await rasterSize(webp);
 
 // The copied string stays on one line; the displayed one wraps so the tail of
 // a long URL doesn't disappear under the Copy button.
@@ -23,7 +25,7 @@ const embed = `<img src="${siteUrl}${webp}" alt="${alt}" />`;
 const embedDisplay = `<img\n  src="${siteUrl}${webp}"\n  alt="${alt}"\n/>`;
 ---
 
-<section class:list={[divider && "border-t border-green-500/30 pt-12"]}>
+<section class:list={[divider && "render-when-near border-t border-green-500/30 pt-12"]}>
   <div class="grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:items-start">
     <div>
       <h2 class="text-h2 text-dark-green-900 mb-4">{title}</h2>
@@ -34,6 +36,8 @@ const embedDisplay = `<img\n  src="${siteUrl}${webp}"\n  alt="${alt}"\n/>`;
     <AnimatedScreenshot
       src={webp}
       alt={alt}
+      width={width}
+      height={height}
       class="aspect-video w-full rounded-lg object-cover"
     />
   </div>

@@ -1,10 +1,12 @@
 ---
+import Footer from "@shared/Footer.astro";
 import Layout from "./Layout.astro";
 import BrandSidebar from "../components/BrandSidebar.astro";
 import BrandHeader from "../components/BrandHeader.astro";
 import BrandPagination from "../components/BrandPagination.astro";
-import BrandFooter from "../components/BrandFooter.astro";
 import { getAdjacent } from "../lib/sections";
+import { heroImage } from "../lib/heroImage";
+import { breadcrumbs } from "../lib/schema";
 
 interface Props {
   slug: string;
@@ -12,22 +14,29 @@ interface Props {
   title: string;
   subtitle?: string;
   variant?: "default" | "hero";
+  noindex?: boolean;
 }
 
-const { slug, eyebrow, title, subtitle, variant } = Astro.props;
+const { slug, eyebrow, title, subtitle, variant, noindex } = Astro.props;
 const { current } = getAdjacent(slug);
 const pageTitle = current ? `${current.title} — AVA Golf Brand Guide` : title;
+const hero = await heroImage();
+// Brand Guidelines › Colors, for every page but the first.
+const schema = current?.slug
+  ? [breadcrumbs([{ name: "Brand Guidelines", href: "/" }, { name: current.title }])]
+  : [];
 ---
 
-<Layout title={pageTitle} description={subtitle}>
+<Layout title={pageTitle} description={subtitle} activeSlug={slug} preloadImage={hero} schema={schema} noindex={noindex}>
   <BrandSidebar activeSlug={slug} />
 
-  <div class="flex min-h-screen flex-col lg:ml-[260px]">
+  <div class="flex min-h-screen flex-col sidebar:ml-[260px]">
     <BrandHeader
       eyebrow={eyebrow}
       title={title}
       subtitle={subtitle}
       variant={variant}
+      image={hero}
     >
       <slot name="hero-cta" slot="cta" />
     </BrandHeader>
@@ -40,6 +49,6 @@ const pageTitle = current ? `${current.title} — AVA Golf Brand Guide` : title;
       <BrandPagination slug={slug} />
     </div>
 
-    <BrandFooter />
+    <Footer site="brand" />
   </div>
 </Layout>

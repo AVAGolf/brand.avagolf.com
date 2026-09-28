@@ -5,6 +5,12 @@ import CopyCodeBlock from "../components/CopyCodeBlock.astro";
 const YOUTUBE_ID = "ZN1NzcLFoNQ";
 const YOUTUBE_SI = "W_4GB18q7tdxDOnC";
 const embedUrl = `https://www.youtube.com/embed/${YOUTUBE_ID}?si=${YOUTUBE_SI}`;
+// What the page itself plays, on click: no cookies until playback, and it
+// starts at once because the click was the visitor's.
+const playerUrl = `https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?si=${YOUTUBE_SI}&autoplay=1`;
+// YouTube's own stills. The 4:3 sizes are letterboxed, and object-cover in a
+// 16:9 frame crops exactly the bars away.
+const posterBase = `https://i.ytimg.com/vi_webp/${YOUTUBE_ID}/`;
 
 const embedCode = `<iframe width="560" height="315" src="${embedUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
 
@@ -24,15 +30,40 @@ const embedCodeDisplay = `<iframe
   subtitle="The official AVA Golf Explainer video, for embedding wherever a video placement is needed."
 >
   <div class="mx-auto max-w-4xl">
-    <div class="aspect-video overflow-hidden rounded-lg shadow-lg">
-      <iframe
-        class="h-full w-full"
-        src={embedUrl}
-        title="AVA Golf Explainer Video"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen
-      ></iframe>
+    {/* A poster and a play button until the visitor presses play. The YouTube
+        player is about 1 MB of script that would otherwise load with the page,
+        above the fold; it now loads on the click, from youtube-nocookie.com
+        (no cookies until playback), and starts playing. The embed code below
+        is unchanged. */}
+    <div
+      class="bg-dark-green-900 relative aspect-video overflow-hidden rounded-lg shadow-lg"
+      data-youtube-player
+      data-src={playerUrl}
+    >
+      <button
+        type="button"
+        class="group absolute inset-0 flex h-full w-full cursor-pointer items-center justify-center"
+        aria-label="Play the AVA Golf Explainer Video"
+      >
+        <img
+          src={posterBase + "hqdefault.webp"}
+          srcset={`${posterBase}hqdefault.webp 480w, ${posterBase}sddefault.webp 640w, ${posterBase}maxresdefault.webp 1280w`}
+          sizes="(min-width: 78.25rem) 896px, (min-width: 64rem) calc(100vw - 356px), (min-width: 56.3125rem) calc(100vw - 308px), calc(100vw - 48px)"
+          alt=""
+          width="1280"
+          height="720"
+          decoding="async"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+        <span
+          aria-hidden="true"
+          class="relative flex h-16 w-16 items-center justify-center rounded-full bg-dark-green-900/80 ring-2 ring-yellow-500 transition-transform group-hover:scale-110 md:h-20 md:w-20"
+        >
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" class="text-yellow-500 ml-1">
+            <path d="M8 5v14l11-7z"></path>
+          </svg>
+        </span>
+      </button>
     </div>
 
     <div class="mt-10">
@@ -40,3 +71,25 @@ const embedCodeDisplay = `<iframe
     </div>
   </div>
 </BrandLayout>
+
+<script>
+  // Swap the poster for the player on the first press.
+  for (const frame of document.querySelectorAll<HTMLElement>("[data-youtube-player]")) {
+    frame.querySelector("button")?.addEventListener(
+      "click",
+      () => {
+        const iframe = document.createElement("iframe");
+        iframe.className = "absolute inset-0 h-full w-full";
+        iframe.src = frame.dataset.src ?? "";
+        iframe.title = "AVA Golf Explainer Video";
+        iframe.allow =
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        iframe.referrerPolicy = "strict-origin-when-cross-origin";
+        iframe.allowFullscreen = true;
+        frame.replaceChildren(iframe);
+        iframe.focus();
+      },
+      { once: true },
+    );
+  }
+</script>

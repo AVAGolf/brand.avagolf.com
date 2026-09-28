@@ -1,4 +1,5 @@
 ---
+import Footer from "@shared/Footer.astro";
 import Layout from "../layouts/Layout.astro";
 import { allColors } from "../lib/colors";
 
@@ -21,7 +22,8 @@ const typeRamp = [
 ---
 
 <Layout title="AVA Golf — Design Tokens">
-  <main class="mx-auto max-w-7xl px-8 py-16">
+  {/* No sidebar here, so the page clears the shared bar itself. */}
+  <main class="mx-auto max-w-7xl px-8 pt-[136px] pb-16 md:pt-[152px]">
     <header class="mb-16">
       <p class="text-label text-green-300 mb-4">Foundations</p>
       <h1 class="text-display text-white">Design Tokens</h1>
@@ -84,4 +86,5 @@ const typeRamp = [
       </div>
     </section>
   </main>
+  <Footer site="brand" />
 </Layout>
