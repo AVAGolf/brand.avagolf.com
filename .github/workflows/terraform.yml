@@ -56,6 +56,21 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: '1.16.4'
+          terraform_wrapper: false
+
+      # Formatting and validation need no credentials (-backend=false skips
+      # the state bucket), so they run on every PR even before the secrets
+      # below exist.
+      - run: terraform fmt -check -recursive -diff
+
+      - name: Validate
+        run: |
+          terraform init -input=false -backend=false
+          terraform validate
+
       - name: Check secrets
         run: |
           missing=""
@@ -68,16 +83,7 @@ jobs:
             exit 1
           fi
 
-      - uses: hashicorp/setup-terraform@v4
-        with:
-          terraform_version: '1.16.4'
-          terraform_wrapper: false
-
-      - run: terraform fmt -check -recursive -diff
-
-      - run: terraform init -input=false
-
-      - run: terraform validate
+      - run: terraform init -input=false -reconfigure
 
       - name: Plan
         run: |
