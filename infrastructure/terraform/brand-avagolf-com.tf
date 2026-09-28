@@ -1,198 +1,102 @@
 # ------------------------------------------------------------------------------
 # brand.avagolf.com
 # ------------------------------------------------------------------------------
-# Static Astro site:
-#   GitHub Actions builds `dist/` -> syncs to S3 -> Fastly fronts the bucket.
-# DNS lives in the avagolf.com zone (managed in the ava.golf infra repo);
-# we only manage the brand subdomain record here.
+# Static Astro site: GitHub Actions builds `dist/`, syncs it to S3, and Fastly
+# fronts the bucket. The brand pack zip under /files/ is uploaded by the
+# AVA-Golf-Brand-Assets repo, not by this site's deploy.
+#
+# Applied by .github/workflows/terraform.yml when anything here changes on
+# main; planned on every pull request that touches it. The Fastly module is
+# the one news.avagolf.com and docs.avagolf.com use, so all three subdomains
+# get avagolf.com's edge rules from one definition.
+
+locals {
+  # redirects.json at the repo root, the same shape as news's and
+  # avagolf.com's. This site has none yet; fileexists() keeps it optional.
+  redirects_file = "${path.module}/../../redirects.json"
+
+  redirects = fileexists(local.redirects_file) ? {
+    for from, entry in jsondecode(file(local.redirects_file)) :
+    from => { to = entry.to }
+    if startswith(from, "/")
+  } : {}
+}
 
 module "brand_avagolf_com_storage" {
   source                = "./modules/aws_s3_website"
   bucket_name           = "brand.avagolf.com"
   enable_access_logging = true
+
+  # src/pages/404.astro builds to this key (added in the app PR, #10, which
+  # merges first). With index.html here, every dead URL got the homepage
+  # under a 404 status, which a crawler reads as a duplicate of it.
+  error_document = "404.html"
 }
 
-resource "fastly_service_vcl" "brand_avagolf_com" {
-  name               = "brand.avagolf.com"
-  comment            = "Website Service"
-  default_ttl        = 300
-  stale_if_error     = true
-  stale_if_error_ttl = 300
-  activate           = true
+# The service used to be declared inline here. It is the module's now; this
+# tells Terraform the existing service moved rather than being replaced.
+moved {
+  from = fastly_service_vcl.brand_avagolf_com
+  to   = module.fastly_brand_avagolf_com.fastly_service_vcl.this
+}
 
-  domain {
-    name = "brand.avagolf.com"
-  }
+module "fastly_brand_avagolf_com" {
+  source          = "./modules/fastly_website_service"
+  service_name    = "brand.avagolf.com"
+  domain_name     = "brand.avagolf.com"
+  backend_address = module.brand_avagolf_com_storage.website_endpoint
+  redirects       = local.redirects
 
-  backend {
-    address       = module.brand_avagolf_com_storage.website_endpoint
-    name          = "s3"
-    override_host = module.brand_avagolf_com_storage.website_endpoint
-    use_ssl       = false
-    weight        = 100
-    shield        = "iad-va-us"
-    port          = 80
-  }
+  # Live on this service (switched on in the Fastly console). Declared so an
+  # apply keeps it on.
+  image_optimizer = true
+
+  # The deploy uploads without Cache-Control, so the edge sets it. The brand
+  # pack keeps the no-cache its own pipeline gives it.
+  browser_cache_policy = true
+  cache_policy_skip    = "^/files/"
+  content_type_fixups  = true
 
   # Range-capable REST endpoint used only for large /files/*.zip downloads.
-  # The website endpoint (backend "s3") ignores Range requests, so segmented
-  # caching cannot work against it; the REST endpoint honours Range.
+  # The website endpoint ignores Range requests, so segmented caching cannot
+  # work against it; the REST endpoint honours Range.
   #
   # Addressing: virtual-hosted via the domain-named bucket. The Host header is
-  # the bucket name (brand.avagolf.com), so S3 resolves the bucket from Host and
-  # the request path is the object key verbatim (no bucket prefix). The dotted
-  # bucket name would normally break virtual-hosted TLS, so SNI and cert
-  # validation are pinned to the regional endpoint while only the Host header
-  # carries the bucket — TLS terminates against s3.us-east-2 with a valid cert.
-  backend {
-    address           = "s3.us-east-2.amazonaws.com"
-    name              = "s3_rest"
-    override_host     = "brand.avagolf.com"
-    ssl_cert_hostname = "s3.us-east-2.amazonaws.com"
-    ssl_sni_hostname  = "s3.us-east-2.amazonaws.com"
-    use_ssl           = true
-    weight            = 100
-    shield            = "iad-va-us"
-    port              = 443
-  }
+  # the bucket name, so S3 resolves the bucket from Host and the path is the
+  # object key verbatim. The dotted bucket name would break virtual-hosted TLS,
+  # so SNI and cert validation are pinned to the regional endpoint while only
+  # the Host header carries the bucket.
+  extra_backends = [
+    {
+      name              = "s3_rest"
+      address           = "s3.us-east-2.amazonaws.com"
+      port              = 443
+      use_ssl           = true
+      override_host     = "brand.avagolf.com"
+      ssl_cert_hostname = "s3.us-east-2.amazonaws.com"
+      ssl_sni_hostname  = "s3.us-east-2.amazonaws.com"
+    },
+  ]
 
-  request_setting {
-    name      = "force-ssl"
-    force_ssl = true
-  }
+  # The brand pack (~377 MB) is over Fastly's 20 MB single-object cache limit
+  # and 503s without this. Segmented caching splits it into <=20 MB blocks so
+  # it stays edge-cached instead of refetching from S3. Priority 10: after the
+  # canonical-url snippet (5), before Fastly's return(lookup).
+  extra_snippets = [
+    {
+      name     = "enable-segmented-caching-large-files"
+      type     = "recv"
+      priority = 10
+      content  = "if (req.url.path ~ \"^/files/.*\\.zip$\") { set req.enable_segmented_caching = true; set req.backend = F_s3_rest; }"
+    },
+  ]
 
-  header {
-    action        = "set"
-    destination   = "http.Access-Control-Allow-Origin"
-    ignore_if_set = false
-    name          = "CORS"
-    source        = "\"*\""
-    type          = "cache"
-  }
-
-  header {
-    action      = "set"
-    destination = "http.Strict-Transport-Security"
-    name        = "HSTS"
-    source      = "\"max-age=31536000; includeSubDomains\""
-    type        = "response"
-  }
-
-  product_enablement {
-    brotli_compression = true
-  }
-
-  # Large downloads (e.g. the brand pack zip) exceed Fastly's 20MB single-object
-  # cache limit and 503 without this. Segmented caching splits them into <=20MB
-  # blocks so they stay edge-cached (cheap egress) instead of refetching origin.
-  # Priority 10: must run in vcl_recv before FASTLY's return(lookup).
-  snippet {
-    name     = "enable-segmented-caching-large-files"
-    type     = "recv"
-    priority = 10
-    content  = "if (req.url.path ~ \"^/files/.*\\.zip$\") { set req.enable_segmented_caching = true; set req.backend = F_s3_rest; }"
-  }
-
-  # No "binary/octet-stream" in content_types. That is the type S3 held for
-  # every .webp and .woff2 (see content-type-fixups below), and both formats
-  # are already compressed, so matching it ran them through Brotli a second
-  # time: the 42,916-byte GoogleSansFlex.woff2 went out as 42,920, and the
-  # 128,704-byte lesson-voice-note-shot-tracer.webp as 128,709. The four
-  # largest application screenshots (1.9-3.3 MB) did shrink, by 39.5 KB across
-  # 9.5 MB (0.4%), and that is what this gives up. Left in, it would also make
-  # a WebP's compression depend on whether this block's VCL runs before or
-  # after that fixup. The one .md was the only text stored under that type, and
-  # "md" in extensions still covers it.
-  gzip {
-    name          = "Generated by terraform"
-    extensions    = ["css", "js", "html", "eot", "ico", "otf", "ttf", "json", "svg", "md"]
-    content_types = ["text/html", "application/x-javascript", "text/css", "application/javascript", "text/javascript", "application/json", "application/vnd.ms-fontobject", "application/x-font-opentype", "application/x-font-truetype", "application/x-font-ttf", "application/xml", "font/eot", "font/opentype", "font/otf", "image/svg+xml", "image/vnd.microsoft.icon", "text/plain", "text/xml"]
-  }
-
-  # Content-Type for the file types the deploy's uploader does not know.
-  #
-  # jakejarvis/s3-sync-action guesses each object's type from a MIME table
-  # with no entry for .webp, .woff2 or .md, so S3 stores all three as
-  # binary/octet-stream. Browsers sniff images and fonts, so nothing looked
-  # broken, but brand/logo-marks/png/README.md arrived as a download rather
-  # than text. Correcting the type here, on the way into the cache, fixes
-  # every object without re-uploading it. Only 200s: the bucket's error
-  # document is index.html, so a missing .webp is the home page with a 404,
-  # and that is HTML.
-  snippet {
-    name    = "content-type-fixups"
-    type    = "fetch"
-    content = <<-EOT
-      if (beresp.status == 200) {
-        if (req.url.path ~ "(?i)\.woff2$") {
-          set beresp.http.Content-Type = "font/woff2";
-        } else if (req.url.path ~ "(?i)\.webp$") {
-          set beresp.http.Content-Type = "image/webp";
-        } else if (req.url.path ~ "(?i)\.md$") {
-          set beresp.http.Content-Type = "text/markdown; charset=utf-8";
-        }
-      }
-    EOT
-  }
-
-  # How long a browser may keep what we send it.
-  #
-  # Nothing set Cache-Control before this: the synced S3 objects carry none,
-  # and default_ttl above governs only the edge's own copy. PageSpeed reports
-  # a cache TTL of "None" for that, and browsers fall back to heuristic
-  # freshness, a fraction of the time since Last-Modified. For HTML that is
-  # worse than no caching: it can hold an old page whose /_astro/ chunks the
-  # next deploy's `s3 sync --delete` has already removed.
-  #
-  # Three tiers, decided by whether the URL changes when the bytes do:
-  #
-  #   - /_astro/*       Vite puts a content hash in every filename, so a new
-  #                     build is a new URL. Keep it for a year, never revalidate.
-  #   - public/ media   Stable URLs, and they do get replaced in place (the
-  #                     favicons and app icons, logo-300.png). A week bounds how
-  #                     long a returning visitor can see the old file. PageSpeed
-  #                     still lists these, because it only stops counting a
-  #                     lifetime at about 97 days. Moving an image into src/ and
-  #                     importing it puts it in /_astro/ with a hash.
-  #   - everything else HTML, robots.txt, llms.txt, sitemaps, site.webmanifest:
-  #                     always revalidate. S3's ETag makes that a 304 when
-  #                     nothing changed.
-  #
-  # Only successes get a lifetime. A 404 for a chunk caught mid-deploy must not
-  # stick, and the redirects (force-ssl's 301, S3's slash-adding 302) keep the
-  # browser's own default. /files/ is left alone: the brand pack is uploaded
-  # out-of-band, not by the deploy's sync, and already carries its own
-  # Cache-Control (public, max-age=300) from S3.
-  #
-  # fastly.ff.visits_this_service is 0 only on the node answering the browser,
-  # so the shield never hands these headers to the edge, where they would
-  # replace default_ttl as the edge TTL.
-  snippet {
-    name    = "browser-cache-policy"
-    type    = "deliver"
-    content = <<-EOT
-      if (fastly.ff.visits_this_service == 0 && req.url.path !~ "^/files/") {
-        if (resp.status == 200 || resp.status == 206 || resp.status == 304) {
-          if (req.url.path ~ "^/_astro/") {
-            set resp.http.Cache-Control = "public, max-age=31536000, immutable";
-          } else if (req.url.path ~ "(?i)\.(avif|gif|ico|jpe?g|mov|mp4|png|svg|webm|webp|woff2?)$") {
-            set resp.http.Cache-Control = "public, max-age=604800, stale-while-revalidate=86400";
-          } else {
-            set resp.http.Cache-Control = "no-cache";
-          }
-        } else if (resp.status >= 400) {
-          set resp.http.Cache-Control = "no-cache";
-        }
-      }
-    EOT
-  }
+  # The *.avagolf.com wildcard in avagolf.com's Terraform covers this host.
+  enable_tls = false
 }
 
-# The avagolf.com TLS subscription in the ava.golf repo already covers
-# *.avagolf.com, so no per-subdomain subscription is needed here.
-
 output "fastly_service_id" {
-  value = fastly_service_vcl.brand_avagolf_com.id
+  value = module.fastly_brand_avagolf_com.service_id
 }
 
 output "s3_bucket" {

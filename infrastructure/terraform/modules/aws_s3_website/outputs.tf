@@ -15,12 +15,12 @@ output "bucket_arn" {
 
 output "website_endpoint" {
   description = "The S3 website endpoint"
-  value       = "${aws_s3_bucket.this.bucket}.s3-website.${data.aws_region.current.name}.amazonaws.com"
+  value       = "${aws_s3_bucket.this.bucket}.s3-website.${data.aws_region.current.region}.amazonaws.com"
 }
 
 output "website_endpoint_url" {
   description = "The full S3 website URL"
-  value       = "http://${aws_s3_bucket.this.bucket}.s3-website.${data.aws_region.current.name}.amazonaws.com"
+  value       = "http://${aws_s3_bucket.this.bucket}.s3-website.${data.aws_region.current.region}.amazonaws.com"
 }
 
 output "access_logs_bucket_name" {

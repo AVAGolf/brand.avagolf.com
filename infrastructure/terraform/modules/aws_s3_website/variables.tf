@@ -20,3 +20,9 @@ variable "enable_access_logging" {
   type        = bool
   default     = true
 }
+
+variable "error_document" {
+  description = "S3 website error document. The default serves the site root for any missing key, which is the SPA fallback; a static multi-page site should name its own 404 page instead."
+  type        = string
+  default     = "index.html"
+}
