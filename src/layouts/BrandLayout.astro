@@ -14,9 +14,10 @@ interface Props {
   title: string;
   subtitle?: string;
   variant?: "default" | "hero";
+  noindex?: boolean;
 }
 
-const { slug, eyebrow, title, subtitle, variant } = Astro.props;
+const { slug, eyebrow, title, subtitle, variant, noindex } = Astro.props;
 const { current } = getAdjacent(slug);
 const pageTitle = current ? `${current.title} — AVA Golf Brand Guide` : title;
 const hero = await heroImage();
@@ -26,7 +27,7 @@ const schema = current?.slug
   : [];
 ---
 
-<Layout title={pageTitle} description={subtitle} activeSlug={slug} preloadImage={hero} schema={schema}>
+<Layout title={pageTitle} description={subtitle} activeSlug={slug} preloadImage={hero} schema={schema} noindex={noindex}>
   <BrandSidebar activeSlug={slug} />
 
   <div class="flex min-h-screen flex-col sidebar:ml-[260px]">

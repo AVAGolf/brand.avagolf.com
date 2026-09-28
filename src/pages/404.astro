@@ -1,0 +1,39 @@
+---
+// Builds to dist/404.html, the page the S3 bucket serves for any missing key
+// once infrastructure/terraform names it as the error document. Until then a
+// dead URL got the homepage under a 404 status, which a crawler reads as a
+// duplicate of the homepage. noindex, so the page itself never ranks.
+import BrandLayout from "../layouts/BrandLayout.astro";
+import { sections, sectionHref } from "../lib/sections";
+---
+
+<BrandLayout
+  slug="404"
+  eyebrow="404"
+  title="Page not found"
+  subtitle="That page isn't part of the AVA Golf brand guidelines. Everything that is, is listed below."
+  noindex
+>
+  <div class="mx-auto max-w-3xl">
+    <p class="text-body text-dark-green-700">
+      Start from the <a class="text-green-500 underline underline-offset-4" href="/">brand guidelines home</a>, or go
+      straight to a section:
+    </p>
+    <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+      {
+        sections
+          .filter((s) => s.slug)
+          .map((s) => (
+            <li>
+              <a
+                class="text-dark-green-900 block rounded-lg border border-green-300 px-4 py-3 transition-colors hover:border-green-500"
+                href={sectionHref(s)}
+              >
+                {s.title}
+              </a>
+            </li>
+          ))
+      }
+    </ul>
+  </div>
+</BrandLayout>
