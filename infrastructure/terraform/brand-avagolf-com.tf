@@ -101,9 +101,20 @@ module "fastly_brand_avagolf_com" {
       type     = "recv"
       priority = 10
       content  = <<-EOT
-        if (req.restarts == 0 && req.http.Accept ~ "(?i)text/markdown" && req.url.path ~ "^/([a-z0-9-]*)/$") {
-          set req.http.X-Markdown-Page = req.url;
-          set req.url = "/" + if(re.group.1 == "", "index", re.group.1) + ".md" + if(req.url.qs == "", "", "?" + req.url.qs);
+        # The homepage is its own case. Matching it through an empty capture
+        # group made / fetch a twin that doesn't exist, so it fell back to HTML.
+        declare local var.twin STRING;
+        set var.twin = "";
+        if (req.restarts == 0 && req.http.Accept ~ "(?i)text/markdown") {
+          if (req.url.path == "/") {
+            set var.twin = "/index.md";
+          } else if (req.url.path ~ "^/([a-z0-9-]+)/$") {
+            set var.twin = "/" + re.group.1 + ".md";
+          }
+          if (var.twin != "") {
+            set req.http.X-Markdown-Page = req.url;
+            set req.url = var.twin + if(req.url.qs == "", "", "?" + req.url.qs);
+          }
         }
       EOT
     },
