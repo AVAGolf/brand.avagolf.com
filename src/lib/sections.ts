@@ -112,3 +112,11 @@ export function getAdjacent(slug: string) {
 export function sectionHref(s: Pick<Section, "slug">): string {
   return s.slug ? `/${s.slug}/` : "/";
 }
+
+/**
+ * The page's Markdown twin, written next to the HTML at build time
+ * (src/integrations/markdownTwins.ts): /voice/ -> /voice.md, / -> /index.md.
+ */
+export function markdownHref(s: Pick<Section, "slug">): string {
+  return `/${s.slug || "index"}.md`;
+}

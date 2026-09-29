@@ -31,12 +31,18 @@
     "chrome-launcher": "1.2.1",
     "eslint": "^10.11.0",
     "eslint-plugin-astro": "^3.2.1",
+    "hast-util-select": "^6.0.4",
     "js-yaml": "^5.4.2",
     "lighthouse": "13.5.0",
+    "rehype-parse": "^9.0.1",
+    "rehype-remark": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-stringify": "^11.0.0",
     "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.70.1",
+    "unified": "^11.0.5",
     "vanilla-cookieconsent": "3.1.0",
     "vitest": "^5.0.2"
   }
