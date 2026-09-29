@@ -4,7 +4,7 @@ import Layout from "./Layout.astro";
 import BrandSidebar from "../components/BrandSidebar.astro";
 import BrandHeader from "../components/BrandHeader.astro";
 import BrandPagination from "../components/BrandPagination.astro";
-import { getAdjacent } from "../lib/sections";
+import { getAdjacent, markdownHref } from "../lib/sections";
 import { heroImage } from "../lib/heroImage";
 import { breadcrumbs } from "../lib/schema";
 
@@ -27,7 +27,15 @@ const schema = current?.slug
   : [];
 ---
 
-<Layout title={pageTitle} description={subtitle} activeSlug={slug} preloadImage={hero} schema={schema} noindex={noindex}>
+<Layout
+  title={pageTitle}
+  description={subtitle}
+  activeSlug={slug}
+  preloadImage={hero}
+  schema={schema}
+  noindex={noindex}
+  markdown={current ? markdownHref(current) : undefined}
+>
   <BrandSidebar activeSlug={slug} />
 
   <div class="flex min-h-screen flex-col sidebar:ml-[260px]">

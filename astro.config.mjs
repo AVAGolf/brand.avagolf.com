@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from "@tailwindcss/vite";
 import { unified } from '@astrojs/markdown-remark';
+import markdownTwins from './src/integrations/markdownTwins.ts';
 
 export const siteUrl = 'https://brand.avagolf.com';
 
@@ -32,7 +33,8 @@ export default defineConfig({
     // pipeline they were written for.
     processor: unified(),
   },
-  integrations: [sitemap()],
+  // markdownTwins: /voice/ -> /voice.md, and /llms-full.txt, for agents.
+  integrations: [sitemap(), markdownTwins()],
   vite: {
     plugins: [tailwindcss()],
   },

@@ -1,13 +1,15 @@
 import { SOCIALS } from "@shared/data/socials";
 import { brandPack, formatBytes, formatDate, MANIFEST_URL, PACK_PATH, type BrandPack } from "@/lib/brandPack";
 import { SITE } from "@/lib/schema";
-import { groupOrder, sectionHref, sectionsByGroup } from "@/lib/sections";
+import { groupOrder, markdownHref, sectionsByGroup } from "@/lib/sections";
 
 // /llms.txt, generated at build time rather than kept as a static file in
 // public/, the way news.avagolf.com generates its own.
 //
 // The guideline links come from src/lib/sections.ts, the list the sidebar and
-// the mobile menu render, so a new page can't be left out of this file. The
+// the mobile menu render, so a new page can't be left out of this file. They
+// point at each page's Markdown twin (/voice.md), which the build writes from
+// the page's HTML (src/integrations/markdownTwins.ts), as does /llms-full.txt. The
 // brand pack line comes from the pack's manifest (src/lib/brandPack.ts), so it
 // names the version the download button offers.
 //
@@ -22,7 +24,7 @@ const INTRO = `# AVA Golf Brand Guidelines
 
 > The official brand guidelines for AVA Golf, the first golf intelligence system: it aggregates and analyzes performance data from every platform a golfer uses, applies machine learning to identify exactly what to work on, and delivers a personalized video playlist from Top 100 teaching professionals. This site covers logo marks, colors, typography, brand elements, and communication principles, for partners, agencies, designers, and AI systems that need accurate brand context.`;
 
-const DETAILS = `The guideline pages linked below are HTML. The facts most often needed are summarized here, so most brand questions can be answered from this file alone. For the product itself (pricing, integrations, coaches), use the main site's file at https://avagolf.com/llms.txt.
+const DETAILS = `The guideline pages linked below are Markdown, the same copy as the HTML page at the URL each one names. All of them in one file: https://brand.avagolf.com/llms-full.txt. The facts most often needed are summarized here, so most brand questions can be answered from this file alone. For the product itself (pricing, integrations, coaches), use the main site's file at https://avagolf.com/llms.txt.
 
 **Identity.** Brand name: AVA Golf. Parent company: ParOne, Inc. Category: AI golf performance; AVA Golf describes itself as a golf intelligence system.
 
@@ -82,13 +84,14 @@ export async function GET() {
     [
       `## ${sentenceCase(group)}`,
       "",
-      ...groups[group].map((s) => `- [${sentenceCase(s.title)}](${SITE}${sectionHref(s)}): ${s.description}`),
+      ...groups[group].map((s) => `- [${sentenceCase(s.title)}](${SITE}${markdownHref(s)}): ${s.description}`),
     ].join("\n"),
   );
 
   const optional = [
     "## Optional",
     "",
+    `- [Full text](${SITE}/llms-full.txt): every guideline page above, in one Markdown file`,
     `- [Design tokens](${SITE}/tokens/): every color, gradient, and type style on one page`,
     "- [AVA Golf main site](https://avagolf.com/llms.txt): the product, pricing, integrations, and coaches",
     ...SOCIALS.map((social) => `- [${social.name}](${social.url})`),

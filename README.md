@@ -14,6 +14,13 @@ Direction, Personalized Progression and Mastery without Guesswork are the
 brand pillars. For a plain-text summary, read
 [brand.avagolf.com/llms.txt](https://brand.avagolf.com/llms.txt).
 
+Every guideline page also has a Markdown twin for coding agents and LLMs
+(`/voice/` -> `/voice.md`), and
+[brand.avagolf.com/llms-full.txt](https://brand.avagolf.com/llms-full.txt) holds
+them all in one file. The build writes both from the built HTML
+(`src/integrations/markdownTwins.ts`), so they always match the pages; they
+exist only after `npm run build`, not under `npm run dev`.
+
 ## Tech stack
 
 - **Astro 7**: static output, one `.astro` file per route

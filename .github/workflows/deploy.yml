@@ -55,6 +55,15 @@ jobs:
         run: |
           aws s3 sync dist/ s3://brand.avagolf.com/ --no-progress \
             --acl public-read --follow-symlinks --delete --exclude 'files/*'
+          # The text files agents read (the Markdown twins, llms.txt,
+          # llms-full.txt, robots.txt) again, with a content type that names
+          # UTF-8: the one sync guesses has no charset, which garbles — and ’.
+          aws s3 cp dist/ s3://brand.avagolf.com/ --recursive --no-progress \
+            --acl public-read --exclude '*' --include '*.md' --exclude 'files/*' \
+            --content-type 'text/markdown; charset=utf-8'
+          aws s3 cp dist/ s3://brand.avagolf.com/ --recursive --no-progress \
+            --acl public-read --exclude '*' --include '*.txt' --exclude 'files/*' \
+            --content-type 'text/plain; charset=utf-8'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

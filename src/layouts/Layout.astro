@@ -34,6 +34,8 @@ interface Props {
   schema?: Node[];
   /** Keep the page out of search (the 404 page). */
   noindex?: boolean;
+  /** The page's Markdown twin (src/integrations/markdownTwins.ts), linked as an alternate. */
+  markdown?: string;
 }
 
 const {
@@ -43,6 +45,7 @@ const {
   preloadImage,
   schema = [],
   noindex = false,
+  markdown,
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, SITE).href;
@@ -104,6 +107,7 @@ const socialImage = {
       author="AVA Golf"
       noindex={noindex}
       image={socialImage}
+      alternates={markdown ? [{ type: "text/markdown", href: markdown, title: "Markdown" }] : []}
     />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
