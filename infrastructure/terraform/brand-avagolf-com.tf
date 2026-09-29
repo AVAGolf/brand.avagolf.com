@@ -89,6 +89,52 @@ module "fastly_brand_avagolf_com" {
       priority = 10
       content  = "if (req.url.path ~ \"^/files/.*\\.zip$\") { set req.enable_segmented_caching = true; set req.backend = F_s3_rest; }"
     },
+
+    # An agent that asks for Markdown gets the page's Markdown twin, which the
+    # build writes next to the HTML (src/integrations/markdownTwins.ts):
+    # /voice/ -> /voice.md, / -> /index.md. Browsers never send text/markdown
+    # in Accept, so they're unaffected. Runs after the canonical-url snippet
+    # (5), so the path is already canonical; only on the first pass, so the
+    # fallback's restart below serves the HTML.
+    {
+      name     = "markdown-negotiation-recv"
+      type     = "recv"
+      priority = 10
+      content  = <<-EOT
+        if (req.restarts == 0 && req.http.Accept ~ "(?i)text/markdown" && req.url.path ~ "^/([a-z0-9-]*)/$") {
+          set req.http.X-Markdown-Page = req.url;
+          set req.url = "/" + if(re.group.1 == "", "index", re.group.1) + ".md" + if(req.url.qs == "", "", "?" + req.url.qs);
+        }
+      EOT
+    },
+
+    # A page with no twin (/tokens/, the 404 page) 404s as .md: restart with
+    # the original URL, so the agent gets the HTML page as it would without
+    # the header. A twin names its own URL in Content-Location. Every page
+    # response carries Vary: Accept, so a cache between us and the client
+    # never hands the Markdown to a browser, or the reverse; the edge's own
+    # cache is keyed on the rewritten URL and needs no Vary. Only on the node
+    # answering the client (visits_this_service == 0), not the shield.
+    {
+      name     = "markdown-negotiation-deliver"
+      type     = "deliver"
+      priority = 10
+      content  = <<-EOT
+        if (fastly.ff.visits_this_service == 0) {
+          if (req.http.X-Markdown-Page) {
+            if (resp.status == 404) {
+              set req.url = req.http.X-Markdown-Page;
+              unset req.http.X-Markdown-Page;
+              restart;
+            }
+            set resp.http.Content-Location = req.url.path;
+          }
+          if (req.http.X-Markdown-Page || req.url.path ~ "/$") {
+            set resp.http.Vary = if(resp.http.Vary, resp.http.Vary + ", Accept", "Accept");
+          }
+        }
+      EOT
+    },
   ]
 
   # The *.avagolf.com wildcard in avagolf.com's Terraform covers this host.
