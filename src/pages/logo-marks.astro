@@ -256,8 +256,8 @@ const backgroundSections: BackgroundSection[] = [
   <div class="mx-auto max-w-6xl space-y-16">
     <!-- OUR LOGOS INTRO -->
     <section class="max-w-2xl">
-      <h2 class="text-h2 text-green-900 mb-4">Our Logos</h2>
-      <p class="text-body text-green-900">
+      <h2 class="text-h2 text-dark-green-900 mb-4">Our Logos</h2>
+      <p class="text-body text-dark-green-700">
         Our logos are the most recognizable symbol of the brand, serving as a
         visual anchor that creates familiarity, builds trust, and ensures
         consistent recognition across every touchpoint. We have a family of
@@ -271,8 +271,8 @@ const backgroundSections: BackgroundSection[] = [
       class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr] md:items-start"
     >
       <div>
-        <h2 class="text-h2 text-green-900 mb-3">Logo Family</h2>
-        <p class="text-body text-green-900">
+        <h2 class="text-h2 text-dark-green-900 mb-3">Logo Family</h2>
+        <p class="text-body text-dark-green-700">
           Our logo family is made up of 6 different lock-ups. These consist of
           combination marks, wordmarks and an icon.
         </p>
@@ -334,14 +334,14 @@ const backgroundSections: BackgroundSection[] = [
       groups.map((group) => (
         <>
           <section class="border-t border-green-300/40 pt-12">
-            <h2 class="text-h2 text-green-900 mb-3">{group.eyebrow}</h2>
-            <p class="text-body text-green-900">{group.body}</p>
+            <h2 class="text-h2 text-dark-green-900 mb-3">{group.eyebrow}</h2>
+            <p class="text-body text-dark-green-700">{group.body}</p>
           </section>
           {group.variants.map((v) => (
             <section class="render-when-near grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr] md:items-start">
               <div>
-                <h3 class="text-h2 text-green-900 mb-3">{v.title}</h3>
-                <p class="text-body text-green-900">{v.body}</p>
+                <h3 class="text-h2 text-dark-green-900 mb-3">{v.title}</h3>
+                <p class="text-body text-dark-green-700">{v.body}</p>
               </div>
               <div class="bg-dark-green-700 flex aspect-[16/9] w-full items-center justify-center rounded-lg p-8">
                 <img
@@ -360,8 +360,8 @@ const backgroundSections: BackgroundSection[] = [
 
     <!-- COLOR + BACKGROUND USE INTRO -->
     <section class="border-t border-green-300/40 pt-12">
-      <h2 class="text-h2 text-green-900 mb-3">Color + Background Use</h2>
-      <p class="text-body text-green-900 max-w-2xl">
+      <h2 class="text-h2 text-dark-green-900 mb-3">Color + Background Use</h2>
+      <p class="text-body text-dark-green-700 max-w-2xl">
         We have variations of each logo based on its environment, so that the
         logo always looks its best and maintains good contrast for full impact.
       </p>
@@ -371,8 +371,8 @@ const backgroundSections: BackgroundSection[] = [
       backgroundSections.map((section) => (
         <section class="render-when-near grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr] md:items-start">
           <div>
-            <h3 class="text-h2 text-green-900 mb-3">{section.title}</h3>
-            <p class="text-body text-green-900">{section.body}</p>
+            <h3 class="text-h2 text-dark-green-900 mb-3">{section.title}</h3>
+            <p class="text-body text-dark-green-700">{section.body}</p>
           </div>
           {section.layout === "standalone" ? (
             <LogoBackgroundBox
@@ -402,20 +402,20 @@ const backgroundSections: BackgroundSection[] = [
       class="render-when-near grid grid-cols-1 gap-8 border-t border-green-300/40 pt-12 md:grid-cols-[1fr_2fr] md:items-start"
     >
       <div>
-        <h2 class="text-h2 text-green-900 mb-3">Clearspace</h2>
-        <p class="text-body text-green-900">
+        <h2 class="text-h2 text-dark-green-900 mb-3">Clearspace</h2>
+        <p class="text-body text-dark-green-700">
           Like us, logos need room to breathe. We have recommended minimum
           clearspaces, but it's important to remember that more space is better,
           up until the point where the logo feels lost. Find that balance.
         </p>
-        <p class="text-body text-green-900 mt-4">
+        <p class="text-body text-dark-green-700 mt-4">
           Minimum clearspace on the icon and combination marks is 50% of the
           icon size.
         </p>
-        <p class="text-body text-green-900 mt-4">
+        <p class="text-body text-dark-green-700 mt-4">
           Minimum clearspace on wordmarks is 100% of the Y axis.
         </p>
-        <p class="text-body text-green-900 mt-4">
+        <p class="text-body text-dark-green-700 mt-4">
           Clearspace excludes the TM symbol for the purposes of boundaries.
         </p>
       </div>
@@ -464,8 +464,8 @@ const backgroundSections: BackgroundSection[] = [
       class="render-when-near grid grid-cols-1 gap-8 border-t border-green-300/40 pt-12 md:grid-cols-[1fr_2fr] md:items-start"
     >
       <div>
-        <h2 class="text-h2 text-green-900 mb-3">Logo Don'ts</h2>
-        <p class="text-body text-green-900">
+        <h2 class="text-h2 text-dark-green-900 mb-3">Logo Don'ts</h2>
+        <p class="text-body text-dark-green-700">
           We always want our brand to look best. While we can't list every
           single thing to not do, these are some common mistakes people make. If
           you are ever unsure or think something doesn't look right, it probably
@@ -521,7 +521,7 @@ const backgroundSections: BackgroundSection[] = [
                   />
                 </svg>
               </div>
-              <figcaption class="text-body-mono text-green-900 text-xs leading-snug">
+              <figcaption class="text-body-mono text-dark-green-700 text-xs leading-snug">
                 {d.label}
               </figcaption>
             </figure>

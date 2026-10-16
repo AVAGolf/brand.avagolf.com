@@ -22,7 +22,7 @@ const { width, height } = await rasterSize(src);
       <div class="text-body text-dark-green-700 space-y-6">
         {body.map((paragraph) => <p>{paragraph}</p>)}
       </div>
-      {caption && <p class="text-code text-green-700 mt-6">{caption}</p>}
+      {caption && <p class="text-code text-dark-green-700 mt-6">{caption}</p>}
       <p
         class="text-label text-dark-green-700 mt-4 font-bold uppercase tracking-widest"
       >
@@ -30,7 +30,7 @@ const { width, height } = await rasterSize(src);
           formats.map((ext, i) => (
             <>
               {i > 0 && (
-                <span class="text-green-500/50 mx-2" aria-hidden="true">
+                <span class="text-dark-green-900/30 mx-2" aria-hidden="true">
                   |
                 </span>
               )}
@@ -38,7 +38,7 @@ const { width, height } = await rasterSize(src);
                 href={`/brand/assets/${image}.${ext}`}
                 download
                 aria-label={`Download ${image}.${ext}`}
-                class="text-green-700 hover:text-green-900 underline underline-offset-4 transition-colors"
+                class="text-dark-green-900 underline underline-offset-4 hover:decoration-2"
               >
                 {ext.toUpperCase()}
               </a>
