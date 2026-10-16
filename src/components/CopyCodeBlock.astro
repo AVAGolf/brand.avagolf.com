@@ -21,14 +21,14 @@ const downloadFile = downloadHref?.split("/").pop();
     {
       downloadHref && (
         <>
-          <span class="text-green-500/50 mx-2" aria-hidden="true">
+          <span class="text-dark-green-900/30 mx-2" aria-hidden="true">
             |
           </span>
           <a
             href={downloadHref}
             download
             aria-label={`Download ${downloadFile}`}
-            class="text-green-700 hover:text-green-900 underline underline-offset-4 transition-colors"
+            class="text-dark-green-900 underline underline-offset-4 hover:decoration-2"
           >
             Download
           </a>
