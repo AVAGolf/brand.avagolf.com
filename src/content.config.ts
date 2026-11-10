@@ -43,4 +43,17 @@ const assets = defineCollection({
   }),
 });
 
-export const collections = { screenshots, assets };
+// src/content/guides/<slug>.md -> /<slug>/ (src/pages/[slug].astro); the
+// product-design sections of the guide, one Markdown file per page.
+const guides = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/guides" }),
+  schema: z.object({
+    title: z.string(),
+    eyebrow: z.string(),
+    subtitle: z.string(),
+    // ADR filenames under docs/decisions/ in the app repo that this page rests on.
+    adrs: z.array(z.string()).default([]),
+  }),
+});
+
+export const collections = { screenshots, assets, guides };

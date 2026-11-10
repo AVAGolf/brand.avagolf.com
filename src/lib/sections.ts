@@ -1,4 +1,8 @@
-export type SectionGroup = "Core Identity" | "Brand Elements" | "Communication";
+export type SectionGroup =
+  | "Core Identity"
+  | "Brand Elements"
+  | "Communication"
+  | "Product Design";
 
 export interface Section {
   slug: string;
@@ -81,12 +85,61 @@ export const sections: Section[] = [
     group: "Communication",
     description: "the three golfer profiles AVA Golf is built for, and who it is not for",
   },
+  {
+    slug: "ux-principles",
+    title: "UX Principles",
+    group: "Product Design",
+    description: "the rules that settle a design dispute in the product",
+  },
+  {
+    slug: "navigation",
+    title: "Navigation",
+    group: "Product Design",
+    description: "information architecture, the shells, the masthead, tab bar and rail, and how screens open",
+  },
+  {
+    slug: "templates",
+    title: "Page Templates",
+    group: "Product Design",
+    description: "hub, list, detail, flow and settings pages on web, iPad and iPhone",
+  },
+  {
+    slug: "patterns",
+    title: "Interaction Patterns",
+    group: "Product Design",
+    description: "loading, empty, error, confirm, feedback and drill-down, and when a sheet, a popover or a dialog opens",
+  },
+  {
+    slug: "components",
+    title: "Components",
+    group: "Product Design",
+    description: "the base components, one per pattern, their variants and what is deprecated",
+  },
+  {
+    slug: "charts",
+    title: "Charts",
+    group: "Product Design",
+    description: "the chart shells, the data-viz palette and the spec format every chart is written in",
+  },
+  {
+    slug: "theme",
+    title: "Theme and Tokens",
+    group: "Product Design",
+    description: "the semantic tokens, the brand layer a partner can theme and the structural layer nobody can",
+  },
+  {
+    slug: "conventions",
+    title: "Codebase Conventions",
+    group: "Product Design",
+    description: "data fetching, the auth guard, errors and events in the app",
+  },
 ];
 
 export const groupOrder: SectionGroup[] = [
   "Core Identity",
   "Brand Elements",
   "Communication",
+  "Product Design",
 ];
 
 export function sectionsByGroup(): Record<SectionGroup, Section[]> {

@@ -1,6 +1,6 @@
 // The measurement vocabulary for brand.avagolf.com pages, in the shape
 // news.avagolf.com's src/lib/pageParams.ts uses (itself after avagolf.com's),
-// with brand's own page families: the three sidebar groups in
+// with brand's own page families: the four sidebar groups in
 // src/lib/sections.ts.
 //
 // Brand keeps its own gtag.js (G-X34R7TJNMF) and pushes nothing to the
@@ -16,6 +16,7 @@ export type PageGroup =
 	| "core_identity"
 	| "brand_elements"
 	| "communication"
+	| "product_design"
 	| "tokens"
 	| "not_found"
 	| "other";
@@ -34,6 +35,7 @@ const GROUPS: Record<SectionGroup, PageGroup> = {
 	"Core Identity": "core_identity",
 	"Brand Elements": "brand_elements",
 	Communication: "communication",
+	"Product Design": "product_design",
 };
 
 function firstSegment(pathname: string): string {
