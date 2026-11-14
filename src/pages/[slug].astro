@@ -9,7 +9,6 @@ export async function getStaticPaths() {
 
 const { guide } = Astro.props;
 const { Content } = await render(guide);
-const adrBase = "https://github.com/AVAGolf/app.avagolf.com/blob/stage/docs/decisions/";
 ---
 
 <BrandLayout
@@ -20,22 +19,6 @@ const adrBase = "https://github.com/AVAGolf/app.avagolf.com/blob/stage/docs/deci
 >
   <div class="guide mx-auto max-w-6xl space-y-12">
     <Content />
-    {
-      guide.data.adrs.length > 0 && (
-        <section class="border-t border-green-500/30 pt-12">
-          <h2 class="text-h2 text-dark-green-900 mb-4">Decisions</h2>
-          <ul class="text-body text-dark-green-700 space-y-2">
-            {guide.data.adrs.map((adr) => (
-              <li>
-                <a class="underline" href={`${adrBase}${adr}`}>
-                  {adr.replace(/\.md$/, "")}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
   </div>
 </BrandLayout>
 
