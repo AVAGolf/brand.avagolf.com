@@ -8,13 +8,11 @@ sites share one set of chrome. The guideline pages, the sidebar and the brand
 pack download are this repo's.
 
 The guidelines cover logo marks, colors, typography, brand elements (textures,
-product screenshots, the explainer video), communication (overview, values,
-pillars, voice, audience) and product design (UX principles, navigation, page
-templates, interaction patterns, components, charts, theme and tokens, codebase
-conventions). The product-design pages and the voice page are Markdown files
-under `src/content/guides/`, one per page, rendered by `src/pages/[slug].astro`;
-their frontmatter lists the app-repo ADRs the page rests on, and the layout
-renders those as links. The tagline is **Get Better. Faster.**; Data with
+product screenshots, the explainer video) and communication (overview, values,
+pillars, voice, audience). The voice page is a Markdown file under
+`src/content/guides/`, rendered by `src/pages/[slug].astro`. Product design
+rules (components, patterns, tokens) are not part of this site; they live in the
+app repository's `docs/design-system/`. The tagline is **Get Better. Faster.**; Data with
 Direction, Personalized Progression and Mastery without Guesswork are the
 brand pillars. For a plain-text summary, read
 [brand.avagolf.com/llms.txt](https://brand.avagolf.com/llms.txt).
