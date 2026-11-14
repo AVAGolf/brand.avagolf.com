@@ -9,10 +9,9 @@ pack download are this repo's.
 
 The guidelines cover logo marks, colors, typography, brand elements (textures,
 product screenshots, the explainer video) and communication (overview, values,
-pillars, voice, audience). The voice page is a Markdown file under
-`src/content/guides/`, rendered by `src/pages/[slug].astro`. Product design
-rules (components, patterns, tokens) are not part of this site; they live in the
-app repository's `docs/design-system/`. The tagline is **Get Better. Faster.**; Data with
+pillars, voice, audience). Product design rules (components, patterns, tokens)
+are not part of this site; they live in the app repository's
+`docs/design-system/`. The tagline is **Get Better. Faster.**; Data with
 Direction, Personalized Progression and Mastery without Guesswork are the
 brand pillars. For a plain-text summary, read
 [brand.avagolf.com/llms.txt](https://brand.avagolf.com/llms.txt).
@@ -68,10 +67,10 @@ avagolf.com is the source of the chrome every AVA site renders.
 `scripts/take-shared-components.sh` copies two of its folders into this repo
 before every build. Both are gitignored:
 
-| Folder | What it is |
-|---|---|
+| Folder               | What it is                                                                                                                                                                                                                    |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `shared-components/` | `Nav`, `MobileMenuFooter`, `Footer`, the palette (`styles/tokens.css`), the brand fonts (`styles/fonts.css`), and the link data (`data/nav.ts`, `data/footer.ts`, `data/socials.ts`). Imported through the `@shared/*` alias. |
-| `scripts/ci/` | The Lighthouse runner, the build diff and the PR comment tools the workflows call. |
+| `scripts/ci/`        | The Lighthouse runner, the build diff and the PR comment tools the workflows call.                                                                                                                                            |
 
 To change a nav or footer link, change it in avagolf.com. This site picks it up
 on its next build: the weekly deploy, or run **Deploy** by hand.
@@ -130,10 +129,16 @@ deploy's S3 sync leaves `files/*` alone.
 That workflow also publishes `/files/brand-pack.json` with each new version:
 
 ```json
-{ "version": "1.0.3", "tag": "brand-pack-v1.0.3", "published": "2026-09-27T14:03:11Z",
-  "bytes": 376970681, "sha256": "…", "commit": "…",
+{
+  "version": "1.0.3",
+  "tag": "brand-pack-v1.0.3",
+  "published": "2026-09-27T14:03:11Z",
+  "bytes": 376970681,
+  "sha256": "…",
+  "commit": "…",
   "url": "https://brand.avagolf.com/files/AVA_Golf_Brand_Pack.zip",
-  "filename": "AVA_Golf_Brand_Pack_v1.0.3.zip" }
+  "filename": "AVA_Golf_Brand_Pack_v1.0.3.zip"
+}
 ```
 
 `src/lib/brandPack.ts` reads it once per build. The homepage shows
@@ -171,6 +176,7 @@ lighthouse.config.json      pages and gates for scripts/ci/lighthouse.mjs
 ```
 
 **Conventions:**
+
 - Every guideline page composes `BrandLayout`; page content goes in the
   default slot.
 - Repeated content (swatches, logo variants, screenshots) is a data array or a
@@ -182,16 +188,16 @@ lighthouse.config.json      pages and gates for scripts/ci/lighthouse.mjs
 
 ## Routes
 
-| Route | Page |
-|---|---|
-| `/` | introduction and the brand pack download |
-| `/logo-marks/`, `/colors/`, `/typography/` | core identity |
-| `/assets/`, `/application/`, `/video/` | brand elements |
-| `/overview/`, `/values/`, `/pillars/`, `/voice/`, `/audience/` | communication |
-| `/tokens/` | every colour, gradient and type style on one page (not in the sidebar) |
-| `/llms.txt`, `/robots.txt`, `/sitemap-index.xml` | LLM summary, crawler rules, sitemap |
-| `/build.json` | the commit and the avagolf.com commit this deploy was built from |
-| `/files/AVA_Golf_Brand_Pack.zip`, `/files/brand-pack.json` | the brand pack and its manifest (uploaded by Brand-Assets) |
+| Route                                                          | Page                                                                   |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `/`                                                            | introduction and the brand pack download                               |
+| `/logo-marks/`, `/colors/`, `/typography/`                     | core identity                                                          |
+| `/assets/`, `/application/`, `/video/`                         | brand elements                                                         |
+| `/overview/`, `/values/`, `/pillars/`, `/voice/`, `/audience/` | communication                                                          |
+| `/tokens/`                                                     | every colour, gradient and type style on one page (not in the sidebar) |
+| `/llms.txt`, `/robots.txt`, `/sitemap-index.xml`               | LLM summary, crawler rules, sitemap                                    |
+| `/build.json`                                                  | the commit and the avagolf.com commit this deploy was built from       |
+| `/files/AVA_Golf_Brand_Pack.zip`, `/files/brand-pack.json`     | the brand pack and its manifest (uploaded by Brand-Assets)             |
 
 ## Checks and deployment
 

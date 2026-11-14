@@ -43,15 +43,4 @@ const assets = defineCollection({
   }),
 });
 
-// src/content/guides/<slug>.md -> /<slug>/ (src/pages/[slug].astro), one
-// Markdown file per page.
-const guides = defineCollection({
-  loader: glob({ pattern: "*.md", base: "./src/content/guides" }),
-  schema: z.object({
-    title: z.string(),
-    eyebrow: z.string(),
-    subtitle: z.string(),
-  }),
-});
-
-export const collections = { screenshots, assets, guides };
+export const collections = { screenshots, assets };
