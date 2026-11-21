@@ -1,12 +1,13 @@
-// Copied from news.avagolf.com's src/lib/appLinks.ts, unchanged.
-// Change it there first, then copy it here and to docs.avagolf.com.
+// Copied from avagolf.com's sites/news/src/lib/appLinks.ts. Changed: the content slug
+// reads the path as is (news maps its /news/ paths back to the old
+// news.avagolf.com ones with legacyPath(), which brand doesn't need). Change
+// the rest there first, then copy it here.
 //
-// Attribution hand-off for links that leave news.avagolf.com for the app.
+// Attribution hand-off for links that leave brand.avagolf.com for the app.
 //
-// Ported from avagolf.com's src/lib/appLinks.ts. The one difference: news has
+// Ported from avagolf.com's src/lib/appLinks.ts. The one difference: brand has
 // no /analyze/ tree, so the type/brand/device trio avagolf.com derives from
-// its routes is never sent from here. brand.avagolf.com and docs.avagolf.com
-// copy this file unchanged.
+// its routes is never sent from here.
 //
 // Both domains are on the property's domain list, so the linker's `_gl` carries
 // the session and its source across the hop by itself. These parameters are the

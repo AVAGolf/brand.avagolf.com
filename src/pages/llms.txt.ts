@@ -4,7 +4,7 @@ import { SITE } from "@/lib/schema";
 import { groupOrder, markdownHref, sectionsByGroup } from "@/lib/sections";
 
 // /llms.txt, generated at build time rather than kept as a static file in
-// public/, the way news.avagolf.com generates its own.
+// public/, the way the newsroom (avagolf.com's sites/news/) generates its own.
 //
 // The guideline links come from src/lib/sections.ts, the list the sidebar and
 // the mobile menu render, so a new page can't be left out of this file. They

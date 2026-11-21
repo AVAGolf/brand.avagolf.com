@@ -1,4 +1,4 @@
-// Copied from news.avagolf.com's src/pages/build.json.ts, unchanged.
+// Copied from avagolf.com's sites/news/src/pages/build.json.ts, unchanged but for the path below.
 import { existsSync, readFileSync } from "node:fs";
 
 // /build.json: what this deploy was built from. `shared` is the avagolf.com

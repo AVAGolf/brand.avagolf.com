@@ -2,7 +2,7 @@ import { robotsTxt } from "@/lib/robots";
 import { SITE } from "@/lib/schema";
 
 // robots.txt, generated so brand allows the same crawlers as every AVA site
-// (src/lib/robots.ts, from news.avagolf.com). The sitemap is
+// (src/lib/robots.ts, originally news.avagolf.com's). The sitemap is
 // @astrojs/sitemap's index.
 export function GET() {
   const body = robotsTxt({

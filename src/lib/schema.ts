@@ -1,4 +1,4 @@
-// Copied from news.avagolf.com's src/lib/schema.ts. Changed: SITE, the
+// Copied from avagolf.com's sites/news/src/lib/schema.ts. Changed: SITE, the
 // WebSite name, the logo (a file this site serves), and the node builders:
 // news's article and collection nodes are gone, and brandGuide() describes the
 // guidelines themselves, with the brand pack as their download.

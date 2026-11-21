@@ -1,18 +1,20 @@
 ---
-// Copied from news.avagolf.com's src/components/site/CookieConsent.astro, unchanged.
-// Change it there first, then copy it here and to docs.avagolf.com.
+// Copied from news.avagolf.com's src/components/site/CookieConsent.astro
+// before the newsroom moved to avagolf.com/news/. Its successor, avagolf.com's
+// sites/news/src/components/site/CookieConsent.astro, now uses avagolf.com's
+// own host-only consent cookie, so this copy is brand's own and no longer
+// tracks it. Keep the categories and wording in step with avagolf.com's
+// src/components/CookieConsent.astro.
 //
-// Cookie consent for news.avagolf.com: Consent Mode v2 defaults, then the
+// Cookie consent for brand.avagolf.com: Consent Mode v2 defaults, then the
 // banner. Ported from avagolf.com's src/components/CookieConsent.astro with
 // four changes, all because this runs on a subdomain beside avagolf.com:
-//   - the consent cookie is set on `.avagolf.com`, so a choice made on news,
-//     brand or docs holds on the other two (avagolf.com's own cookie is
-//     host-only, so a choice made there is asked again here);
+//   - the consent cookie is set on `.avagolf.com` (avagolf.com's own cookie
+//     is host-only, so a choice made there is asked again here);
 //   - links to the privacy policy are absolute;
 //   - the Analytics category names the tools the shared GTM container
 //     actually runs (Google Analytics and Mouseflow);
 //   - the tagline is "Get Better. Faster."
-// brand.avagolf.com and docs.avagolf.com copy this file unchanged.
 ---
 
 {/* Consent Mode v2 defaults — deny in the EEA/UK/CH, measure elsewhere.

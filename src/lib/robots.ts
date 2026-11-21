@@ -1,9 +1,10 @@
-// Copied from news.avagolf.com's src/lib/robots.ts, unchanged.
-// Change it there first, then copy it here and to docs.avagolf.com.
+// Copied from news.avagolf.com's src/lib/robots.ts. The newsroom has since
+// moved into avagolf.com (sites/news/) and is covered by avagolf.com's
+// public/robots.txt, so this copy is brand's own.
 //
 // robots.txt, generated so every AVA site allows the same crawlers. The agent
-// list is avagolf.com's (public/robots.txt there); brand.avagolf.com and
-// docs.avagolf.com copy this file and pass their own sitemaps and llms.txt.
+// list is avagolf.com's (public/robots.txt there); keep the two in step.
+// The caller passes its own sitemaps and llms.txt.
 
 /** AI assistants and answer engines, explicitly welcome to read and cite us. */
 export const AI_AGENTS = [

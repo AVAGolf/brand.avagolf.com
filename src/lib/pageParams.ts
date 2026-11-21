@@ -1,5 +1,5 @@
 // The measurement vocabulary for brand.avagolf.com pages, in the shape
-// news.avagolf.com's src/lib/pageParams.ts uses (itself after avagolf.com's),
+// avagolf.com's sites/news/src/lib/pageParams.ts uses (itself after avagolf.com's),
 // with brand's own page families: the three sidebar groups in
 // src/lib/sections.ts.
 //
