@@ -9,7 +9,9 @@ pack download are this repo's.
 
 The guidelines cover logo marks, colors, typography, brand elements (textures,
 product screenshots, the explainer video) and communication (overview, values,
-pillars, voice, audience). The tagline is **Get Better. Faster.**; Data with
+pillars, voice, audience). Product design rules (components, patterns, tokens)
+are not part of this site; they live in the app repository's
+`docs/design-system/`. The tagline is **Get Better. Faster.**; Data with
 Direction, Personalized Progression and Mastery without Guesswork are the
 brand pillars. For a plain-text summary, read
 [brand.avagolf.com/llms.txt](https://brand.avagolf.com/llms.txt).
