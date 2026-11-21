@@ -1,6 +1,6 @@
 {
   "_comment": [
-    "Pages and profiles for scripts/ci/lighthouse.mjs (taken from avagolf.com; see its header). Copied from news.avagolf.com's lighthouse.config.json.",
+    "Pages and profiles for scripts/ci/lighthouse.mjs (taken from avagolf.com; see its header). Copied from avagolf.com's sites/news/lighthouse.config.json.",
     "One page per template: the homepage (hero header and the brand pack), a guideline page, a content-collection page, and the video page.",
     "`served.headStart` is the edge tag-gateway bootstrap, byte for byte as Fastly injects it at the",
     "top of <head> on brand.avagolf.com; if the gateway changes, copy it again from view-source of the live site.",

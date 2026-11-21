@@ -82,10 +82,12 @@ values. The typography utilities (`text-h1`, `text-body`, ...), the gradients
 and the shadows are brand's own.
 
 What the shared chrome leaves to the site that renders it lives here, copied
-from news.avagolf.com (each file says so at the top):
+from the newsroom, now avagolf.com's `sites/news/` (each file says at the top
+what it was copied from and what changed):
 
 - `src/components/site/CookieConsent.astro`: Consent Mode v2 defaults and the
-  banner, with one consent cookie across news, brand and docs
+  banner, with the consent cookie on `.avagolf.com`. Brand's own since the
+  newsroom moved to avagolf.com's host-only cookie
 - `src/components/site/MenuInert.astro`: keeps the hidden mobile menu out of
   focus order
 - `src/components/site/Head.astro`, `src/lib/schema.ts`: meta tags and JSON-LD
@@ -93,7 +95,8 @@ from news.avagolf.com (each file says so at the top):
   app.avagolf.com links
 - `src/lib/pageParams.ts`: brand's page vocabulary (`site`, `page_group`,
   `content_slug`), in the shape news uses
-- `src/lib/robots.ts`: the crawler rules every AVA site shares
+- `src/lib/robots.ts`: the crawler rules every AVA site shares (brand's own;
+  keep it in step with avagolf.com's `public/robots.txt`)
 
 ## Navigation
 

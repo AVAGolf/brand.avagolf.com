@@ -1,5 +1,5 @@
-// Copied from news.avagolf.com's src/lib/consentRegion.ts, unchanged.
-// Change it there first, then copy it here and to docs.avagolf.com.
+// Copied from avagolf.com's sites/news/src/lib/consentRegion.ts, unchanged.
+// Change it there first (sites/docs/ keeps its own copy), then copy it here.
 //
 // Client-side region guess for the two places that cannot ask Google.
 //

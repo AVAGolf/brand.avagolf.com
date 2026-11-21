@@ -2,8 +2,9 @@ name: Pull request checks
 
 # Everything a merge to main is about to ship, run first where it can still be
 # read and fixed: types, tests, lint, a build compared against main's, and
-# Lighthouse the way PageSpeed runs it. Copied from news.avagolf.com's ci.yml
-# (which follows avagolf.com's) without its post-contract step; the jobs call
+# Lighthouse the way PageSpeed runs it. Copied from the old news.avagolf.com
+# repo's ci.yml (which followed avagolf.com's .github/workflows/ci.yml, where
+# the newsroom now builds) without its post-contract step; the jobs call
 # the tools the build takes from avagolf.com's scripts/ci/ (see
 # scripts/take-shared-components.sh).
 on:

@@ -1,11 +1,11 @@
-// Copied from news.avagolf.com's src/lib/robots.test.ts, unchanged.
+// Copied from news.avagolf.com's src/lib/robots.test.ts (see src/lib/robots.ts).
 import { describe, expect, it } from "vitest";
 import { AI_AGENTS, robotsTxt } from "./robots";
 
 describe("robots.txt", () => {
 	const txt = robotsTxt({
-		llms: "https://news.avagolf.com/llms.txt",
-		sitemaps: [{ url: "https://news.avagolf.com/sitemap.xml" }],
+		llms: "https://brand.avagolf.com/llms.txt",
+		sitemaps: [{ url: "https://brand.avagolf.com/sitemap.xml" }],
 	});
 
 	it("disallows nothing and names every AI agent", () => {
@@ -14,6 +14,6 @@ describe("robots.txt", () => {
 	});
 
 	it("lists the sitemaps", () => {
-		expect(txt).toContain("Sitemap: https://news.avagolf.com/sitemap.xml");
+		expect(txt).toContain("Sitemap: https://brand.avagolf.com/sitemap.xml");
 	});
 });
